@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="busted">
+      <UniqueIdentifier>{6c788645-d25b-417d-81d3-a5b97a8f0fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="busted\Game_Manager">
+      <UniqueIdentifier>{1f600d12-80b9-4923-8f46-15aa9ad40f20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="busted\Mentor">
+      <UniqueIdentifier>{e0a19110-73d2-436f-bb99-067e7999cb75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="busted\Menu">
+      <UniqueIdentifier>{0aa3c3fd-748a-4eca-8f4a-f9d164476837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="busted\Tile">
+      <UniqueIdentifier>{660e7776-d8cd-4600-9446-c5d5a0f3c3a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="busted\Player">
+      <UniqueIdentifier>{6f3a1f67-0499-44c8-8397-eb6ec6252c58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="busted\HUD">
+      <UniqueIdentifier>{51ab7d67-b419-4603-90fc-eb00d8ce4371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="busted\Camera">
+      <UniqueIdentifier>{ce690471-26e0-407b-ae71-97ab22cc40f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="busted\Polish">
+      <UniqueIdentifier>{85c83399-28f1-43a5-b63f-7df981ca3e64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{33b450c1-680b-4d6a-a786-493fd1012bf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\audio">
+      <UniqueIdentifier>{40276c42-c7ed-4499-af71-94d2b9457f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\audio\ogg">
+      <UniqueIdentifier>{9817897b-9c5c-4cf3-8efc-21cbe734f2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\audio\sound_manager">
+      <UniqueIdentifier>{25793317-4ac1-402b-892d-02ddacec1c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core">
+      <UniqueIdentifier>{9be639bc-178c-4156-8b07-0a5131f673df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core\Questions">
+      <UniqueIdentifier>{fbbe69d4-e2f6-42ba-b4e3-35c1a7cce8e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core\stat_manager">
+      <UniqueIdentifier>{c6ba5cd6-aa28-4c4d-ba0c-5ed0dd441ac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core\stat_manager\TurnData">
+      <UniqueIdentifier>{acfa6701-bae7-437c-af8d-4ff07de32281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core\Window">
+      <UniqueIdentifier>{6a048d3b-c653-4569-b7dd-f122c16760c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core\Sprites">
+      <UniqueIdentifier>{a9fb3db8-d323-4948-8330-942b1f3df126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools">
+      <UniqueIdentifier>{7beeccf1-5864-46c4-b10f-0f078c51ff3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\datadrive">
+      <UniqueIdentifier>{0f79b3ff-2773-460b-9559-53283fc117e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\importer">
+      <UniqueIdentifier>{1df2e160-6e79-4a9a-a77a-da3c8275a626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\textdisplay">
+      <UniqueIdentifier>{ad2de9cf-50f1-4937-bb57-bde8d296a4a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\textureImporter">
+      <UniqueIdentifier>{c724332e-7199-4ace-b928-032b1086ad3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\sqlite">
+      <UniqueIdentifier>{b47a3f94-1cc4-401d-9428-2d185b52f319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core\InputAndDisplay">
+      <UniqueIdentifier>{44e41f8e-5d6d-4a71-91ba-c6ed3cb70f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core\InputAndDisplay\InputHandler">
+      <UniqueIdentifier>{59abae63-3d05-4bca-be6f-2478f9915701}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="busted\busted.all.cpp">
+      <Filter>busted</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\Game_Manager\Game_Manager.cpp">
+      <Filter>busted\Game_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\Mentor.cpp">
+      <Filter>busted\Mentor</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\Mainmenu.cpp">
+      <Filter>busted\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\Menu.cpp">
+      <Filter>busted\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\TabMenu.cpp">
+      <Filter>busted\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\tile\tile.cpp">
+      <Filter>busted\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\player\player.cpp">
+      <Filter>busted\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\hud.cpp">
+      <Filter>busted\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\Camera.cpp">
+      <Filter>busted\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="busted\Polish.cpp">
+      <Filter>busted\Polish</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\audio\ogg\stream\ogg_stream.cpp">
+      <Filter>engine\audio\ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\audio\sound_manager\sndFile_man.cpp">
+      <Filter>engine\audio\sound_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\audio\sound_manager\sound_manager.cpp">
+      <Filter>engine\audio\sound_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\all.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\classes.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\main.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\glut\Input.cpp">
+      <Filter>engine\core\InputAndDisplay\InputHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\Questions\Questions.cpp">
+      <Filter>engine\core\Questions</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\stat_manager\stat_manager.cpp">
+      <Filter>engine\core\stat_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\stat_manager\TurnData\TurnData.cpp">
+      <Filter>engine\core\stat_manager\TurnData</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\GameWindow.cpp">
+      <Filter>engine\core\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\Sprite.cpp">
+      <Filter>engine\core\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\datadrive\datadrive.cpp">
+      <Filter>tools\datadrive</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\importer\modelLoader.cpp">
+      <Filter>tools\importer</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\importer\pinaImporter.cpp">
+      <Filter>tools\importer</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\textureload\textureImporter.cpp">
+      <Filter>tools\textureImporter</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\sqlite\SQLiteDB.cpp">
+      <Filter>tools\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\glut\display.cpp">
+      <Filter>engine\core\InputAndDisplay</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\textdisplay\TextBox.cpp">
+      <Filter>tools\textdisplay</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tools\textdisplay\TextManager.cpp">
+      <Filter>tools\textdisplay</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="busted\busted.all.h">
+      <Filter>busted</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\Game_Manager\Game_Manager.h">
+      <Filter>busted\Game_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\Mentor.h">
+      <Filter>busted\Mentor</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\Mainmenu.h">
+      <Filter>busted\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\Menu.h">
+      <Filter>busted\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\TabMenu.h">
+      <Filter>busted\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\tile\tile.h">
+      <Filter>busted\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\player\player.h">
+      <Filter>busted\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\hud.h">
+      <Filter>busted\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\Camera.h">
+      <Filter>busted\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="busted\Polish.h">
+      <Filter>busted\Polish</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\audio\ogg\stream\ogg_stream.h">
+      <Filter>engine\audio\ogg</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\audio\sound_manager\sndFile_man.h">
+      <Filter>engine\audio\sound_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\audio\sound_manager\sound_manager.h">
+      <Filter>engine\audio\sound_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\all.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\classes.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\structures.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\glut\display.h">
+      <Filter>engine\core\InputAndDisplay</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\glut\keys.h">
+      <Filter>engine\core\InputAndDisplay</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\glut\specialKeys.h">
+      <Filter>engine\core\InputAndDisplay</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\glut\Input.h">
+      <Filter>engine\core\InputAndDisplay\InputHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\Questions\Questions.h">
+      <Filter>engine\core\Questions</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\stat_manager\stat_manager.h">
+      <Filter>engine\core\stat_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\stat_manager\TurnData\TurnData.h">
+      <Filter>engine\core\stat_manager\TurnData</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\GameWindow.h">
+      <Filter>engine\core\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\Sprite.h">
+      <Filter>engine\core\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\datadrive\datadrive.h">
+      <Filter>tools\datadrive</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\importer\modelLoader.h">
+      <Filter>tools\importer</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\importer\pinaImporter.h">
+      <Filter>tools\importer</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\textureload\textureImporter.h">
+      <Filter>tools\textureImporter</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\sqlite\SQLiteDB.h">
+      <Filter>tools\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\textdisplay\TextBox.h">
+      <Filter>tools\textdisplay</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tools\textdisplay\TextManager.h">
+      <Filter>tools\textdisplay</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="busted\bustedRC.rc">
+      <Filter>busted</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

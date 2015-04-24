@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7E63B813-9993-4811-96C9-A85EE29C1C9F}</ProjectGuid>
+    <RootNamespace>Busted</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(SolutionDir)third-party/glut-3.7.6/include;%(SolutionDir)third-party/libiconv-1.9.2/include;%(SolutionDir)third-party/collada_dom-1.3.0/include;%(SolutionDir)third-party/libogg-1.3.0/include;%(SolutionDir)third-party/libxml2-2.7.8/include;%(SolutionDir)third-party/libvorbis-1.3.3/include;%(SolutionDir)third-party/OpenAL-1.1/include;%(SolutionDir)third-party/SDL_image-1.2/include;%(SolutionDir)third-party/SDL-1.2.15/include;%(SolutionDir)third-party/sqlite-3.7.16/include;%(SolutionDir)third-party/zlib-1.2.5/include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(SolutionDir)third-party/glut-3.7.6/include;%(SolutionDir)third-party/libiconv-1.9.2/include;%(SolutionDir)third-party/collada_dom-1.3.0/include;%(SolutionDir)third-party/libogg-1.3.0/include;%(SolutionDir)third-party/libxml2-2.7.8/include;%(SolutionDir)third-party/libvorbis-1.3.3/include;%(SolutionDir)third-party/OpenAL-1.1/include;%(SolutionDir)third-party/SDL_image-1.2/include;%(SolutionDir)third-party/SDL-1.2.15/include;%(SolutionDir)third-party/sqlite-3.7.16/include;%(SolutionDir)third-party/zlib-1.2.5/include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\third-party\OpenAL-1.1\include;$(SolutionDir)\third-party\libogg-1.3.0\include;$(SolutionDir)\third-party\libvorbis-1.3.3\include;$(SolutionDir)\third-party\sqlite-3.7.16\include;$(SolutionDir)\third-party\libxml2-2.7.8\include;$(SolutionDir)\third-party\collada_dom-1.3.0\include;$(SolutionDir)\third-party\collada_dom-1.3.0\include\1.4;$(SolutionDir)\third-party\SDL-1.2.15\include;$(SolutionDir)\third-party\SDL_image-1.2\include;$(SolutionDir)\third-party\glut-3.7.6\include;$(SolutionDir)\third-party\zlib-1.2.5\include;$(SolutionDir)\Busted;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>sqlite3.lib;OpenAL32.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;libcollada141dom13.lib;libcollada_dom.lib;libxml2_a.lib;SDL.lib;SDLmain.lib;SDL_image.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\third-party\OpenAL-1.1\lib;$(SolutionDir)\third-party\libogg-1.3.0\lib;$(SolutionDir)\third-party\libvorbis-1.3.3\lib;$(SolutionDir)\third-party\glew-1.9.0\lib;$(SolutionDir)\third-party\sqlite-3.7.16\lib;$(SolutionDir)\third-party\libiconv-1.9.2\lib;$(SolutionDir)\third-party\libxml2-2.7.8\lib;$(SolutionDir)\third-party\SDL-1.2.15\lib;$(SolutionDir)\third-party\SDL_image-1.2\lib;$(SolutionDir)\third-party\collada_dom-1.3.0\lib;$(SolutionDir)\third-party\glut-3.7.6\lib;$(SolutionDir)\third-party\zlib-1.2.5\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)\third-party\OpenAL-1.1\include;$(SolutionDir)\third-party\libogg-1.3.0\include;$(SolutionDir)\third-party\libvorbis-1.3.3\include;$(SolutionDir)\third-party\sqlite-3.7.16\include;$(SolutionDir)\third-party\libxml2-2.7.8\include;$(SolutionDir)\third-party\collada_dom-1.3.0\include;$(SolutionDir)\third-party\collada_dom-1.3.0\include\1.4;$(SolutionDir)\third-party\SDL-1.2.15\include;$(SolutionDir)\third-party\SDL_image-1.2\include;$(SolutionDir)\third-party\glut-3.7.6\include;$(SolutionDir)\third-party\zlib-1.2.5\include;$(SolutionDir)\Busted;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>sqlite3.lib;OpenAL32.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;libcollada141dom13.lib;libcollada_dom.lib;libxml2_a.lib;SDL.lib;SDLmain.lib;SDL_image.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\third-party\OpenAL-1.1\lib;$(SolutionDir)\third-party\libogg-1.3.0\lib;$(SolutionDir)\third-party\libvorbis-1.3.3\lib;$(SolutionDir)\third-party\glew-1.9.0\lib;$(SolutionDir)\third-party\sqlite-3.7.16\lib;$(SolutionDir)\third-party\libiconv-1.9.2\lib;$(SolutionDir)\third-party\libxml2-2.7.8\lib;$(SolutionDir)\third-party\SDL-1.2.15\lib;$(SolutionDir)\third-party\SDL_image-1.2\lib;$(SolutionDir)\third-party\collada_dom-1.3.0\lib;$(SolutionDir)\third-party\glut-3.7.6\lib;$(SolutionDir)\third-party\zlib-1.2.5\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="busted\busted.all.cpp" />
+    <ClCompile Include="busted\Game_Manager\Game_Manager.cpp" />
+    <ClCompile Include="busted\Mentor.cpp" />
+    <ClCompile Include="busted\Mainmenu.cpp" />
+    <ClCompile Include="busted\Menu.cpp" />
+    <ClCompile Include="busted\TabMenu.cpp" />
+    <ClCompile Include="busted\tile\tile.cpp" />
+    <ClCompile Include="busted\player\player.cpp" />
+    <ClCompile Include="busted\hud.cpp" />
+    <ClCompile Include="busted\Camera.cpp" />
+    <ClCompile Include="busted\Polish.cpp" />
+    <ClCompile Include="engine\audio\ogg\stream\ogg_stream.cpp" />
+    <ClCompile Include="engine\audio\sound_manager\sndFile_man.cpp" />
+    <ClCompile Include="engine\audio\sound_manager\sound_manager.cpp" />
+    <ClCompile Include="engine\core\all.cpp" />
+    <ClCompile Include="engine\core\classes.cpp" />
+    <ClCompile Include="engine\core\glut\display.cpp" />
+    <ClCompile Include="engine\core\main.cpp" />
+    <ClCompile Include="engine\core\glut\Input.cpp" />
+    <ClCompile Include="engine\core\Questions\Questions.cpp" />
+    <ClCompile Include="engine\core\stat_manager\stat_manager.cpp" />
+    <ClCompile Include="engine\core\stat_manager\TurnData\TurnData.cpp" />
+    <ClCompile Include="engine\core\GameWindow.cpp" />
+    <ClCompile Include="engine\core\Sprite.cpp" />
+    <ClCompile Include="engine\tools\datadrive\datadrive.cpp" />
+    <ClCompile Include="engine\tools\importer\modelLoader.cpp" />
+    <ClCompile Include="engine\tools\importer\pinaImporter.cpp" />
+    <ClCompile Include="engine\tools\textdisplay\TextBox.cpp" />
+    <ClCompile Include="engine\tools\textdisplay\TextManager.cpp" />
+    <ClCompile Include="engine\tools\textureload\textureImporter.cpp" />
+    <ClCompile Include="engine\tools\sqlite\SQLiteDB.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="busted\busted.all.h" />
+    <ClInclude Include="busted\Game_Manager\Game_Manager.h" />
+    <ClInclude Include="busted\Mentor.h" />
+    <ClInclude Include="busted\Mainmenu.h" />
+    <ClInclude Include="busted\Menu.h" />
+    <ClInclude Include="busted\TabMenu.h" />
+    <ClInclude Include="busted\tile\tile.h" />
+    <ClInclude Include="busted\player\player.h" />
+    <ClInclude Include="busted\hud.h" />
+    <ClInclude Include="busted\Camera.h" />
+    <ClInclude Include="busted\Polish.h" />
+    <ClInclude Include="engine\audio\ogg\stream\ogg_stream.h" />
+    <ClInclude Include="engine\audio\sound_manager\sndFile_man.h" />
+    <ClInclude Include="engine\audio\sound_manager\sound_manager.h" />
+    <ClInclude Include="engine\core\all.h" />
+    <ClInclude Include="engine\core\classes.h" />
+    <ClInclude Include="engine\core\structures.h" />
+    <ClInclude Include="engine\core\glut\display.h" />
+    <ClInclude Include="engine\core\glut\keys.h" />
+    <ClInclude Include="engine\core\glut\specialKeys.h" />
+    <ClInclude Include="engine\core\glut\Input.h" />
+    <ClInclude Include="engine\core\Questions\Questions.h" />
+    <ClInclude Include="engine\core\stat_manager\stat_manager.h" />
+    <ClInclude Include="engine\core\stat_manager\TurnData\TurnData.h" />
+    <ClInclude Include="engine\core\GameWindow.h" />
+    <ClInclude Include="engine\core\Sprite.h" />
+    <ClInclude Include="engine\tools\datadrive\datadrive.h" />
+    <ClInclude Include="engine\tools\importer\modelLoader.h" />
+    <ClInclude Include="engine\tools\importer\pinaImporter.h" />
+    <ClInclude Include="engine\tools\textdisplay\TextBox.h" />
+    <ClInclude Include="engine\tools\textdisplay\TextManager.h" />
+    <ClInclude Include="engine\tools\textureload\textureImporter.h" />
+    <ClInclude Include="engine\tools\sqlite\SQLiteDB.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="busted\bustedRC.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
