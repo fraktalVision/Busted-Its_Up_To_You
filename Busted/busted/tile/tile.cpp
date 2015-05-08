@@ -30,8 +30,6 @@ tile::tile(): tile_action( TA_NONE )
 	this->setType("Action");
 
 	this->setNum(0);
-
-	
 }
 vec3* tile::getBases(void)	{ return this->bases; }
 tile::tile(int num)

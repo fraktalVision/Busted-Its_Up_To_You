@@ -1,9 +1,7 @@
 #include "../../all.h"
 
-
 #ifndef _TURN_DATA_H_
 #define _TURN_DATA_H_
-
 
 extern enum QuestionType;
 
@@ -24,7 +22,6 @@ struct TurnData
 	int score;
 	int openend_score[4];
 	DWORD turn_time;
-
 };
 
 //class for recording player stats
@@ -36,17 +33,14 @@ private:
 	std::ofstream m_file;	 //handle
 	DWORD m_start_time;
 
-
 public:
 	TurnDump( std::string filename );
 	~TurnDump();
 
-	
 	void SubmitTurnData();
 	void DumpData();
 	void CreateNewFile(std::string filename);
 	void StartTimer() { m_start_time = GetTickCount(); currentData.turn_time = GetTickCount(); }
-
 
 	TurnData currentData; //data for the current turn
 	int player_cnt; //number of players playing

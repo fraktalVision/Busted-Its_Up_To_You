@@ -17,11 +17,7 @@ gamemogul@gmail.com
 #ifndef TILE_H
 #define TILE_H
 
-
-
 #include "../busted.all.h"
-
-
 
 enum TILE_ACTION{ TA_NONE, TA_ROLL_AGAIN, TA_LOSE_TURN };//!<The actions to perform when players land on this tile
 

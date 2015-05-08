@@ -5,7 +5,6 @@
 
 */
 
-
 #pragma once
 
 #include "busted.all.h"
@@ -14,11 +13,8 @@
 #include "Menu.h"
 #include "player/player.h"
 
-
 enum DIE_SIDE{ LEFT_DIE = 0, RIGHT_DIE };
 enum ROLL_STATE{ ROLL_IDLE, ROLL_OUT, ROLL_IN, ROLL_STOP };
-
-
 
 //!enum for winning rule
 enum WIN_RULE{  ROUND_LIMIT, FIRST_TO_LIMIT, BOTH_LIMIT };
@@ -42,7 +38,6 @@ public:
 	DiceDisplay(bool two_d,  //!<whether to render a 2D or 3D dice
 				float x = 375,  //!<x position on screen for 2d dice rolls
 				float y = 550); //!<y position on screen for 2d dice rolls
-
 
 	void Update(float t);
 	void Render2D();
@@ -95,18 +90,14 @@ private:
 
 	std::vector<unsigned int> m_marker_vec; //!<vector of all the marker slides that have been added
 
-
 	//added for 3D dice
 	void RenderDie3D( DIE_SIDE s );
 	void Render3DSide( int val );
 	void SetDie3DOrient( DIE_SIDE side );
-	float m_orig_ang[2][3]; //!<the angle of orientation used as a basis for each particular dice 
-	float m_delt_ang[2][3]; //!<angular rotation collected over time used for animating the dice 
+	float m_orig_ang[2][3]; //!<the angle of orientation used as a basis for each particular dice
+	float m_delt_ang[2][3]; //!<angular rotation collected over time used for animating the dice
 	ROLL_STATE m_roll_state; //!<state of the dice
-
 };
-
-
 
 //!Object for running and managing which player goes first
 class PlayOrderRoll
@@ -125,7 +116,7 @@ public:
 	}
 
 	bool IsComplete; //!<is true if the player order has been set
-	
+
 private:
 	bool DeterminePlayerOrder(); //!<calculates the order of everyone and determines whether rerolls need to occur.
 
@@ -140,20 +131,17 @@ private:
 	std::vector<Box_2D*>		m_tok_results_icons; //!<corresponding player icons
 	std::vector<Answer*>		m_stopbut_vec; //!<a list of each player's name in a box to be rendered to the screen
 	std::vector<int>			m_values_taken; //!<list of all values rolled to decide when a reroll needs to occur (prevent ties from happening)
-	
+
 	std::vector<float>			m_animation_speed;//!<speed of animation when reordering players
-	
+
 	bool ol_loaded; //!<bool for if the order list has already been loaded
 	bool results_shown; //!<bool for if the results have been found
-
 
 	float GetInterp(){ return interp_cntr/INTERPMAX;}
 
 	float interp_cntr; //!<counter for how long a delay the game should take
 	const float INTERPMAX;
-
 };
-
 
 //!this class manages the active score system that is always displayed at the bottom of the screen in game
 class ScoreDisplay
@@ -178,20 +166,13 @@ private:
 
 	Box_2D turnHL;
 
-
 	//stuff used for animating the score
 	bool Anim_on; //!<bool for whether or not the animation is on
 	int anim_score; //!<score displayed in the animation when a person scores.
 	int anim_pl_id; //!<id of the person that scored
 	Box_2D anim_box; //!<used to have the animated score when a person gets points
 	float accum_time; //!<the amount of time accumulated over a given frame, used for interpolation animation of the score animation
-
 };
-
-
-
-
-
 
 //!class for displaying results at the end of the game
 class EndDisplay
@@ -201,8 +182,7 @@ public:
 	~EndDisplay();
 
 	void Update(float t);
-	void Render();	
-
+	void Render();
 
 private:
 

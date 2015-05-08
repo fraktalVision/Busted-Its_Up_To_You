@@ -11,7 +11,6 @@ extern Texture_Manager* pTexture_man;
 //Situation database
 sqlDB* sitDB;
 
-
 //Initialize the board array...
 tile* tileArray[TILENUM];
 
@@ -45,23 +44,16 @@ void drawBoard(void)
 				pos.z -= 5.5f*1.8f;
 		}
 		myTile->setPos(pos);
-		
-
 
 		if ( i == 8 || i == 24 )
 			myTile->setAction(TA_ROLL_AGAIN);
 		else if ( i == 0 || i == 16 )
 			myTile->setAction(TA_LOSE_TURN);
 
-
 		//default if it doesn't meet the following conditionals...
 		vec3 color = myTile->getColor().a;
 		std::string type = "action";
 		std::string texture = "TID_TILE_BLUE";
-
-
-	
-		
 
 		//Based on the tile's position in the array, set it's color and type attributes
 		if(i == 0 || i == (0.25*TILENUM) || i == (0.5*TILENUM) || i == (0.75*TILENUM))
@@ -78,37 +70,37 @@ void drawBoard(void)
 		}
 		else if(i == 2 || i == (0.25*TILENUM)+2 || i == (0.5*TILENUM)+2 || i == (0.75*TILENUM)+2)
 		{
-			color.x = 0; color.y = 1; color.z = 0;		
-			type = "health";	
+			color.x = 0; color.y = 1; color.z = 0;
+			type = "health";
 			texture = "TID_TILE_PINK";
 		}
 		else if(i == 3 || i == (0.25*TILENUM)+3 || i == (0.5*TILENUM)+3 || i == (0.75*TILENUM)+3)
 		{
-			color.x = 0; color.y = 0; color.z = 1;	
-			type = "burn";	
+			color.x = 0; color.y = 0; color.z = 1;
+			type = "burn";
 			texture = "TID_TILE_ORANGE";
 		}
 		else if(i == 4 || i == (0.25*TILENUM)+4 || i == (0.5*TILENUM)+4 || i == (0.75*TILENUM)+4)
 		{
-			color.x = 1; color.y = 1; color.z = 0;		
+			color.x = 1; color.y = 1; color.z = 0;
 			type = "familyHome";
 			texture = "TID_TILE_BLUE";
 		}
 		else if(i == 5 || i == (0.25*TILENUM)+5 || i == (0.5*TILENUM)+5 || i == (0.75*TILENUM)+5)
 		{
-			color.x = 0; color.y = 1; color.z = 1;			
-			type = "work";	
+			color.x = 0; color.y = 1; color.z = 1;
+			type = "work";
 			texture = "TID_TILE_YELLOW";
 		}
 		else if(i == 6 || i == (0.25*TILENUM)+6 || i == (0.5*TILENUM)+6 || i == (0.75*TILENUM)+6)
 		{
-			color.x = 1; color.y = 0; color.z = 1;			
-			type = "money";	
+			color.x = 1; color.y = 0; color.z = 1;
+			type = "money";
 			texture = "TID_TILE_GREEN";
 		}
 		else if(i == 7 || i == (0.25*TILENUM)+7 || i == (0.5*TILENUM)+7 || i == (0.75*TILENUM)+7)
 		{
-			color.x = 1; color.y = 1; color.z = 1;	
+			color.x = 1; color.y = 1; color.z = 1;
 			type = "action";
 			texture = "TID_TILE_PURPLE";
 		}
@@ -117,7 +109,6 @@ void drawBoard(void)
 		myTile->setColor(color);
 		myTile->setType(type);
 		myTile->setTexture(pTexture_man->GetTexture(texture));
-		
 
 		tileArray[i] = myTile; //put myself into the global tile array
 	}// for tiles
@@ -126,7 +117,7 @@ void drawBoard(void)
 //Pseudo-random number generator
 int random(void)
 {
-	int low=1, high=100; 
+	int low=1, high=100;
 	return random(low, high);
 }
 int random(int low, int high)

@@ -1,9 +1,6 @@
 #include "../busted.all.h"
 #include "Game_Manager.h"
 
-
-
-
 //Global to poll user-input
 extern Input *pInput;
 extern Mentor_Manager *pMentor_man;
@@ -16,12 +13,12 @@ Author: Jamie Gault
 ***********************************/
 Game_Manager::Game_Manager(): stat("../Busted/assets/stats/gameStats.txt"),
 							turndump("../TurnDump/gameTurnDump"),//WTF is a turnDump?
-							m_ig_state(IGS_DICE), 
+							m_ig_state(IGS_DICE),
 							m_ig_mode(IGM_NONE),
 							m_question(NULL),
 							framerate(1.0f),
 							framescale(1.0f),
-							m_pSetupmenu(NULL),	
+							m_pSetupmenu(NULL),
 							m_pMainMenu(NULL),
 							m_pPauseMenu(NULL),
 							m_pEndMenu(NULL),
@@ -30,10 +27,8 @@ Game_Manager::Game_Manager(): stat("../Busted/assets/stats/gameStats.txt"),
 							m_cam_man( Camera ),
 							m_discuss_fade(0.0f),
 							turncount(0)
-							
-							
-{
 
+{
 	//setup clock
 	m_system_clock.oldtime = GetTickCount();
 	m_system_clock.m_clock_speed = 1.0f;
@@ -43,7 +38,6 @@ Game_Manager::Game_Manager(): stat("../Busted/assets/stats/gameStats.txt"),
 	m_win_data.turn = 1;
 	m_win_data.turn_limit = 2;
 	m_win_data.rule = BOTH_LIMIT;
-	
 
 	//load in a texture
 	textboxdata.background = pTexture_man->GetTexture("TID_TEXTBG");
@@ -53,25 +47,22 @@ Game_Manager::Game_Manager(): stat("../Busted/assets/stats/gameStats.txt"),
 
 	m_ex_state = ES_PREGAME_LOAD;
 
-	m_dicestop_but = Answer( pText_man, std::string("Stop!"), 
-							DATA("STOPBUT_X"), DATA("STOPBUT_Y"), 500.0f); 
+	m_dicestop_but = Answer( pText_man, std::string("Stop!"),
+							DATA("STOPBUT_X"), DATA("STOPBUT_Y"), 500.0f);
 
 	m_continue_but = Answer( pText_man, std::string("Continue..."),
 							DATA("CONTBUT_X"), DATA("CONTBUT_Y"), 500.0f);
 
 	pModel_man->open();
 
-	
 	tabmenu = new TabMenu(&m_win_data);
 
-	m_mentor_text = TextBox(pText_man, std::string(), 
-							DATA("INSTMSG_POSX") + DATA("menttxt_x"), 
-							DATA("INSTMSG_POSY") + DATA("menttxt_y"), DATA("menttxt_wid"), 
+	m_mentor_text = TextBox(pText_man, std::string(),
+							DATA("INSTMSG_POSX") + DATA("menttxt_x"),
+							DATA("INSTMSG_POSY") + DATA("menttxt_y"), DATA("menttxt_wid"),
 							DATA("menttxt_letSpc"), DATA("menttxt_letWd"), DATA("menttxt_letHt"));
 	m_mentor_text.SetBackground(0);
-
 }
-
 
 /***********************************
 Game_Manager Deconstructor
@@ -85,7 +76,6 @@ Game_Manager::~Game_Manager()
 
 	pModel_man->close();
 }
-
 
 /***********************************
 Game_Manager Deconstructor
@@ -110,7 +100,7 @@ bool Game_Manager::UpdateFramerate()
 
 	//accumulate the milliseconds per frame
 	milspf += currenttime - m_system_clock.oldtime;
-	
+
 	tmpfps += 1.0f;
 
 	if( milspf > 1000 )
@@ -119,18 +109,15 @@ bool Game_Manager::UpdateFramerate()
 
 		milspf = 0;
 		tmpfps = 0;
-
 	}
 
 	framescale = ((float)(currenttime - m_system_clock.oldtime))/16.0f;
-	
-	//update the old time 
+
+	//update the old time
 	m_system_clock.oldtime = currenttime;
 
 	return true;
-
 }
-
 
 /***********************************
 Game_Manager Update
@@ -139,7 +126,6 @@ Author: Jamie Gault
 ***********************************/
 void Game_Manager::Update(float t)
 {
-
 	//options for debug
 	if( DATA("debug") )
 	{
@@ -147,8 +133,6 @@ void Game_Manager::Update(float t)
 			DATA_MAN->RefreshData();
 	}
 
-	
-	
 	switch(m_ex_state)
 	{
 	case ES_PREGAME_LOAD:
@@ -158,8 +142,8 @@ void Game_Manager::Update(float t)
 		m_pMainMenu->Update(t);
 
 		{
-			vec3 newRot = Camera->getRot(); 
-			newRot.y += t/24.0f;	
+			vec3 newRot = Camera->getRot();
+			newRot.y += t/24.0f;
 			Camera->setRot(newRot);
 		}
 
@@ -196,9 +180,9 @@ void Game_Manager::Update(float t)
 		{
 			//update the dice rollers
 			m_pOrderRoll->Update(t);
-			
+
 			//if the game is ready to be played.
-			if( m_pOrderRoll->IsComplete )	
+			if( m_pOrderRoll->IsComplete )
 			{
 				LoadGame();
 			}
@@ -210,8 +194,7 @@ void Game_Manager::Update(float t)
 		m_dicestop_but.Update(t);
 		m_continue_but.Update(t);
 
-
-		//multiply time by speed up time 
+		//multiply time by speed up time
 		t = m_system_clock.m_clock_speed*t;
 
 		//if game is paused
@@ -221,7 +204,7 @@ void Game_Manager::Update(float t)
 
 			if( m_discuss_fade > 1.0f )
 				m_discuss_fade = 1.0f;
-			
+
 			//if the discussion button was pressed
 			if( tabmenu->m_action == TMA_DISCUSS)
 			{
@@ -229,7 +212,7 @@ void Game_Manager::Update(float t)
 				m_ig_mode = IGM_NONE;
 			}
 			return;
-		}	
+		}
 		//if game is paused
 		else if( m_ig_mode == IGM_PAUSE )
 		{
@@ -255,7 +238,7 @@ void Game_Manager::Update(float t)
 
 			if( m_discuss_fade < 0.0f )
 				m_discuss_fade = 0.0f;
-			else 
+			else
 				return;
 
 			if( pInput->PollKey(ENTER)|| pInput->PollKey(ESCAPE)|| tabmenu->m_action == TMA_PAUSE)//check for pausing the game
@@ -264,14 +247,9 @@ void Game_Manager::Update(float t)
 			}
 		}
 
-			
-
-
 		//if the game is not paused
 		if( m_ig_mode != IGM_PAUSE )
 		{
-			
-			
 
 			//poll for input
 			InputInGameContext(t);
@@ -289,13 +267,10 @@ void Game_Manager::Update(float t)
 				//only update when the camera is done moving
 				if( m_cam_man.GetTransInterp() == 1.0f)
 					m_question->Update(t);
-
-
 			}
 			//update the current player until it is done moving
 			else if( m_ig_state == IGS_MOVE )
 			{
-			
 				//the user has reached their destination
 				if( (*m_current_player)->bAtDest )
 				{
@@ -319,23 +294,18 @@ void Game_Manager::Update(float t)
 					//if the camera isn't transitioning
 					if(!m_cam_man.IsTransActive())
 					{
-				
 						int i = (*m_current_player)->getTempTile()->getNum();
-						
+
 						(*m_current_player)->update(t);
 
 						if( pInput->PollMouseBut(MLEFT) )
 							m_system_clock.m_clock_speed = 3.0f;
-						
 
-						
 						//set the camera to follow the player
 						m_cam_man.SetFocalPoint( (*m_current_player)->pos.x, DATA("TILE_HEIGHT") , (*m_current_player)->pos.z);
 
-
 						if( i != (*m_current_player)->getTempTile()->getNum() || (*m_current_player)->bAtDest )
 							m_dicedisplay->IncrementStep();
-
 					}
 				}
 			}
@@ -356,7 +326,6 @@ void Game_Manager::Update(float t)
 				partfeat->Update(t);
 			}
 
-
 			//if the game is still going, update the camera
 			if( m_ex_state == ES_INGAME )
 			{
@@ -366,20 +335,14 @@ void Game_Manager::Update(float t)
 				//update score board
 				m_scoredisplay->Update(t);
 			}
-
 		}
 
 		break;
 	}
 
-	
-
 }
 
-
 vec4 ORIGIN = vec4(0, 0, 0, 0);
-
-
 
 /***********************************
 Game_Manager InputContext
@@ -388,11 +351,8 @@ Author: Jamie Gault
 ***********************************/
 void Game_Manager::InputInGameContext(float t)
 {
-
 	if( m_ig_mode == IGM_PAUSE )
 		return;
-
-
 
 	if( m_ig_state == IGS_DICE )
 	{
@@ -411,7 +371,7 @@ void Game_Manager::InputInGameContext(float t)
 					SetTokenToMove();
 					m_cam_man.SetCamFollowType( CFT_TOKEN_FOLLOW);
 					m_cam_man.TransitionCamera( (*m_current_player)->pos.x, (*m_current_player)->pos.y, (*m_current_player)->pos.z);
-					m_cam_man.speed = DATA("CAMERA_DEF_SPEED"); 
+					m_cam_man.speed = DATA("CAMERA_DEF_SPEED");
 				}
 			}
 			else
@@ -419,11 +379,10 @@ void Game_Manager::InputInGameContext(float t)
 				//event to roll the die
 				if( pInput->PollMouseBut(MLEFT) )
 				{
-					
 					//if the mouse is over the button and the dice haven't been rolled yet
 					if( m_dicestop_but.IsMouseOver() && m_dicedisplay->GetRollState() == ROLL_IDLE)
 					{
-						m_dicedisplay->RollDice();	
+						m_dicedisplay->RollDice();
 						pMusic_man->fadeOut("DICE_ROLL");
 						pMusic_man->play("DICE_LAND");
 					}
@@ -435,18 +394,17 @@ void Game_Manager::InputInGameContext(float t)
 	}
 	else if(  m_ig_state == IGS_QUESTION )
 	{
-		
 		//if the left button was pressed
 		if( pInput->PollMouseBut( MLEFT ) )
 		{
 			int result_id = m_question->PollForAnswer();
-			
+
 			if( result_id != NO_ANSWER )
 			{
 				pMusic_man->play("BTN_C");
 				//this is where the answers need to be found by sql
 				int score = 0;
-				//add data for what the user answered 
+				//add data for what the user answered
 				turndump.currentData.answer = result_id;
 
 				if( result_id == ANSWER_PRIVACY)
@@ -457,8 +415,6 @@ void Game_Manager::InputInGameContext(float t)
 				}
 				else
 				{
-
-					
 
 					switch(m_question->GetQuestionType())
 					{
@@ -506,7 +462,7 @@ void Game_Manager::InputInGameContext(float t)
 									pMusic_man->play("OUT_G");
 									(*m_current_player)->lastOutcome = true;
 								}
-								(*m_current_player)->setOutID(id);
+								(*m_current_player)->setOutID(atoi((*sitDB->rows[id])["id"].c_str()));
 								(*m_current_player)->incChance();
 								(*m_current_player)->lastMoral = MORALITY::POSITIVE;
 							}
@@ -522,7 +478,7 @@ void Game_Manager::InputInGameContext(float t)
 									pMusic_man->play("OUT_G");
 									(*m_current_player)->lastOutcome = true;
 								}
-								(*m_current_player)->setOutID(id);
+								(*m_current_player)->setOutID(atoi(((*sitDB->rows[id])["id"].c_str())));
 								(*m_current_player)->lastMoral = MORALITY::NEUTRAL;
 							}
 							else if( option == -1 )//Bad option
@@ -543,7 +499,7 @@ void Game_Manager::InputInGameContext(float t)
 									pMusic_man->play("OUT_B");
 									(*m_current_player)->lastOutcome = false;
 								}
-								(*m_current_player)->setOutID(id);
+								(*m_current_player)->setOutID((atoi((*sitDB->rows[id])["id"].c_str())));
 								(*m_current_player)->decChance();
 								(*m_current_player)->lastMoral = MORALITY::NEGATIVE;
 							}
@@ -555,7 +511,6 @@ void Game_Manager::InputInGameContext(float t)
 
 							//data recorder
 							turndump.currentData.result = atoi(outcome["id"].c_str());
-							
 						}
 
 						break;
@@ -572,7 +527,6 @@ void Game_Manager::InputInGameContext(float t)
 								m_question->AssignResults("No True/False found.", 0);
 								break;
 							}
-								
 
 							std::map<std::string, std::string> option = (*sitDB->rows[0]);
 
@@ -584,6 +538,7 @@ void Game_Manager::InputInGameContext(float t)
 								(*m_current_player)->incChance();
 								(*m_current_player)->lastMoral = MORALITY::POSITIVE;
 								(*m_current_player)->lastOutcome = true;
+								(*m_current_player)->setOutID(0);
 							}
 							else
 							{
@@ -593,12 +548,13 @@ void Game_Manager::InputInGameContext(float t)
 								(*m_current_player)->decChance();
 								(*m_current_player)->lastMoral = MORALITY::NEGATIVE;
 								(*m_current_player)->lastOutcome = false;
+								(*m_current_player)->setOutID(0);
 							}
 
 							m_question->AssignResults( ((option["text"] != "")?option["text"]:"NULL"), score );
 						}
 						break;
-					
+
 					case OPEN_ENDED:
 
 						if(DATA("TURN_DUMP")) m_question->GetOpenEndedScore( turndump.currentData.openend_score );
@@ -609,6 +565,7 @@ void Game_Manager::InputInGameContext(float t)
 							(*m_current_player)->incChance();
 							(*m_current_player)->lastMoral = MORALITY::POSITIVE;
 							(*m_current_player)->lastOutcome = true;
+							(*m_current_player)->setOutID(0);
 						}
 						else
 						{
@@ -616,6 +573,7 @@ void Game_Manager::InputInGameContext(float t)
 							(*m_current_player)->decChance();
 							(*m_current_player)->lastMoral = MORALITY::NEGATIVE;
 							(*m_current_player)->lastOutcome = false;
+							(*m_current_player)->setOutID(0);
 						}
 						m_question->AssignResults( "The group has decided.", m_question->GetScore() );
 						break;
@@ -632,7 +590,7 @@ void Game_Manager::InputInGameContext(float t)
 
 				if(DATA("TURN_DUMP")) turndump.currentData.score = score;
 
-				m_ig_state = IGS_RESULT; 
+				m_ig_state = IGS_RESULT;
 			}
 		}
 	}
@@ -649,21 +607,19 @@ void Game_Manager::InputInGameContext(float t)
 				//EndTurnShift();
 
 				if (DATA("debug")) { std::cout << "mentor set default name\n"; }
-				m_mentor_text.SetString("Everyone has a right to privacy.", true);				
+				m_mentor_text.SetString("Everyone has a right to privacy.", true);
 
 				//need to set randomizer here for rendering mentor
 				m_ig_state = IGS_MENTOR;
 				m_cam_man.SetCamFollowType( CFT_Q_TRANS_OUT );
-
 			}
 			else
 			{
-				
 				//need to set randomizer here for rendering mentor
 				m_ig_state = IGS_MENTOR;
 				std::string mentorText = (*m_current_player)->getMentor()->makeText(
-					(*m_current_player)->lastMoral, 
-					(*m_current_player)->lastOutcome, 
+					(*m_current_player)->lastMoral,
+					(*m_current_player)->lastOutcome,
 					(*m_current_player)->getGender(),
 					(*m_current_player)->getOutID());
 				if (DATA("debug")) { std::cout << "mentor set this text: " << mentorText << "\n"; }
@@ -675,9 +631,9 @@ void Game_Manager::InputInGameContext(float t)
 	else if(  m_ig_state == IGS_MENTOR )
 	{
 		//quit button picture
-		Box_2D box = Box_2D(BT_LINES , 
-					DATA("INSTMSG_POSX")+ DATA("XMSG_POSX"), 
-					DATA("INSTMSG_POSY")+ DATA("XMSG_POSY"), 
+		Box_2D box = Box_2D(BT_LINES ,
+					DATA("INSTMSG_POSX")+ DATA("XMSG_POSX"),
+					DATA("INSTMSG_POSY")+ DATA("XMSG_POSY"),
 					DATA("XMSG_W"), DATA("XMSG_H"));
 
 		//if the left mouse is pressed and the mouse is over the continue button
@@ -699,7 +655,7 @@ void Game_Manager::InputInGameContext(float t)
 			//reset delay counter
 			m_system_clock.m_delay_counter = 0.0f;
 
-			//switch states according to what should 
+			//switch states according to what should
 			if( (*m_current_player)->tile_action == TA_ROLL_AGAIN )
 			{
 				m_ig_state = IGS_DICE; pMusic_man->fadeIn("DICE_ROLL"); pMusic_man->play("DICE_ROLL");
@@ -711,7 +667,6 @@ void Game_Manager::InputInGameContext(float t)
 				//play sounds
 				pMusic_man->fadeIn((*m_current_player)->getSndSet() + "-happy");
 				pMusic_man->play((*m_current_player)->getSndSet() + "-happy");
-
 			}
 			else if( (*m_current_player)->tile_action == TA_LOSE_TURN )
 			{
@@ -725,15 +680,14 @@ void Game_Manager::InputInGameContext(float t)
 				{
 					//show everyone's score
 					//m_ig_state = IGS_SCORE;
-					
-				
+
 					if( TurnWinCheck() )
 					{
 						m_cam_man.SetCamFollowType( CFT_OVERVIEW);
 						return;
 					}
 				}
-				
+
 				//status change
 				if( (*m_current_player)->tile_action == TA_ROLL_AGAIN || (*m_current_player)->tile_action == TA_LOSE_TURN )
 				{
@@ -750,7 +704,7 @@ void Game_Manager::InputInGameContext(float t)
 				}
 				else
 				{
-					m_ig_state = IGS_DICE; pMusic_man->fadeIn("DICE_ROLL"); pMusic_man->play("DICE_ROLL"); 
+					m_ig_state = IGS_DICE; pMusic_man->fadeIn("DICE_ROLL"); pMusic_man->play("DICE_ROLL");
 					m_dicedisplay->SetToRoll();
 
 					//set the camera to follow the player
@@ -759,13 +713,8 @@ void Game_Manager::InputInGameContext(float t)
 					//play sounds
 					pMusic_man->fadeIn((*m_current_player)->getSndSet() + "-happy");
 					pMusic_man->play((*m_current_player)->getSndSet() + "-happy");
-
 				}
-			
-
 			}
-
-			
 		}
 	}
 	else if(  m_ig_state == IGS_END )
@@ -795,7 +744,6 @@ void Game_Manager::InputInGameContext(float t)
 			if( partfeat )
 			{delete partfeat; partfeat = NULL;}
 
-			
 			m_ig_state = IGS_DICE;
 
 			pMusic_man->fadeIn("DICE_ROLL"); pMusic_man->play("DICE_ROLL");
@@ -803,14 +751,9 @@ void Game_Manager::InputInGameContext(float t)
 			pMusic_man->fadeIn((*m_current_player)->getSndSet() + "-happy");
 			pMusic_man->play((*m_current_player)->getSndSet() + "-happy");
 		}
-		
 	}
 
-
-
 }
-
-
 
 /***********************************
 Game_Manager Render
@@ -819,7 +762,6 @@ Author: Jamie Gault
 ***********************************/
 void Game_Manager::Render()
 {
-
 	//render all the 3D stuff that needs to be done in world space
 	if( m_ex_state == ES_INGAME)
 	{
@@ -830,7 +772,6 @@ void Game_Manager::Render()
 			partfeat->Render();
 		}
 	}
-	
 
 	//setup display for drawing things in hud space (like 3D dice that aren't occluded)
 	glDisable(GL_DEPTH_TEST);
@@ -846,7 +787,7 @@ void Game_Manager::Render()
 		}
 	}
 
-	//set to orthogonal projection(2D) when all 3D work is done 
+	//set to orthogonal projection(2D) when all 3D work is done
 	ViewOrtho();
 
 	//Render the music...
@@ -865,9 +806,8 @@ void Game_Manager::Render()
 		break;
 
 	case ES_INGAME:
-		
-		RenderInGame();
 
+		RenderInGame();
 
 		//render pause menu
 		if( m_ig_mode == IGM_PAUSE )
@@ -876,8 +816,6 @@ void Game_Manager::Render()
 			m_pPauseMenu->Render();
 		}
 
-		
-		
 		if( m_discuss_fade)
 			RenderFullScreenImage( pTexture_man->GetTexture( "discuss_bg"), m_discuss_fade);
 
@@ -890,22 +828,19 @@ void Game_Manager::Render()
 		RenderGameSetup();
 		break;
 	}
-		
-
 
 	if( DATA("debug") )
 	{
 		//render frame counter
 		char frame[100];
 		sprintf(frame, "fps: %0.1f", framerate );
-		TextBox frameratebox(textboxdata.text_m, std::string(frame) , 
+		TextBox frameratebox(textboxdata.text_m, std::string(frame) ,
 							000.0f*SCREEN_X_RATIO, 700.0f*SCREEN_Y_RATIO, 1000.0f );
 		frameratebox.Render();
 	}
 
 	ViewPerspective();
 }
-
 
 /***********************************
 Game_Manager RenderInGame
@@ -914,24 +849,19 @@ Author: Jamie Gault
 ***********************************/
 void Game_Manager::RenderInGame()
 {
-
-
 	//if there is a question
 	if(m_question && m_ig_state != IGS_MENTOR)
 	{
 		if( m_cam_man.GetTransInterp() == 1.0f )
 		{
-			
-			
 			m_question->Render();
 
 			if( DATA("questnum_display" ) )
 			{
 				char q[100];
 				sprintf(q, "Question# %i", m_question->GetQuestionID() );
-				
 
-				TextBox questionnum(textboxdata.text_m, std::string(q) , 
+				TextBox questionnum(textboxdata.text_m, std::string(q) ,
 									400.0f, 650.0f, 1000.0f,
 									10.0f, 30, 30);
 
@@ -945,62 +875,58 @@ void Game_Manager::RenderInGame()
 				RenderScreenGel( 1.0f, 1.0f, 1.0f, m_cam_man.GetTransInterp()*2.0f -1.0f);
 
 			//render a box that slowly fades in as the camera zooms
-			Box_2D q_title( pTexture_man->GetTexture(std::string("SitHd_")+m_question->m_category),DATA("Q_LOAD_POSX"), 
+			Box_2D q_title( pTexture_man->GetTexture(std::string("SitHd_")+m_question->m_category),DATA("Q_LOAD_POSX"),
 							DATA("Q_LOAD_POSY"), DATA("Q_LOAD_WD"), DATA("Q_LOAD_HT"));
 			glColor4f(1.0f, 1.0f, 1.0f, m_cam_man.GetTransInterp()*DATA("Q_LOAD_SPEED"));
 			q_title.Render();
-			
 		}
 
 		if( m_ig_state == IGS_RESULT )
 			m_continue_but.Render();
 	}
 
-
 	//if it's time to roll the dice
 	if(  m_ig_state == IGS_DICE || m_ig_state == IGS_MOVE )
 	{
-
 		//if the dice haven't been rolled yet
 		if( m_dicedisplay->GetRollState() == ROLL_IDLE )
 		{
-			TextBox diceroll(textboxdata.text_m, std::string("Hit the button to roll the dice!"), 
+			TextBox diceroll(textboxdata.text_m, std::string("Hit the button to roll the dice!"),
 							300.0f*SCREEN_X_RATIO, 250.0f*SCREEN_X_RATIO, 1000.0f, 10.0f*SCREEN_X_RATIO, 30*SCREEN_X_RATIO, 30*SCREEN_Y_RATIO );
 			diceroll.Render();
 			m_dicestop_but.Render();
 		}
 
-		m_dicedisplay->Render2D();	
-
+		m_dicedisplay->Render2D();
 	}
 	else if(  m_ig_state == IGS_MENTOR )
 	{
 		// instant message box picture
-		Box_2D box = Box_2D(pTexture_man->GetTexture(std::string("MentMSG_box")), 
-								DATA("INSTMSG_POSX"), DATA("INSTMSG_POSY"), 
+		Box_2D box = Box_2D(pTexture_man->GetTexture(std::string("MentMSG_box")),
+								DATA("INSTMSG_POSX"), DATA("INSTMSG_POSY"),
 								DATA("INSTMSG_W"), DATA("INSTMSG_H"));
 		box.Render();
 
 		//mentor picture
 		if(m_question->GetAnswerIndex() != ANSWER_PRIVACY )
-		box = Box_2D((*m_current_player)->getMentor()->GetEmoPic(m_question->GetScore()) , 
-								DATA("INSTMSG_POSX")+ DATA("MENTMSG_POSX"), 
-								DATA("INSTMSG_POSY")+ DATA("MENTMSG_POSY"), 
+		box = Box_2D((*m_current_player)->getMentor()->GetEmoPic(m_question->GetScore()) ,
+								DATA("INSTMSG_POSX")+ DATA("MENTMSG_POSX"),
+								DATA("INSTMSG_POSY")+ DATA("MENTMSG_POSY"),
 								DATA("MENTMSG_W"), DATA("MENTMSG_H"));
 		else
-		box = Box_2D((*m_current_player)->getMentor()->GetEmoPic(HAPPY) , 
-								DATA("INSTMSG_POSX")+ DATA("MENTMSG_POSX"), 
-								DATA("INSTMSG_POSY")+ DATA("MENTMSG_POSY"), 
+		box = Box_2D((*m_current_player)->getMentor()->GetEmoPic(HAPPY) ,
+								DATA("INSTMSG_POSX")+ DATA("MENTMSG_POSX"),
+								DATA("INSTMSG_POSY")+ DATA("MENTMSG_POSY"),
 								DATA("MENTMSG_W"), DATA("MENTMSG_H"));
 
 		box.Render();
 
 		//quit button picture
-		box = Box_2D(pTexture_man->GetTexture("MSG_Xbut"), 
-					DATA("INSTMSG_POSX")+ DATA("XMSG_POSX"), 
-					DATA("INSTMSG_POSY")+ DATA("XMSG_POSY"), 
+		box = Box_2D(pTexture_man->GetTexture("MSG_Xbut"),
+					DATA("INSTMSG_POSX")+ DATA("XMSG_POSX"),
+					DATA("INSTMSG_POSY")+ DATA("XMSG_POSY"),
 					DATA("XMSG_W"), DATA("XMSG_H"));
-		
+
 		//render this box if the mouse is over it
 		if( box.IsMouseOver() )
 			box.Render();
@@ -1009,10 +935,9 @@ void Game_Manager::RenderInGame()
 
 		m_continue_but.Render();
 
-
 		//start fading to white half way through the camera transition
 		if( m_cam_man.GetTransInterp() < 0.5f )
-			RenderScreenGel( 1.0f, 1.0f, 1.0f, 1.0f-m_cam_man.GetTransInterp()*2.0f);			
+			RenderScreenGel( 1.0f, 1.0f, 1.0f, 1.0f-m_cam_man.GetTransInterp()*2.0f);
 	}
 	//announcement before player turn (for turn loss or roll again)
 	else if(  m_ig_state == IGS_STATUS )
@@ -1023,7 +948,7 @@ void Game_Manager::RenderInGame()
 		{
 			title << " gets to roll again." ;
 		}
-		else 
+		else
 		{
 			title << " lost a turn." ;
 		}
@@ -1032,8 +957,8 @@ void Game_Manager::RenderInGame()
 						DATA("status_x"), DATA("status_y"), 70.0f, 70.0f );
 
 		//display the title
-		TextBox titlebox(textboxdata.text_m, title.str(), 
-							DATA("status_x")+65.0f, (DATA("status_y"))*SCREEN_Y_RATIO+10.0f, 
+		TextBox titlebox(textboxdata.text_m, title.str(),
+							DATA("status_x")+65.0f, (DATA("status_y"))*SCREEN_Y_RATIO+10.0f,
 							700.0f, 16.0f, 50, 50 );
 
 		titlebox.SetBGOffset( -70.0f, 0, 0 );
@@ -1041,25 +966,20 @@ void Game_Manager::RenderInGame()
 		titlebox.Render();
 		b.Render();
 
-
 		//flash a message to say to click the mouse to continue
-		TextBox cont_txt(pText_man, std::string("Click the mouse to continue"), 
-							200.0f, 600.0f, 1000.0f, 
+		TextBox cont_txt(pText_man, std::string("Click the mouse to continue"),
+							200.0f, 600.0f, 1000.0f,
 							10.0f, 30.0f, 30.0f );
 		cont_txt.Render();
-
 	}
 	else if( m_ig_state == IGS_END )
 	{
-
 		m_enddisplay->Render();
-		
 
 		//render the end game menu
 		m_pEndMenu->Render();
-	}	
+	}
 }
-
 
 /***********************************
 Game_Manager RenderMenuMode
@@ -1071,7 +991,6 @@ void Game_Manager::RenderGameSetup()
 	RenderScreenGel( 0.0f, 1.0f, 1.0f, 0.4f );
 	m_pSetupmenu->Render();
 }
-
 
 /***********************************
 Game_Manager LoadSetupMenu
@@ -1091,10 +1010,7 @@ void Game_Manager::LoadSetupMenu()
 	Camera->setRot(rot);
 
 	m_ex_state = ES_GAME_SETUP;
-	
 }
-
-
 
 /***********************************
 Game_Manager UnloadSetupMenu
@@ -1116,7 +1032,6 @@ void Game_Manager::UnloadSetupMenu()
 	}
 }
 
-
 /***********************************
 Game_Manager LoadGame
 
@@ -1124,7 +1039,7 @@ Author: Jamie Gault
 ***********************************/
 void Game_Manager::LoadGame()
 {
-	//setup privacy 
+	//setup privacy
 	m_privacy.m_enable = m_pSetupmenu->GetPrivEnabled();
 
 	//setup privacy accordingly
@@ -1139,50 +1054,38 @@ void Game_Manager::LoadGame()
 		m_privacy.m_limited = false;
 	}
 
-
 	PlayerSetup::list_t playset_vec; //vector for indexing into
 	playset_vec.swap(m_pOrderRoll->getOrderedPlayers());
-	
+
 	//load in the players in the correct order
 	for(size_t i = 0; i < playset_vec.size(); ++i) {
 		PlayerSetup & p = playset_vec[i];
-		CreatePlayer(pMentor_man->GetMentor( p.m_mentor),  p.m_boardpiece, 
+		CreatePlayer(pMentor_man->GetMentor( p.m_mentor),  p.m_boardpiece,
 			p.m_gender, p.m_token_name, p.m_soundset, m_privacy.m_limit_value);
 	}
 
 	//sets user at the beginning of the list to be the active player
 	m_current_player = m_player_vec.begin();
 
-
-
 	//load in score keeper here
 	m_scoredisplay = new ScoreDisplay( m_player_vec );
-
-	
 
 	m_win_data.rule = (WIN_RULE)( m_pSetupmenu->GetGameRules() );
 	m_win_data.turn_limit = m_pSetupmenu->GetTurnLimit();
 	m_win_data.goal_score = m_pSetupmenu->GetGoalScore();
 
-	
 	//create a new dice displayer
 	m_dicedisplay = new DiceDisplay( true );
 	m_dicedisplay->SetToRoll();
-
-	
-
-
 
 	//now that everything is done with the setup menu, unload it
 	UnloadSetupMenu();
 
 	m_ex_state = ES_INGAME;
-	m_ig_state = IGS_START; 
-	
+	m_ig_state = IGS_START;
 
 	//load in the balloons
 	partfeat = new ParticleFeature(PT_BALLOON);
-
 
 	//setup overview positioning
 	m_cam_man.SetFocalPoint( 0.0f, 100.0f, -10.0f);
@@ -1192,13 +1095,11 @@ void Game_Manager::LoadGame()
 	Camera->setCamDistance(10.0f);
 	//set the camera to follow the player
 	m_cam_man.SetCamFollowType( CFT_OVERVIEW);
-	
 
 	m_win_data.turn = 1;
 	m_win_data.winner.clear();
 
 	tabmenu->SetTurnText();
-
 
 	if(DATA("TURN_DUMP") )
 	{
@@ -1206,9 +1107,7 @@ void Game_Manager::LoadGame()
 		turndump.StartTimer();
 		turndump.player_cnt = (int)m_player_vec.size();
 	}
-
 }
-
 
 /***********************************
 Game_Manager UnloadGame
@@ -1221,21 +1120,19 @@ void Game_Manager::UnloadGame()
 	if( m_pEndMenu )
 	{
 		delete m_pEndMenu;
-		m_pEndMenu = NULL; 
+		m_pEndMenu = NULL;
 	}
 
 	//unload the display of who won
 	if( m_enddisplay )
 	{
 		delete m_enddisplay;
-		m_enddisplay = NULL; 
+		m_enddisplay = NULL;
 	}
 
 	//unload the particle effects
 	if( partfeat )
 	{delete partfeat; partfeat = NULL;}
-
-	
 
 	//clear questions
 	if( m_question )
@@ -1267,7 +1164,6 @@ void Game_Manager::UnloadGame()
 	//create a new file to be dumped into
 	if(DATA("TURN_DUMP") ) turndump.CreateNewFile("./TurnDump/gameTurnDump");
 
-	
 	//Default camera positioning
 	vec3 rot = vec3(DATA("CAMERA_DEF_ANGLE"), 0, 0);
 	vec4 pos = vec4(0, 0, 0, 0);
@@ -1283,9 +1179,7 @@ void Game_Manager::UnloadGame()
 	{
 		pMusic_man->stop((*si).first);
 	}
-
 }
-
 
 /***********************************
 Game_Manager RestartGame
@@ -1298,12 +1192,11 @@ void Game_Manager::RestartGame()
 	if( m_pEndMenu )
 	{
 		delete m_pEndMenu;
-		m_pEndMenu = NULL; 
+		m_pEndMenu = NULL;
 	}
 
 	//create a new file for a new game
 	if(DATA("TURN_DUMP") ) turndump.CreateNewFile("./TurnDump/gameTurnDump");
-
 
 	ResetPlayers();
 
@@ -1314,13 +1207,12 @@ void Game_Manager::RestartGame()
 	}
 
 	m_current_player = m_player_vec.begin();
-	
+
 	m_ex_state = ES_INGAME;
 	m_ig_state = IGS_START; // pMusic_man->fadeIn("DICE_ROLL"); pMusic_man->play("DICE_ROLL");
 
 	//set the camera to follow the player
 	m_cam_man.SetCamFollowType( CFT_OVERVIEW);
-
 
 	//begin the game counter
 	if(DATA("TURN_DUMP") )
@@ -1337,13 +1229,11 @@ void Game_Manager::RestartGame()
 
 	m_scoredisplay->Reset();
 
-
 	//unload the particle effects
 	if( partfeat )
 	{delete partfeat; partfeat = NULL;}
 
 	partfeat = new ParticleFeature(PT_BALLOON);
-
 
 	//setup overview positioning
 	m_cam_man.SetFocalPoint( 0.0f, 100.0f, -10.0f);
@@ -1353,10 +1243,7 @@ void Game_Manager::RestartGame()
 	Camera->setCamDistance(10.0f);
 	//set the camera to follow the player
 	m_cam_man.SetCamFollowType( CFT_OVERVIEW);
-
 }
-
-
 
 /***********************************
 Game_Manager LoadMainMenu
@@ -1378,10 +1265,8 @@ void Game_Manager::LoadMainMenu()
 	Camera->setCamDistance( DATA("CAMERA_DISTANCE") );
 	m_cam_man.ClearPaths();
 
-
 	m_ex_state = ES_MAIN_MENU;
 }
-
 
 /***********************************
 Game_Manager UnloadMainMenu
@@ -1407,12 +1292,10 @@ void Game_Manager::LoadPauseMenu()
 	if(!m_pPauseMenu)
 		m_pPauseMenu = new PauseMenu(textboxdata.text_m );
 
-
 	m_ig_mode = IGM_PAUSE;
 
 	pMusic_man->pause();
 }
-
 
 /***********************************
 Game_Manager UnloadPauseMenu
@@ -1433,7 +1316,6 @@ void Game_Manager::UnloadPauseMenu()
 	pMusic_man->render();
 }
 
-
 /***********************************
 Game_Manager CreatePlayer
 
@@ -1445,7 +1327,7 @@ void Game_Manager::CreatePlayer(Mentor* m, pina* mesh, GENDER gen, std::string N
     myPlayer->setPina(mesh);
 
    	myPlayer->setName( Name );
-	
+
 	myPlayer->setMentor( m);
 	myPlayer->setGender( gen);
 
@@ -1456,12 +1338,10 @@ void Game_Manager::CreatePlayer(Mentor* m, pina* mesh, GENDER gen, std::string N
 
 	myPlayer->privacy = priv_limit;
 
-
 	myPlayer->pos.x = myPlayer->getTile()->pos.x + myPlayer->getTile()->getBases()[myPlayer->getID()-1].x;
 	myPlayer->pos.y = myPlayer->getTile()->pos.y + myPlayer->getTile()->getBases()[myPlayer->getID()-1].y;
 	myPlayer->pos.z = myPlayer->getTile()->pos.z + myPlayer->getTile()->getBases()[myPlayer->getID()-1].z;
 }
-
 
 /***********************************
 Game_Manager ResetPlayers
@@ -1476,7 +1356,6 @@ void Game_Manager::ResetPlayers()
 	}
 }
 
-
 /***********************************
 Game_Manager EndTurnShift
 
@@ -1485,7 +1364,7 @@ Author: Jamie Gault
 void Game_Manager::EndTurnShift()
 {
 	//dump all the data from this turn into a file
-	if(DATA("TURN_DUMP")) 
+	if(DATA("TURN_DUMP"))
 	{
 		turndump.SubmitTurnData();
 		turndump.DumpData();
@@ -1499,7 +1378,6 @@ void Game_Manager::EndTurnShift()
 	{
 		//set the camera to follow the player
 		m_cam_man.SetCamFollowType( CFT_OVERVIEW);
-		
 
 		return;
 	}
@@ -1509,20 +1387,18 @@ void Game_Manager::EndTurnShift()
 	{
 		ShiftPlayerTurn();
 	}
-	
 
 	//if it's the first players turn again
 	if( (*m_current_player)->getID() == 1 && ((*m_current_player)->tile_action != TA_ROLL_AGAIN ) )
 	{
 		//show everyone's score
 		//m_ig_state = IGS_SCORE;
-	
+
 		if( TurnWinCheck() )
 		{
 			m_cam_man.SetCamFollowType( CFT_OVERVIEW);
 			return;
 		}
-		
 	}
 	//else
 	{
@@ -1530,18 +1406,16 @@ void Game_Manager::EndTurnShift()
 		{
 			m_ig_state = IGS_STATUS;
 
-
 			if( (*m_current_player)->tile_action == TA_LOSE_TURN )
 			{
 				//set the camera to follow the player
 				m_cam_man.SetCamFollowType( CFT_TOKEN_FOLLOW);
 				m_cam_man.TransitionCamera( (*m_current_player)->pos.x, (*m_current_player)->pos.y, (*m_current_player)->pos.z);
 			}
-			
 		}
 		else
 		{
-			m_ig_state = IGS_DICE; pMusic_man->fadeIn("DICE_ROLL"); pMusic_man->play("DICE_ROLL"); 
+			m_ig_state = IGS_DICE; pMusic_man->fadeIn("DICE_ROLL"); pMusic_man->play("DICE_ROLL");
 			m_dicedisplay->SetToRoll();
 
 			m_cam_man.SetCamFollowType( CFT_OVERVIEW);
@@ -1549,12 +1423,9 @@ void Game_Manager::EndTurnShift()
 			//play sounds
 			pMusic_man->fadeIn((*m_current_player)->getSndSet() + "-happy");
 			pMusic_man->play((*m_current_player)->getSndSet() + "-happy");
-				
-			
 		}
 	}
 }
-
 
 /***********************************
 Game_Manager ClearAllPlayers
@@ -1563,7 +1434,7 @@ Author: Jamie Gault
 ***********************************/
 void Game_Manager::ClearAllPlayers()
 {
-	for(std::vector<player*>::iterator pi = m_player_vec.begin(); 
+	for(std::vector<player*>::iterator pi = m_player_vec.begin();
 							pi != m_player_vec.end(); ++pi )
 	{
 		if( *pi )
@@ -1575,9 +1446,7 @@ void Game_Manager::ClearAllPlayers()
 	}
 
 	m_player_vec.clear();
-	
 }
-
 
 /***********************************
 Game_Manager EndGameCleanUp
@@ -1596,13 +1465,12 @@ void Game_Manager::EndGameCleanUp()
 		delete m_pEndMenu;
 		m_pEndMenu = NULL;
 	}
-	
+
 	if(m_question)
 	{
 		delete m_question;
 		m_question = NULL;
 	}
-
 }
 
 /***********************************
@@ -1615,7 +1483,6 @@ INGAME_STATE Game_Manager::GetInGameState()
 	return m_ig_state;
 }
 
-
 /***********************************
 Game_Manager GetMode
 
@@ -1626,8 +1493,6 @@ INGAME_MODE Game_Manager::GetMode()
 	return m_ig_mode;
 }
 
-
-
 /***********************************
 Game_Manager SetTokenToMove
 
@@ -1635,7 +1500,6 @@ Author: Jamie Gault
 ***********************************/
 void Game_Manager::SetTokenToMove()
 {
-	
 	int value1 = 0.0f;
 	int value2 = 0.0f;
 
@@ -1655,7 +1519,6 @@ void Game_Manager::SetTokenToMove()
 	//m_cam_man.AddPath(CPT_ZOOM, NULL, 1.0f, 200.0f  );
 }
 
-
 /***********************************
 Game_Manager ShiftPlayerTurn
 
@@ -1663,7 +1526,6 @@ Author: Jamie Gault
 ***********************************/
 void Game_Manager::ShiftPlayerTurn()
 {
-
 	++m_current_player;
 
 	if( m_current_player == m_player_vec.end() )
@@ -1674,8 +1536,6 @@ void Game_Manager::ShiftPlayerTurn()
 	m_scoredisplay->active_player = (*m_current_player)->getID() - 1;
 }
 
-
-
 /***********************************
 Game_Manager ShiftPlayerTurn
 
@@ -1685,7 +1545,6 @@ bool Game_Manager::PointWinCheck(player* p)
 {
 	if( p->getScore() >= m_win_data.goal_score && ( m_win_data.rule == FIRST_TO_LIMIT || m_win_data.rule == BOTH_LIMIT ))
 	{
-	
 		m_win_data.winner.push_back(p);
 		m_ig_state = IGS_END;
 		m_pEndMenu = new EndGameMenu(textboxdata.text_m);
@@ -1699,7 +1558,6 @@ bool Game_Manager::PointWinCheck(player* p)
 	return false;
 }
 
-
 /***********************************
 Game_Manager TurnWinCheck
 
@@ -1707,8 +1565,6 @@ Author: Jamie Gault
 ***********************************/
 bool Game_Manager::TurnWinCheck()
 {
-	
-
 	//if the turn limit has been reached
 	if( m_win_data.turn == m_win_data.turn_limit && ( m_win_data.rule == ROUND_LIMIT || m_win_data.rule == BOTH_LIMIT ))
 	{
@@ -1721,11 +1577,11 @@ bool Game_Manager::TurnWinCheck()
 			{
 				m_win_data.winner.clear();
 				m_win_data.winner.push_back( (*p) );
-				maxscore = (*p)->getScore();				
+				maxscore = (*p)->getScore();
 			}
 			else if( (*p)->getScore() == maxscore )
 			{
-				m_win_data.winner.push_back( (*p) );		
+				m_win_data.winner.push_back( (*p) );
 			}
 		}
 
@@ -1752,8 +1608,6 @@ GLuint FindBackGround( std::string s)
 
 	return pTexture_man->GetTexture(s);
 }
-
-
 
 /***********************************
 Game_Manager ChooseTokenRender
@@ -1783,9 +1637,6 @@ void Game_Manager::ChooseTokenRender()
 	}
 }
 
-
-
-
 /***********************************
 Game_Manager LoadQuestion
 
@@ -1800,7 +1651,6 @@ void Game_Manager::LoadQuestion(bool qoverride, int q_id)
 	//How many questions have gone by
 	++turncount;
 
-
 	if(!qoverride)
 	{
 	//Get random situation
@@ -1811,7 +1661,7 @@ void Game_Manager::LoadQuestion(bool qoverride, int q_id)
 
 		if(turncount < DATA("TOUCHY_TURN"))
 			ss << "AND touchy <> 1 ";
-		
+
 		ss <<"AND sex <> ";
 		if((*m_current_player)->getGender() == GEN_MALE)
 		{
@@ -1843,20 +1693,18 @@ void Game_Manager::LoadQuestion(bool qoverride, int q_id)
 		}
 
 		if(DATA("TURN_DUMP") ) turndump.currentData.space_id = (*m_current_player)->getTile()->getType();
-
 	}
 	else
 	{
 		std::stringstream num;
 		num << q_id;
-		
+
 		sitDB->exec("SELECT * FROM situations WHERE id = " + num.str());
 		id = 0;
 	}
 
-	
 	std::map<std::string, std::string> situation = (*sitDB->rows[id]);
-	
+
 	//Update statistics
 	if(DATA("q_stats"))
 	{
@@ -1869,7 +1717,7 @@ void Game_Manager::LoadQuestion(bool qoverride, int q_id)
 				:"0" ) + 1;
 		this->stat.write(situation["id"], count.str());
 
-		this->stat.close();	
+		this->stat.close();
 	}
 
 	if(situation["type"] == "mc")
@@ -1909,9 +1757,8 @@ void Game_Manager::LoadQuestion(bool qoverride, int q_id)
 		answer_ids.push_back( 0 );
 	}
 
-	
-	m_question = new Question( atoi(situation["id"].c_str()), 
-								qType, 
+	m_question = new Question( atoi(situation["id"].c_str()),
+								qType,
 								(*m_current_player)->getTile()->getType(),
 								std::string(situation["text"]), answers,
 								answer_ids,
@@ -1919,26 +1766,17 @@ void Game_Manager::LoadQuestion(bool qoverride, int q_id)
 
 	m_question->SetPrivacySettings(m_privacy, (*m_current_player)->privacy);
 
-
 	//set the back ground
 	m_question->SetBackground( FindBackGround((*m_current_player)->getTile()->getType()));
 
-	
 	if(DATA("TURN_DUMP") )
 	{
 		//assign question id
 		turndump.currentData.question = atoi(situation["id"].c_str());
 		turndump.currentData.q_type = qType;
 	}
-	
-
 
 }
-
-
-
-
-
 
 void Game_Manager::LoadStart()
 {
@@ -1948,7 +1786,7 @@ void Game_Manager::LoadStart()
 	//Play the ambient sound
 	(*pMusic_man->getOggs())[ (*pMusic_man->getAudio())["MAIN_MENU"] ]->loop = true;
 	(*pMusic_man->getOggs())[ (*pMusic_man->getAudio())["DICE_ROLL"] ]->loop = true;
-	
+
 	for(std::map<std::string, Model*>::iterator mi = pModel_man->getInstances()->begin(); mi != pModel_man->getInstances()->end(); ++mi)
 	{
 		obj *object = new obj();
@@ -1989,5 +1827,4 @@ void Game_Manager::LoadStart()
 	LoadMainMenu();
 
 	//pMusic_man->play("SET1-happy");
-
 }

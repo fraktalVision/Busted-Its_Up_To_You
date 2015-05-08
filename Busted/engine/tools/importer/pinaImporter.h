@@ -13,7 +13,7 @@ private:
 	std::string		filename;	//Input file
 	DAE*			daeObj;		//COLLADA
 	domMesh			*mesh;
-	
+
 	daeElement*		_element;
 	meshObj*		_object;
 	input			position;
@@ -24,7 +24,7 @@ private:
 	unsigned int	text_id;
 
 	bool			dlist_on;	//bool for whether or not to use display lists
-	
+
 	void			errorReport(daeInt, std::string);
 
 public:
@@ -33,10 +33,9 @@ public:
 
 	void setFile(std::string filename)	{ this->filename = filename; };
 	std::string getFile(void)			{return this->filename; };
-	
 
 	meshObj*		getMesh(void)		{ return _object; };
-	
+
 	virtual void pina::fromCOLLADAPostProcess(){}
 	virtual void pina::toCOLLADAPostProcess(){}
 	virtual void pina::createTo(void *userData){}
@@ -55,7 +54,6 @@ public:
 	unsigned int GetTextureID() { return text_id;}
 
 	bool			cull_face;	//bool to mark if face should be culled
-
 };
 
 #endif

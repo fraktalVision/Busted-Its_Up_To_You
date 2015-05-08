@@ -25,7 +25,6 @@ private:
 	GENDER	gender;		//!<gender of the player
 	float	chance;		//!<Chance of good/bad result for option
 	int     outcomeID;  //!<stores the outcome ID to be used with selecting mentor comment
-	
 
 	std::string	soundSet;	//What sounds to play on my turn
 
@@ -39,8 +38,6 @@ private:
 	Spline	scale_anim; //!<interpolates the scale values over the path time
 
 	void setScore(int value);
-
-
 
 public:
 
@@ -88,20 +85,14 @@ public:
 	void setTile(int tile);									//!<Set my destination tile by ID
 	void incTile(int tile);									//!<Increment the destination around the board
 	tile* getTile(void);									//!<What's my tile?
-	tile* getTempTile(void);	
+	tile* getTempTile(void);
 
 	void update(float t);									//!<Should I move, should I this, should that, etc.?
 
 	void Reset();											//!<Clear every thing
 
-
 	player();
 	virtual ~player();
 };
-
-
-
-
-
 
 #endif

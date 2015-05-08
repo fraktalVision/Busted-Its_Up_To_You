@@ -5,17 +5,10 @@
 
 */
 
-
-
-
 #include "busted.all.h"
 #include "Polish.h"
 
-
-
 extern Texture_Manager* pTexture_man;
-
-
 
 Particle::Particle(ParticleType t, Sprite& sprite, float vx, float vy, float vz, float dw, float dh, float dang): m_spr(sprite), type(t)
 {
@@ -27,7 +20,6 @@ Particle::Particle(ParticleType t, Sprite& sprite, float vx, float vy, float vz,
 	m_delta_dim[1] = dh;
 
 	m_delta_rot = dang;
-
 }
 
 void Particle::Update(float t)
@@ -35,7 +27,6 @@ void Particle::Update(float t)
 	m_spr.pos.x += m_velo[0]*t;
 	m_spr.pos.y += m_velo[1]*t;
 	m_spr.pos.z += m_velo[2]*t;
-	
 
 	if( m_spr.GetHeight() > 0.0f )
 		m_spr.SetHeight(m_delta_dim[0]*t + m_spr.GetHeight() );
@@ -46,12 +37,8 @@ void Particle::Update(float t)
 	m_spr.rot_angle += m_delta_rot*t;
 }
 
-
-
-
 ParticleFeature::ParticleFeature(ParticleType pt)
 {
-
 	switch(pt)
 	{
 	case PT_CONFETTI:
@@ -61,8 +48,6 @@ ParticleFeature::ParticleFeature(ParticleType pt)
 		LoadBalloonIntro();
 		break;
 	}
-	
-
 }
 
 ParticleFeature::~ParticleFeature()
@@ -72,7 +57,6 @@ ParticleFeature::~ParticleFeature()
 		delete(*spr);
 	}
 }
-
 
 void ParticleFeature::Update(float t)
 {
@@ -91,14 +75,11 @@ void ParticleFeature::Update(float t)
 
 				(*spr)->m_spr.SetWidth(DATA("CNF_WID"));
 				(*spr)->m_spr.SetHeight(DATA("CNF_HT"));
-
 			}
 			break;
-
 		}
 	}
 }
-
 
 void ParticleFeature::Render()
 {
@@ -130,10 +111,8 @@ void ParticleFeature::LoadBalloonIntro()
 
 		float x = sin(i/maxballoons*2.0f*3.14159f);
 		float z = cos(i/maxballoons*2.0f*3.14159f);
-		
 
 		Particle* p = AddParticle(PT_BALLOON, 20.0f*x, DATA("BLN1_POS_Y"), 20.0f*z, s );
-		
 
 		p = AddParticle(PT_BALLOON,10.0f*x, DATA("BLN1_POS_Y"), 10.0f*z, s );
 		p->m_velo[0] = x*DATA("BLN_VELO_X");
@@ -144,9 +123,6 @@ void ParticleFeature::LoadBalloonIntro()
 		p->m_velo[2] = z*DATA("BLN_VELO_Z");
 	}
 
-	
-
-
 	//This is the ballon that is to display the message 'let's play' as the intro plays
 	Particle* p = AddParticle(PT_BALLOON,DATA("BLN1_POS_X"), DATA("BLN1_POS_Y"), DATA("BLN1_POS_Z"), std::string("LPballoon") );
 	p->m_velo[1] = 0.5f;
@@ -156,10 +132,8 @@ void ParticleFeature::LoadBalloonIntro()
 	p->m_delta_dim[0] = DATA("BLN1_SCALE");
 	p->m_delta_dim[1] = DATA("BLN1_SCALE");
 
-
 	AddParticle(PT_BALLOON, DATA("BLN2_POS_X"), DATA("BLN2_POS_Y"), DATA("BLN2_POS_Z"), std::string("balloon2") );
 	AddParticle(PT_BALLOON, DATA("BLN3_POS_X"), DATA("BLN3_POS_Y"), DATA("BLN3_POS_Z"), std::string("balloon3") );
-
 
 	AddParticle(PT_BALLOON, -DATA("BLN2_POS_X"), DATA("BLN2_POS_Y"), -DATA("BLN2_POS_Z"), std::string("balloon2") );
 	AddParticle(PT_BALLOON, -DATA("BLN3_POS_X"), DATA("BLN3_POS_Y"), -DATA("BLN3_POS_Z"), std::string("balloon3") );
@@ -187,7 +161,6 @@ void ParticleFeature::LoadOutro()
 		//get the coordinate about the circle
 		float x = sin(i/maxparticles*2.0f*3.14159f);
 		float z = cos(i/maxparticles*2.0f*3.14159f);
-		
 
 		//generate 4 rings of particles that start at different heights
 		Particle* p = AddParticle(PT_CONFETTI, 60.0f*x, DATA("CNF_MAX_Y")+50.0f+20.0f*x, 60.0f*z, s );
@@ -195,11 +168,8 @@ void ParticleFeature::LoadOutro()
 		p = AddParticle(PT_CONFETTI,50.0f*x, DATA("CNF_MAX_Y")-10.0f*z+20.0f, 50.0f*z, s );
 		p = AddParticle(PT_CONFETTI,25.0f*x, DATA("CNF_MAX_Y")+30.0f+20.0f*z, 25.0f*z, s );
 		p = AddParticle(PT_CONFETTI,40.0f*x, DATA("CNF_MAX_Y")+10.0f*z, 30.0f*z, s );
-	
 	}
-
 }
-
 
 Particle* ParticleFeature::AddParticle(ParticleType pt, float x, float y, float z, std::string s)
 {
@@ -209,11 +179,11 @@ Particle* ParticleFeature::AddParticle(ParticleType pt, float x, float y, float 
 	switch( pt )
 	{
 	case PT_BALLOON:
-		spr = new Particle(pt, Sprite(pTexture_man->GetTexture(s), x, y, z, DATA("BLN_WID"), DATA("BLN_HT")), 
+		spr = new Particle(pt, Sprite(pTexture_man->GetTexture(s), x, y, z, DATA("BLN_WID"), DATA("BLN_HT")),
 						0.0f, DATA("BLN_VELO_Y"), 0.0f, 0.0f, 0.0f );
 		break;
 	case PT_CONFETTI:
-		spr = new Particle(pt, Sprite(pTexture_man->GetTexture(s), x, y, z, DATA("CNF_WID"), DATA("CNF_HT")), 
+		spr = new Particle(pt, Sprite(pTexture_man->GetTexture(s), x, y, z, DATA("CNF_WID"), DATA("CNF_HT")),
 			DATA("CNF_VELO_X"), DATA("CNF_VELO_Y"), DATA("CNF_VELO_Z"), DATA("CNF_DEL_W"), DATA("CNF_DEL_H"), DATA("CNF_DEL_ANG") );
 		break;
 	}
@@ -221,5 +191,3 @@ Particle* ParticleFeature::AddParticle(ParticleType pt, float x, float y, float 
 	m_particles.push_back(spr);
 	return spr;
 }
-
-

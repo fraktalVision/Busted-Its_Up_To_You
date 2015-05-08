@@ -24,7 +24,7 @@ private:
 
 	float splashFade;
 	float splashWait;
-	
+
 	float splashFadeRem;
 	float splashWaitRem;
 

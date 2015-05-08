@@ -89,7 +89,7 @@ void sndFile_man::copy(std::string File)
 {
 	sndFile_man *stat = new sndFile_man(File);	//Temp sndFile_man
 	stat->open();			//Open and copy
-	
+
 	//Copy values from the new map into my local one
 	this->copy(stat->getVars());
 

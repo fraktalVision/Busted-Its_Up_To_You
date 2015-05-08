@@ -8,7 +8,6 @@ gamemogul@gmail.com
 #include "../../../busted/busted.all.h"
 #include "SQLiteDB.h"
 
-
 //---------------------------
 //Constructors/Destructors
 	sqlDB::sqlDB()
@@ -18,7 +17,7 @@ gamemogul@gmail.com
 		this->rc = SQLITE_OK;
 	}
 	sqlDB::sqlDB(std::string filename)
-	{	
+	{
 		this->sqlDB::sqlDB();
 		sqlDB::open(filename);
 	}

@@ -1,15 +1,8 @@
 #include "./TurnData.h"
 
-
 #include "../../Questions/Questions.h"
 
-
 extern enum QuestionType;
-
-
-
-
-
 
 void TimeCalc( int &time, int &minutes, int &seconds)
 {
@@ -55,10 +48,7 @@ TurnDump::TurnDump( std::string filename ): m_start_time(0)
 	currentData.openend_score[3] = 0;
 	currentData.score= 0;
 	currentData.turn_time = 0;
-
-
 }
-
 
 /***********************************
 TurnDump Destructor
@@ -67,7 +57,6 @@ Author: Jamie Gault
 ***********************************/
 TurnDump::~TurnDump()
 {}
-
 
 /***********************************
 TurnDump SubmitTurnData
@@ -94,10 +83,6 @@ void TurnDump::SubmitTurnData()
 	currentData.score= 0;
 }
 
-
-
-
-
 /***********************************
 TurnDump DumpData
 
@@ -108,7 +93,6 @@ void TurnDump::DumpData()
 	//set it for writing
 	m_file.open(m_filename.c_str(), std::ios::trunc);
 
-
 	int time = GetTickCount() - m_start_time;
 
 	int minutes = 0;
@@ -116,7 +100,6 @@ void TurnDump::DumpData()
 
 	//calculate time
 	TimeCalc( time, minutes, seconds );
-
 
 	//write out time
 	m_file << " Time in-game: " << minutes << ":" << seconds << ":" << time << std::endl << std::endl;
@@ -126,41 +109,37 @@ void TurnDump::DumpData()
 		//Iterate over the map, writing to the file-stream
 	for(std::vector<TurnData>::iterator td = m_turndata_vec.begin(); td != m_turndata_vec.end(); ++td )
 	{
-
-		time = (*td).turn_time - begintime; 
+		time = (*td).turn_time - begintime;
 		//calculate time
 		TimeCalc( time, minutes, seconds );
-
 
 		m_file << " Turn: "<< (*td).Turn << " " <<
 				  " Player: "<< (*td).playerID << " " <<
 				  " Roll: " << (*td).roll << " " <<
 				  " Space: " << (*td).space_id << " ";
-		
+
 		switch( (*td).q_type )
 		{
 		case MULTIPLE_CHOICE:
 			m_file << " Multiple-Choice ";
 			break;
-		case TRUE_FALSE: 
+		case TRUE_FALSE:
 			m_file << " True-False ";
 			break;
 		case OPEN_ENDED:
 			m_file << " Open-Ended ";
 			break;
-
 		}
-		
+
 		m_file << " Question: " << (*td).question << " "<<
 				  " Answer: "<< (*td).answer << " "<<
-				  " Result: "<< (*td).result << 
-				  " Score: "<< (*td).score << std::endl; 
+				  " Result: "<< (*td).result <<
+				  " Score: "<< (*td).score << std::endl;
 
 		//if the question was open ended
 		if( (*td).q_type == OPEN_ENDED )
 		{
 			m_file << " Open Ended ";
-			
 
 			for( int i = 0; i < player_cnt-1 ; ++i )
 			{
@@ -168,12 +147,10 @@ void TurnDump::DumpData()
 				m_file << " score: "<<(*td).openend_score[i] ;
 			}
 
-			m_file << std::endl; 
-										
+			m_file << std::endl;
 		}
-		
 
-		m_file << " Turn Time: " << minutes << ":" << seconds << ":" << time << std::endl<< std::endl; 
+		m_file << " Turn Time: " << minutes << ":" << seconds << ":" << time << std::endl<< std::endl;
 
 		begintime = (*td).turn_time;
 	}

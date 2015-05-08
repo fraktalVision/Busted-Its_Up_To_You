@@ -9,15 +9,14 @@ void specialKeys(int key, int x, int y)
 	switch (key)
 	{
 		case GLUT_KEY_UP:
-			
-		case GLUT_KEY_DOWN:
-			
-		case GLUT_KEY_RIGHT:
-			
-		case GLUT_KEY_LEFT:
-			
-			break;
 
+		case GLUT_KEY_DOWN:
+
+		case GLUT_KEY_RIGHT:
+
+		case GLUT_KEY_LEFT:
+
+			break;
 	}
 }
 

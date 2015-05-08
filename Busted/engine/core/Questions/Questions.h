@@ -5,7 +5,6 @@
 
 */
 
-
 #pragma once
 #include "../all.h"
 #include "../../tools/textdisplay/TextManager.h"
@@ -60,14 +59,11 @@ public:
 private:
 	BOX_TYPE m_boxtype; //!<type of box to be rendered
 	float m_pos[2]; //!<position of the box
-	float m_dim[2]; //!<dimensions of the box	
+	float m_dim[2]; //!<dimensions of the box
 
 	//!texture sets to be used as backgrounds
 	BtnTextureSet m_textureset;
 };
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /*!
@@ -80,7 +76,7 @@ class Answer
 {
 public:
 	Answer();
-	Answer( Text_Manager *tx_m, std::string &s, float x0, float y0, float width ); 
+	Answer( Text_Manager *tx_m, std::string &s, float x0, float y0, float width );
 	Answer( Answer& a );
 	Answer( TextBox& t );
 	Answer& operator=( Answer& a);
@@ -104,18 +100,11 @@ public:
 		GLuint m_selected; //!<texture displayed when the answer is selected.
 	}m_textureset;
 
-	
-
-
 private:
 	TextBox m_textbox;
 
 	float m_press_delay; //!<delay counter for when the button is pressed.
-
-	
 };
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /*!
@@ -134,9 +123,9 @@ public:
 	void Render();
 
 	bool IsActive();
-	
+
 	void SetScore( int s );
-	int GetScore(); 
+	int GetScore();
 
 	void SetPos(float x, float y);
 	float GetPosX(){ return user_id_box->GetPosX(); }
@@ -147,22 +136,15 @@ public:
 private:
 	void SetActivity(bool act);
 
-
 	bool m_active; //!<bool saying whether or not the menu has dropped down
 	int m_score_given;
 	int m_player_num;
 	std::vector<Answer*> m_score_menu; //!<boxes that can be used to keep score
 	Box_2D* user_id_box;
 	Box_2D	frame;
-	
-
 };
 
-
-
-
 class player; //!declaration for use of player vectors to be passed to the question constructor
-
 
 //!struct for managing what happens with privacy
 class Privacy
@@ -176,10 +158,8 @@ public:
 	int m_limit_value; //!<how many privacy calls can be used
 };
 
-
 const int NO_ANSWER = -1;
 const int ANSWER_PRIVACY = -2; //value associated with privacy for an answer
-
 
 enum QuestionType { MULTIPLE_CHOICE, TRUE_FALSE, OPEN_ENDED};
 
@@ -212,7 +192,7 @@ public:
 
 	void AssignResults( std::string results, int score ); //assign the results from the given answer
 
-	void Render(); 
+	void Render();
 
 	unsigned int GetQuestionID() { return m_question_id; }
 	QuestionType GetQuestionType(){ return m_qtype; }
@@ -223,11 +203,9 @@ public:
 
 	void SetBackground(GLuint bg) { m_background = bg; }
 
-
 	void SetPrivacySettings(Privacy privsetup, int player_priv_cnt );
 
 	std::string m_category;
-
 
 private:
 	unsigned int m_question_id;
@@ -252,7 +230,6 @@ private:
 	//!displays for privacy
 	Answer m_priv_but; //!<privacy button to override the question
 	TextBox m_priv_lim_display; //!<box for display how many privacy requests they have left
-
 
 	Privacy m_privacy; //The settings for privacy selected in menu
 };

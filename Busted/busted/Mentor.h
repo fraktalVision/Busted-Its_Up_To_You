@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "busted.all.h"
@@ -37,9 +36,7 @@ public:
 private:
 	MENTOR_ID m_id;								//!<id for what character they are
 	GLuint m_emo_pic[4];						//!<ID's for the textures loaded
-	
 };
-
 
 //!An class to manage all mentors
 class Mentor_Manager
@@ -53,4 +50,3 @@ public:
 private:
 	std::vector<Mentor*> m_mentor_vec;			//!<Vector of all the mentors playing
 };
-

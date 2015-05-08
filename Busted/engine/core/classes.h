@@ -40,7 +40,7 @@ public:
 
 	void setVisible(bool myBool);//!<Set whether or not to render
 	bool isVisible(void);//!<Do I render it?
-	
+
 	void setSelected(bool myBool);//!<
 	bool isSelected(void);//!<
 
@@ -96,8 +96,6 @@ public:
 
 class pina;
 
-
-
 //---------------------------
 //!Basic 3D object
 class obj: public locator
@@ -108,7 +106,7 @@ private:
 	GLuint	texture;//!<texture id
 	vec3x3	color;	//!<object color (each vertex)...
 
-	int			soundID; 
+	int			soundID;
 	bool			lit;
 
 public:
@@ -132,14 +130,10 @@ public:
 	void			setColor(vec3 color);
 	vec3x3			getColor(void);
 
-
-
-
 	obj(bool addtolist = true);
 	obj(std::string);
 	virtual ~obj();
 };
-
 
 void RemoveObject( obj* ob );
 
@@ -166,8 +160,6 @@ public:
 	void init();
 };
 
-
-
 class Spline
 {
 private:
@@ -185,8 +177,5 @@ public:
 
 	vec3 GetPoint(float t); //returns a point on the spline
 };
-
-
-
 
 #endif

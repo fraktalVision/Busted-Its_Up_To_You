@@ -24,10 +24,10 @@ gamemogul@gmail.com
 	class tile;
 	class player;
 	enum MORALITY { //!< enum for the lastMoral variable since we've added neutral options.
-		NEGATIVE = -1, 
+		NEGATIVE = -1,
 		NEUTRAL = 0,
 		POSITIVE = 1
-	}; 
+	};
 
 //Situation database
 extern sqlDB* sitDB;
@@ -43,6 +43,5 @@ void drawBoard(void);			//generate the tiles
 
 //array for all the tiles on the board
 extern tile* tileArray[TILENUM];
-
 
 #endif

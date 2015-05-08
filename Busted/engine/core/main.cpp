@@ -11,14 +11,11 @@
 
 #pragma comment(lib, "User32.lib")
 
-
 extern Game_Manager *Game_Man;
 extern GraphicsEngine *Graph_En;
 extern Texture_Manager *pTexture_man; //manages images
 extern Mentor_Manager *pMentor_man;
 extern Text_Manager *pText_man; //manages fonts and text
-
-
 
 //GLUT interface headers...
 #include "glut.h"
@@ -30,13 +27,10 @@ void init(void)
 {
     display->LoadGLDefaults();
 
-
     pTexture_man = new Texture_Manager();
     pMentor_man = new Mentor_Manager();
 
-
     pMusic_man = new sound_manager("../Busted/assets/music/default_sounds.xtx");
-
 
     //load game structures
     Game_Man = new Game_Manager();
@@ -48,7 +42,6 @@ void init(void)
 //#define _CRTDBG_MAP_ALLOC
 //#include <stdlib.h>
 //#include <crtdbg.h>
-
 
 DEVMODE old_res;
 DEVMODE new_res;
@@ -84,7 +77,6 @@ void clean()
 			Camera = NULL;
 		}
 	} catch (...) {
-		
 	}
 }
 
@@ -102,7 +94,7 @@ void showErrorMessage(const char * msg)
 		, "Fatal Error"
 		, MB_OK | MB_ICONERROR);
 }
-	
+
 void start()
 {
 	try {
@@ -133,10 +125,9 @@ void start()
 		MSG  msg;
 		while(displayWindow->IsOpen())
 		{
-        
 			if (PeekMessage (&msg, NULL, 0, 0, PM_REMOVE))
 			{
-				if (msg.message == WM_QUIT) 
+				if (msg.message == WM_QUIT)
 					break;
 
 				TranslateMessage(&msg);

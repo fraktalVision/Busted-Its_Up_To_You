@@ -1,6 +1,3 @@
-
-
-
 #include "Sprite.h"
 
 extern camera *Camera; //main camera for the game;
@@ -26,7 +23,6 @@ Sprite::Sprite()
 	offset[0] = 0.0f;
 	offset[1] = 0.0f;
 	rot_angle = 0.0f;
-
 }
 
 /***********************************
@@ -34,7 +30,7 @@ Sprite Constructor
 
 Author: Jamie Gault
 ***********************************/
-Sprite::Sprite( unsigned int tid, float x, float y, float z, float width, float height,  
+Sprite::Sprite( unsigned int tid, float x, float y, float z, float width, float height,
 			   float t0x, float t0y, float t1x, float t1y ): texture_id(tid)
 {
 	pos.x = x;
@@ -76,7 +72,7 @@ void Sprite::operator=(Sprite& s)
 	dim[0] = s.dim[0];
 	dim[1] = s.dim[1] ;
 	texture_id = s.texture_id;
-	
+
 	txt_coord0[0] = s.txt_coord0[0];
 	txt_coord0[1] = s.txt_coord0[1];
 	txt_coord1[0] = s.txt_coord1[0];
@@ -86,7 +82,6 @@ void Sprite::operator=(Sprite& s)
 	offset[1] = s.offset[1];
 
 	rot_angle = s.rot_angle;
-
 }
 
 /***********************************
@@ -99,7 +94,6 @@ void Sprite::SetPos(float x, float y, float z)
 	pos.x = x;
 	pos.y = y;
 	pos.z = z;
-
 }
 
 /***********************************
@@ -112,7 +106,6 @@ void Sprite::SetWidth(float w)
 	dim[0] = w;
 }
 
-
 /***********************************
 Sprite Constructor
 
@@ -122,7 +115,6 @@ void Sprite::SetHeight(float h)
 {
 	dim[1] = h;
 }
-
 
 /***********************************
 Sprite Constructor
@@ -134,7 +126,6 @@ float Sprite::GetWidth()
 	return dim[0];
 }
 
-
 /***********************************
 Sprite Constructor
 
@@ -145,7 +136,6 @@ float Sprite::GetHeight()
 	return dim[1];
 }
 
-
 /***********************************
 Sprite Constructor
 
@@ -153,46 +143,37 @@ Author: Jamie Gault
 ***********************************/
 void Sprite::Render()
 {
-
 	glPushMatrix();
-			glTranslatef ( pos.x, pos.y, pos.z);	
+			glTranslatef ( pos.x, pos.y, pos.z);
 			glRotatef( -Camera->rot.y , 0.0f, 1.0f, 0.0f);
 			glRotatef(-Camera->rot.x, 1.0f, 0.0f, 0.0f);
-			
+
 			//if the sprite is rotated
 			if( rot_angle != 0.0f )
 				glRotatef( rot_angle , 0.0f, 0.0f, 1.0f);
 
-			
-			
 			if( offset[0] || offset[1] )
-				glTranslatef ( offset[0] , offset[1], 0.0f);	
+				glTranslatef ( offset[0] , offset[1], 0.0f);
 
 			glScalef( dim[0]/2.0f, dim[1]/2.0f, 0.0f );
 
-
 			glBindTexture(GL_TEXTURE_2D, texture_id);			// Bind text texture
 
-
 			glBegin(GL_QUADS);						// Begin Drawing Quads
-				
-				
-				glTexCoord2f(txt_coord1[0],txt_coord0[1]);			
-				glVertex3f(  1.0f ,  1.0f , 0.0f);	
 
+				glTexCoord2f(txt_coord1[0],txt_coord0[1]);
+				glVertex3f(  1.0f ,  1.0f , 0.0f);
 
-				glTexCoord2f(txt_coord0[0],txt_coord0[1]);			
-				glVertex3f(  -1.0f,   1.0f , 0.0f);					
+				glTexCoord2f(txt_coord0[0],txt_coord0[1]);
+				glVertex3f(  -1.0f,   1.0f , 0.0f);
 
-				glTexCoord2f(txt_coord0[0],txt_coord1[1]);			
-				glVertex3f(  -1.0f  , -1.0f , 0.0f);	
+				glTexCoord2f(txt_coord0[0],txt_coord1[1]);
+				glVertex3f(  -1.0f  , -1.0f , 0.0f);
 
-				glTexCoord2f(txt_coord1[0],txt_coord1[1]);			
-				glVertex3f(  1.0f , - 1.0f , 0.0f);				
+				glTexCoord2f(txt_coord1[0],txt_coord1[1]);
+				glVertex3f(  1.0f , - 1.0f , 0.0f);
 
-				
 			glEnd();			// Done Drawing Quads
 
 	glPopMatrix();
-
 }

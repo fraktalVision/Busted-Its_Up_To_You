@@ -5,7 +5,6 @@
 
 */
 
-
 #pragma once
 
 #include "busted.all.h"
@@ -13,18 +12,11 @@
 #include "../engine/core/stat_manager/stat_manager.h"
 #include "../engine/core/Questions/Questions.h"
 
-
-
-
-
 //all the possible results to return from the menus
 enum MENU_RESULT{ MR_NONE, MR_START, MR_QUIT, MR_RESUME, MR_EXITGAME, MR_RETURN , MR_RETRY}; //posible options selecting yielding results
 
-
 //menu that is currently active
 enum MENU_ACTIVE{ MA_BASE, MA_OPTIONS, MA_QUIT, MA_MODERATOR, MA_PLAYER, MA_CREDITS};
-
-
 
 /*
 ! General options menu for changing video and sound settings.
@@ -44,23 +36,17 @@ public:
 
 private:
 
-
-
 	MENU_RESULT m_men_res;		//!<result of the user's choices
 	MENU_ACTIVE m_men_act;		//!<active menu
 
-
 	TextBox m_title;			//!<title of the pause menu
 
-	
 	WordMenu m_TextureDetail;	//!<level of detail with the textures
 	NumberMenu m_MusicVol_men;	//!<volume level of music
 	NumberMenu m_SoundVol_men;	//!<volume level of sound effects
-	
+
 	Answer m_back_but;
 };
-
-
 
 /*
 ! Class for handling the display of credits
@@ -77,10 +63,10 @@ public:
 	void Render();			//!<
 
 	bool IsFinished();		//!<
-	
+
 private:
 	bool LoadCreditsFile();	//!<
-	
+
 	std::vector<Box_2D*> charPics;		//!<characatures of everyone to be displayed throughout
 	std::vector<TextBox*> textboxlist;	//!<
 	int num_tboxes;
@@ -91,16 +77,12 @@ private:
 	bool loaded;
 };
 
-
-
-
-
 //! Class for handling the button input and display.
 class MainMenu
 {
 public:
 	MainMenu(Text_Manager* tm);		//!<
-	
+
 	void Update(float t);			//!<
 	void Render();					//!<Draw to the screen
 
@@ -110,9 +92,7 @@ public:
 
 	MENU_ACTIVE GetActiveMenu(){return m_men_act;}//!<Which menu is running
 
-
 private:
-
 
 	void LoadModInst();			//!< Loads all the textures onto the graphics card
 	void LoadPlaInst();			//!< Loads all the textures onto the graphics card
@@ -132,10 +112,9 @@ private:
 	Box_2D m_title;				//!busted title box
 	GenOptionsMenu m_optmenu;	//!menu for additional options
 
-
 	//moderator stuff
 	Answer m_exit_mod_but;				/*!<button for exiting the moderator slides	*/
-	
+
 	std::vector<GLuint> m_mod_slides;	/*!<all the texture ID's for the moderator slides		*/
 	std::vector<GLuint> m_pla_slides;	/*!<all the texture ID's for the player slides		*/
 	NumberMenu m_slide_men;				/*!<Menu for incrementing through moderator slides	*/
@@ -143,14 +122,8 @@ private:
 
 	//object for handling credits display
 	CreditsDisplay* m_cred_dis;			//!<
-	
-	
 
 };
-
-
-
-
 
 //! Class for handing the input and display of the ingame pause menu
 class PauseMenu
@@ -168,7 +141,6 @@ private:
 	MENU_RESULT m_men_res;			/*!<result of the user's choices			*/
 	MENU_ACTIVE m_men_act;			/*!<active menu								*/
 
-
 	TextBox m_title;				/*!<title of the pause menu					*/
 
 	Answer m_resumeBut;				/*!<button for starting the game			*/
@@ -176,21 +148,12 @@ private:
 
 	Answer m_quitBut;				/*!<button for quiting the game				*/
 
-
 	Answer m_yes;					/*!<button for exiting the game				*/
 	Answer m_no;					/*!<button for exiting the game				*/
 
-
 	GenOptionsMenu m_optmenu;		/*!<menu for additional options				*/
 
-
-
-
 };
-
-
-
-
 
 //! Handles the input and displaying of the endgame menu buttons
 class EndGameMenu
@@ -200,20 +163,12 @@ public:
 
 	void Update(float t);			//!<
 	void Render();					//!<
-	
-	MENU_RESULT GetMenuResult();	//!<
 
+	MENU_RESULT GetMenuResult();	//!<
 
 private:
 	MENU_RESULT m_men_res;	/*!<result of the user's choices	*/
 
 	Answer m_playagainBut;	/*!<button for starting the game	*/
 	Answer m_quitBut;		/*!<button for quiting the game		*/
-
 };
-
-
-
-
-
-

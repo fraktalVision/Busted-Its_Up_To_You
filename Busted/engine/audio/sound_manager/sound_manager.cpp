@@ -25,7 +25,7 @@ sound_manager *pMusic_man;
 //Constructors/Destructors
 //---------------------------
 //Instantiate a sound manager with no default sounds -- you must add streams to play anything
-sound_manager::sound_manager(void) 
+sound_manager::sound_manager(void)
 	:	srcStrings(NULL),
 		device(NULL),
 		context(NULL),
@@ -70,7 +70,6 @@ std::vector<ogg_stream*>* sound_manager::getOggs(void)
 	return &this->oggs;
 }
 
-
 //---------------------------
 //Get a handle to the audio map which has 'keys' of the sound names, and 'values' of their position in the ogg vector
 std::map<std::string, int>* sound_manager::getAudio(void)
@@ -109,13 +108,12 @@ void sound_manager::loadSrc(void)
 
 			if(this->addOgg( std::string((*si).second.puzzled), MUSIC, true ))				//Load the ogg
 				audio_map[(*si).first + "-puzzled"] = int(this->oggs.size())-1;	//Associate it's vector position with the name
-		}	
-		srcStrings->close();	//Close the source file		
+		}
+		srcStrings->close();	//Close the source file
 
 		numSets = ((sndFile_man*)(srcStrings))->getNumSets();
 	}
 }
-
 
 //---------------------------
 //Add sounds to the manager
@@ -156,7 +154,7 @@ void sound_manager::addOgg(ogg_stream *ogg)
 	}
 }
 
-ogg_stream * sound_manager::getStream(const std::string & snd) 
+ogg_stream * sound_manager::getStream(const std::string & snd)
 {
 	if (snd.empty()) {
 		return NULL;
@@ -279,7 +277,7 @@ void sound_manager::render(void)
 	case SM_PLAY:
 		for (size_t i = 0; i < oggs.size(); ++i) {
 			ogg_stream * ogg = oggs[i];
-			try {	  
+			try {
 				//float volume = ((*ogg)->type == SFX)?sndVolume:musVolume;
 				float volume = 0.5f;
 				if(ogg->type == SFX) {
@@ -365,7 +363,7 @@ void sound_manager::check()
 	if(error != ALC_NO_ERROR)
 	{
 		std::stringstream ss;
-		ss << "OpenAL error was raised: " << error  << std::endl; 
+		ss << "OpenAL error was raised: " << error  << std::endl;
 		throw std::runtime_error(ss.str());
 	}
 }

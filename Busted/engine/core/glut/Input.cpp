@@ -11,8 +11,8 @@ Input *pInput;
 
 /***********************************
 Input Constructor
-	
-brief: 
+
+brief:
 Author: Jamie Gault
 ***********************************/
 Input::Input()
@@ -27,7 +27,7 @@ Input::Input()
 
 /***********************************
 Input PollKey
-	
+
 brief: returns next key from the pressed_key stack
 Author: Vigen Issahhanjan
 ***********************************/
@@ -43,7 +43,7 @@ char Input::NextKey()
 
 /***********************************
 Input PollKey
-	
+
 brief: returns true if the key was pressed
 Author: Jamie Gault
 ***********************************/
@@ -62,10 +62,9 @@ char Input::PollKey( char c )
 	return 0;
 }
 
-
 /***********************************
 Input PollMouseBut
-	
+
 Author: Jamie Gault
 ***********************************/
 char Input::PollMouseBut( MouseDown but )
@@ -73,10 +72,9 @@ char Input::PollMouseBut( MouseDown but )
 	return m_mouse.Trig[but];
 }
 
-
 /***********************************
 Input GetMousePosX
-	
+
 Author: Jamie Gault
 ***********************************/
 float Input::GetMousePosX()
@@ -85,10 +83,9 @@ float Input::GetMousePosX()
 	return x;
 }
 
-
 /***********************************
 Input GetMousePosY
-	
+
 Author: Jamie Gault
 ***********************************/
 float Input::GetMousePosY()
@@ -97,11 +94,8 @@ float Input::GetMousePosY()
 	return y;
 }
 
-
-
 /***********************************
 Input SetMousePosX
-	
 
 Author: Jamie Gault
 ***********************************/
@@ -110,10 +104,9 @@ void Input::SetMousePosX(float x)
 	m_mouse.x = x;
 }
 
-
 /***********************************
 Input SetMousePosY
-	
+
 Author: Jamie Gault
 ***********************************/
 void Input::SetMousePosY(float y)
@@ -121,11 +114,9 @@ void Input::SetMousePosY(float y)
 	m_mouse.y = y;
 }
 
-
-
 /***********************************
 Input SetMouseBut
-	
+
 Author: Jamie Gault
 ***********************************/
 void Input::SetMouseButTrig( int i)
@@ -134,10 +125,9 @@ void Input::SetMouseButTrig( int i)
 		m_mouse.Trig[i] = 1;
 }
 
-
 /***********************************
 Input SetMouseBut
-	
+
 Author: Jamie Gault
 ***********************************/
 void Input::SetMouseButHeld( int i)
@@ -146,11 +136,9 @@ void Input::SetMouseButHeld( int i)
 		m_mouse.Held[i] = 1;
 }
 
-
-
 /***********************************
 Input ClearMouseButTrig
-	
+
 Author: Jamie Gault
 ***********************************/
 void Input::ClearMouseButTrig( int i)
@@ -159,10 +147,9 @@ void Input::ClearMouseButTrig( int i)
 		m_mouse.Trig[i] = 0;
 }
 
-
 /***********************************
 Input ClearMouseButHeld
-	
+
 Author: Jamie Gault
 ***********************************/
 void Input::ClearMouseButHeld( int i)
@@ -171,11 +158,9 @@ void Input::ClearMouseButHeld( int i)
 		m_mouse.Held[i] = 0;
 }
 
-
-
 /***********************************
 Input SetInput
-	
+
 Author: Jamie Gault
 ***********************************/
 void Input::SetKeyboard( char c)
@@ -194,21 +179,16 @@ void Input::SetKeyboard( char c)
 	else if( c == ENTER )
 	{
 		m_keyboard.t_enter = 1;
-
 	}
 	else if( c == ' ' )
 	{
 		m_keyboard.t_space = 1;
-
 	}
-
-
 }
-
 
 /***********************************
 Input ClearKeyboardData
-	
+
 Author: Jamie Gault
 ***********************************/
 void Input::ClearKeyboardData()
@@ -225,10 +205,9 @@ void Input::ClearKeyboardData()
 	m_keyboard.pressed_keys.swap(std::stack<char>());
 }
 
-
 /***********************************
 Input ClearMouseData
-	
+
 Author: Jamie Gault
 ***********************************/
 void Input::ClearMouseData()

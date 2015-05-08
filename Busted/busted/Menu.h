@@ -14,7 +14,6 @@
 
 extern enum GENDER;
 
-
 //!class for recording their selections in menus
 class PlayerSetup
 {
@@ -34,7 +33,7 @@ public:
 	pina* m_boardpiece; //!<pointer to the mesh they want to use
 	MENTOR_ID m_mentor; //i!<d of the mentor they choose
 	int m_soundset; //!<set of sounds that the user chooses
-	
+
 	GENDER m_gender; //!<gender of the indivdual
 	std::string m_name; //!<player name
 
@@ -42,10 +41,6 @@ public:
 
 	int m_rollvalue; //!<value of dices rolled when deciding the order of players
 };
-
-
-
-
 
 //!actions that the arrows can preform
 enum ARROW_ACTION{ AA_NONE, AA_INC, AA_DEC };
@@ -55,7 +50,7 @@ class IncDecArrows
 {
 public:
 	IncDecArrows();
-	IncDecArrows( unsigned int defvalue, float xL, float yL, float xR, float yR, 
+	IncDecArrows( unsigned int defvalue, float xL, float yL, float xR, float yR,
 					unsigned min = 0, unsigned int max = 10, unsigned int inc = 1);
 	IncDecArrows( IncDecArrows &arrow );
 	IncDecArrows& operator=( IncDecArrows &arrows);
@@ -77,10 +72,7 @@ public:
 	ARROW_ACTION m_pressed;
 	Box_2D m_Left_but; //!<button to decrease or move left
 	Box_2D m_Right_but; //!<button to increase or move right
-
 };
-
-
 
 //!class for general number management like determining the number of players
 class NumberMenu : public thing
@@ -101,16 +93,13 @@ public:
 
 	IncDecArrows m_arrows; //!<buttons for increasing and decreasing
 
-
 private:
 	void UpdateValueDisplay();
-	
+
 	TextBox m_identifier; //!< box to say what the number corresponds to
 	TextBox m_value_display; //!<box showing value
 	bool m_displaymax; //!<whether or not to display the maximum along witht he current value
 };
-
-
 
 //!class for options with words instead of numbers
 class WordMenu : public thing
@@ -127,8 +116,8 @@ public:
 	void Reset() {
 		SetOption(0);
 	}
-	int GetOption() { 
-		return m_arrows.m_value; 
+	int GetOption() {
+		return m_arrows.m_value;
 	}
 	void SetOption(int i);
 
@@ -143,8 +132,6 @@ private:
 	TextBox m_identifier; // !<box to say what the number corresponds to
 	TextBox m_option_display; //!<box showing value
 };
-
-
 
 //!class for text input
 class EditMenu : public thing
@@ -166,7 +153,6 @@ private:
 	TextBox m_input_box;
 };
 
-
 //!option for picking pieces
 class PieceOption
 {
@@ -174,17 +160,12 @@ public:
 	PieceOption( pina* obj, std::string name);
 	~PieceOption();
 
-	obj m_piece;	//!<Piece pointer 
+	obj m_piece;	//!<Piece pointer
 	bool m_taken;	//!< Whether the piece has been taken or not
 	std::string m_token_name; //!<Name of the token assigned.
 };
 
-
-
-
-
 enum PIECE_ACTION{ PA_MOVELEFT, PA_MOVERIGHT, PA_PAUSE };
-
 
 //!menu for managing piece options in the setup menu
 class PieceMenu
@@ -192,7 +173,6 @@ class PieceMenu
 public:
 	PieceMenu();
 	~PieceMenu();
-
 
 	void Update(float t);						//!<Update position etc. based on current input
 	void Render();								//!<Draw members to the screen
@@ -219,15 +199,9 @@ private:
 	float goal_pos[3];			//!<the position everthing will rotate to
 	PIECE_ACTION m_action;		//!<the current action of selectiong (left, right, none)
 
-	
 	std::list<PieceOption*>::iterator m_selected_piece;	//!<Current hi-lighted piece
 	IncDecArrows m_arrows;		//!<buttons for increasing and decreasing
-
 };
-
-
-
-
 
 //!options for the mentors
 class MentorOption
@@ -242,17 +216,13 @@ public:
 	void	thanks(void);	//!<Play the selection audio
 
 	MENTOR_ID GetID();		//!<Which mentor is it?
-	
+
 	void Render();			//!<Draw the mentor
 
 	Box_2D	m_box;			//!<The box to frame this mentor in
 	Mentor* m_mentor;		//!<The actual mentor
 	bool m_selected;		//!<Is this mentor selected
-
 };
-
-
-
 
 //!class for manage the mentor options a
 class MentorMenu
@@ -271,10 +241,6 @@ private:
 	MentorOption* m_selected_mentor;
 };
 
-
-
-
-
 //!screen showing the configurations for all screens
 class ConfigConfirm
 {
@@ -290,11 +256,7 @@ private:
 	std::vector<Box_2D*> mentor_pics;	//!<The images of the mentors selected by the players
 	std::vector<Box_2D*>  sound_pics;	//!<The images of the sounds selected by the players
 	std::vector<TextBox*> gender_vec;	//!<The genders of all the players
-
 };
-
-
-
 
 //!options for the mentors
 class PictureOption
@@ -304,9 +266,7 @@ public:
 
 	Box_2D	m_box;
 	int value;
-
 };
-
 
 //!class for manage the mentor options a
 class PictureMenu
@@ -322,8 +282,8 @@ public:
 	void SetSelectedOpt(int value) {
 		m_selected_option = value;
 	}
-	int GetSelectedOpt() { 
-		return m_selected_option; 
+	int GetSelectedOpt() {
+		return m_selected_option;
 	}
 
 private:
@@ -331,18 +291,15 @@ private:
 	int m_selected_option;
 };
 
-
-
-
 //!This is the sequence in which the users setup the game DDDD
 enum SETUP_MENU_STATE {
-	SMS_MAINBACK, 
-	SMS_GAME_SETUP, 
-	SMS_PLAYER_NAME, 
-	SMS_PLAYER_INFO, 
-	SMS_PLAYER_TOKEN, 
-	SMS_MENTOR, 
-	SMS_CONFIRM, 
+	SMS_MAINBACK,
+	SMS_GAME_SETUP,
+	SMS_PLAYER_NAME,
+	SMS_PLAYER_INFO,
+	SMS_PLAYER_TOKEN,
+	SMS_MENTOR,
+	SMS_CONFIRM,
 	SMS_START
 };
 
@@ -367,19 +324,17 @@ public:
 	int GetPrivLimitVal(){ return m_priv_lim_on.GetOption(); } // enabled privacy starts from index 1 and is equal to 1
 	bool GetPrivLimEnabled(){return m_priv_lim_on.GetOption() > 0; }
 
-	PlayerSetup::list_t & getPlayers() { 
+	PlayerSetup::list_t & getPlayers() {
 		return m_psetup_list;
 	}
 
 	SETUP_MENU_STATE m_state;	//!<state of the menu
 	PieceMenu m_piece_menu;		//!<menu for selecting pieces
-	
 
 private:
 
 	void ClearPlayerSetups();	//!<duh
 
-	
 	void MoveNext();			//!<
 	void MoveBack();			//!<
 
@@ -411,7 +366,7 @@ private:
 	Answer	m_Back_but;			//!<button to go back
 
 	unsigned int m_player_cnt;	//!<Number of players
-	
+
 	NumberMenu m_playercounter;	//!<specifies the player counter
 	WordMenu m_game_mode;		//!<specifies the rules of winning
 	NumberMenu m_roundcount;	//!<specifies limit on rounds
@@ -430,5 +385,3 @@ private:
 	TextBox m_menu_title;		//!<Menu title shown on top
 	TextBox m_menu_footer;		//!<Menu footer show below
 };
-
-

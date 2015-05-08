@@ -1,6 +1,5 @@
 #include "all.h"
 
-
 ///////////////////////////
 ////Override VSC++ new and delete garbage
 ///////////////////////////
@@ -11,7 +10,7 @@
 //
 //	void* operator new (size_t size)
 //	{
-//	 void *p=malloc(size); 
+//	 void *p=malloc(size);
 //	 if (p==0) // did malloc succeed?
 //	  throw std::bad_alloc(); // ANSI/ISO compliant behavior
 //	 return p;
@@ -19,7 +18,7 @@
 //
 //	void operator delete (void *p)
 //	{
-//	 free(p); 
+//	 free(p);
 //	}
 ///////////////////////////
 

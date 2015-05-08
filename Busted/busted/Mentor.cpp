@@ -1,5 +1,3 @@
-
-
 #include "Mentor.h"
 
 Mentor_Manager* pMentor_man;
@@ -60,7 +58,6 @@ Mentor::Mentor(MENTOR_ID id)
 	LoadMentor( id );
 }
 
-
 /***********************************
 Mentor Constructor
 
@@ -71,7 +68,6 @@ Mentor::Mentor(Mentor& mentor) : dbID(-1)
 	LoadMentor( mentor.GetMentorID() );
 }
 
-
 /***********************************
 Mentor Deconstructor
 
@@ -81,7 +77,6 @@ Mentor::~Mentor()
 {
 	glDeleteTextures( 4,  m_emo_pic );
 }
-
 
 /***********************************
 Mentor LoadMentor
@@ -95,78 +90,76 @@ void Mentor::LoadMentor(MENTOR_ID id)
 	switch( m_id )
 	{
 	case BLACK_GUY:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenAfriBR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenAfriBH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenAfriBS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenAfriBP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenAfriBR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenAfriBH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenAfriBS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenAfriBP");
 		break;
 
 	case BLACK_GIRL:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenAfriGR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenAfriGH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenAfriGS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenAfriGP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenAfriGR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenAfriGH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenAfriGS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenAfriGP");
 		break;
 
 	case ASIAN_GUY:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenAsiaBR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenAsiaBH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenAsiaBS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenAsiaBP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenAsiaBR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenAsiaBH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenAsiaBS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenAsiaBP");
 		break;
 
 	case ASIAN_GIRL:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenAsiaGR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenAsiaGH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenAsiaGS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenAsiaGP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenAsiaGR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenAsiaGH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenAsiaGS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenAsiaGP");
 		break;
 
 	case INDIAN_GUY:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenIndiBR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenIndiBH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenIndiBS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenIndiBP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenIndiBR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenIndiBH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenIndiBS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenIndiBP");
 		break;
 
 	case INDIAN_GIRL:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenIndiGR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenIndiGH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenIndiGS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenIndiGP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenIndiGR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenIndiGH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenIndiGS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenIndiGP");
 		break;
 
 	case LATIN_GUY:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenLatiBR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenLatiBH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenLatiBS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenLatiBP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenLatiBR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenLatiBH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenLatiBS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenLatiBP");
 		break;
 
 	case LATIN_GIRL:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenLatiGR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenLatiGH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenLatiGS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenLatiGP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenLatiGR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenLatiGH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenLatiGS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenLatiGP");
 		break;
 
 	case WHITE_GUY:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenWhitBR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenWhitBH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenWhitBS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenWhitBP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenWhitBR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenWhitBH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenWhitBS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenWhitBP");
 		break;
 
 	default:
 	case WHITE_GIRL:
-		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenWhitGR"); 
-		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenWhitGH"); 
-		m_emo_pic[SAD] = pTexture_man->GetTexture("MenWhitGS"); 
-		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenWhitGP"); 
+		m_emo_pic[NORMAL] = pTexture_man->GetTexture("MenWhitGR");
+		m_emo_pic[HAPPY] = pTexture_man->GetTexture("MenWhitGH");
+		m_emo_pic[SAD] = pTexture_man->GetTexture("MenWhitGS");
+		m_emo_pic[CONFUSED] = pTexture_man->GetTexture("MenWhitGP");
 		break;
-
 	}
-
 }
 
 std::string Mentor::makeText(MORALITY choice, bool outcome, GENDER gen, int outcomeID)
@@ -177,10 +170,10 @@ std::string Mentor::makeText(MORALITY choice, bool outcome, GENDER gen, int outc
 	int opSex = (gen == GEN_MALE ? 2 : 1);
 
 	std::stringstream ss;
-	ss	<< "SELECT * FROM `mentor` WHERE mentor = " << int(this->GetMentorID()) + 1 << " AND `moral` = " << (int)choice
-		<< " AND `point` = " << outcome << " AND `sex` <> " << opSex << " AND (`outID` = " << outcomeID << " OR `outID` = 0);";
+	ss	<< "SELECT * FROM `mentor` WHERE `outID` = " << outcomeID << " OR (`moral` = " << (int)choice << " AND `point` = "
+		<< outcome << " AND `sex` <> " << opSex << " AND `outID` = 0);";
 
-	if(DATA("debug")) { std::cout << ss.str() << std::endl; }
+	/*if(DATA("debug")) { */std::cout << ss.str() << std::endl;// }
 
 	sitDB->exec(ss.str());
 	if(sitDB->rows.size() > 0)
@@ -199,7 +192,6 @@ std::string Mentor::makeText(MORALITY choice, bool outcome, GENDER gen, int outc
 	return mentorText;
 }
 
-
 /***********************************
 Mentor GetMentorID
 
@@ -210,7 +202,6 @@ MENTOR_ID Mentor::GetMentorID()
 	return m_id;
 }
 
-
 /***********************************
 Mentor GetEmoPic
 
@@ -218,17 +209,15 @@ Author: Jamie Gault
 ***********************************/
 GLuint Mentor::GetEmoPic( int score )
 {
-
 	if( score > 2 )
 		return GetEmoPic( HAPPY );
 	else if( score > 0 )
 		return GetEmoPic( NORMAL );
 	else if( score > -1 )
-		return GetEmoPic( CONFUSED );	
-	else 
+		return GetEmoPic( CONFUSED );
+	else
 		return GetEmoPic( SAD );
 }
-
 
 /***********************************
 Mentor GetEmoPic
@@ -239,12 +228,6 @@ GLuint Mentor::GetEmoPic( MENTOR_EMOTIONS emo )
 {
 	return m_emo_pic[emo];
 }
-
-
-
-
-
-
 
 /***********************************
 Mentor_Manager Constructor
@@ -260,7 +243,6 @@ Mentor_Manager::Mentor_Manager()
 	}
 }
 
-
 /***********************************
 Mentor_Manager Deconstructor
 
@@ -274,7 +256,6 @@ Mentor_Manager::~Mentor_Manager()
 		delete(*i);
 	}
 }
-
 
 /***********************************
 Mentor_Manager GetMentor

@@ -20,7 +20,7 @@ void pina::load(void)
 {
 	daeInt error = 0;
 
-	error = daeObj->load(filename.c_str());	
+	error = daeObj->load(filename.c_str());
 	errorReport(error, "File failed to load.");
 
 	error = daeObj->getDatabase()->getElement(&_element, 0, 0, COLLADA_ELEMENT_GEOMETRY); //first and only geometry in the file
@@ -74,7 +74,7 @@ void pina::updateInputs(domTriangles *triangles, domVertices *vertices)
 				}
 
 			//Normal orientations
-				else if	(semantic == "NORMAL")		
+				else if	(semantic == "NORMAL")
 				{
 					normal.source = findSource( mesh, inputArray[i]->getSource().getID() );
 					normal.offset = inputArray[i]->getOffset();
@@ -91,7 +91,7 @@ void pina::updateInputs(domTriangles *triangles, domVertices *vertices)
 				}
 
 			//If the one of the inputs is VERTEX, we must check *it* for the others
-			else if	(semantic == "VERTEX")		
+			else if	(semantic == "VERTEX")
 			{
 				//Set the position and normal offset to that of the VERTEX input
 				position.offset = inputArray[i]->getOffset();
@@ -103,7 +103,7 @@ void pina::updateInputs(domTriangles *triangles, domVertices *vertices)
 				{
 					//Type of input...
 					std::string semantic = inputs[j]->getSemantic();
-					
+
 					//Get the source arrays for each type of attribute, again...
 					//Vertex positions
 						if		(semantic == "POSITION")
@@ -121,7 +121,7 @@ void pina::updateInputs(domTriangles *triangles, domVertices *vertices)
 				}//for <vertex> inputs
 			}
 		}//for <mesh> inputs
-		
+
 		if(position.source)
 			assert(position.source->getFloat_array()->getCount() % position.stride == 0);
 		if(normal.source)
@@ -192,7 +192,7 @@ void pina::fromCOLLADA(void)
 			{
 				if(DATA("debug")) { std::cout << "bad_alloc: " << x.what() << std::endl; }
 			}
-			
+
 			//Vertices
 				// Loop over all the triangles
 				for (int i = 0; i < sub_mesh->num_vert; ++i)
@@ -284,15 +284,15 @@ void pina::fromCOLLADA(void)
 					}
 				}
 
-				if(DATA("debug")) 
-					if(DATA("debug")) { std::cout	
+				if(DATA("debug"))
+					if(DATA("debug")) { std::cout
 							/*<< "-~# Obj: "	<< triangles->getID()	<< " #~-\n"*/
 							<< " Vert count:\t"	<< sub_mesh->num_vert	<< "\n"
 							<< " Poly count:\t"	<< sub_mesh->num_poly	<< "\n"
 							<< " Norm count:\t"	<< sub_mesh->num_norm	<< "\n"
 							<< " Text count:\t"	<< sub_mesh->num_text	<< "\n"
 							<< " P size:\t"		<< P->getValue().getCount() << "\n"
-							
+
 							<< std::endl; }
 							//<< " P/inputs: " << P->getValue().getCount()/numInputs/3 //the 3 is for X, Y, Z (or A, B, C or S, T, R... whatever)
 
@@ -300,22 +300,17 @@ void pina::fromCOLLADA(void)
 			_object->mesh.push_back(sub_mesh);
 		}//for <triangles>
 
-
-
 		//For generating a display list
 	if(dlist_on)
 	{
-
 		_object->displaylist = glGenLists(1);
-
 
 		if( _object->displaylist == 0 )
 			return ;
 
-		
 		glNewList(_object->displaylist,GL_COMPILE);
 		// Bind texture
-				
+
 			//Loop through each sub-mesh and draw it
 			for(std::vector<mesh_type*>::iterator mi = _object->mesh.begin(); mi < _object->mesh.end(); ++mi)
 			{
@@ -329,12 +324,12 @@ void pina::fromCOLLADA(void)
 						glTexCoord2f( subMesh->texcoord	[ subMesh->texcoord_list[j].a ].x, 1.0f-subMesh->texcoord[ subMesh->texcoord_list[j].a ].y );
 						glNormal3f	( subMesh->normal	[ subMesh->normal_list[j].a ].x, subMesh->normal	[ subMesh->normal_list	[j].a ].y, subMesh->normal[ subMesh->normal_list[j].a ].z );
 						glVertex3f	( subMesh->vertex	[ subMesh->vertex_list[j].a ].x, subMesh->vertex	[ subMesh->vertex_list	[j].a ].y, subMesh->vertex[ subMesh->vertex_list[j].a ].z );
-						
+
 						//Vert 2
 						glTexCoord2f( subMesh->texcoord	[ subMesh->texcoord_list[j].b ].x, 1.0f-subMesh->texcoord[ subMesh->texcoord_list[j].b ].y );
 						glNormal3f	( subMesh->normal	[ subMesh->normal_list	[j].b ].x, subMesh->normal	[ subMesh->normal_list	[j].b ].y, subMesh->normal[ subMesh->normal_list[j].b ].z);
 						glVertex3f	( subMesh->vertex	[ subMesh->vertex_list	[j].b ].x, subMesh->vertex	[ subMesh->vertex_list	[j].b ].y, subMesh->vertex[ subMesh->vertex_list[j].b ].z);
-						
+
 						//Vert 3
 						glTexCoord2f( subMesh->texcoord	[ subMesh->texcoord_list[j].c ].x, 1.0f-subMesh->texcoord[ subMesh->texcoord_list[j].c ].y );
 						glNormal3f	( subMesh->normal	[ subMesh->normal_list	[j].c ].x, subMesh->normal	[ subMesh->normal_list	[j].c ].y, subMesh->normal[ subMesh->normal_list[j].c ].z);
@@ -342,12 +337,8 @@ void pina::fromCOLLADA(void)
 					} // for polygon
 
 				glEnd();
-
-				
 			}// for submesh
 		glEndList();
-
-
 	}
 	else
 		_object->displaylist = 0;

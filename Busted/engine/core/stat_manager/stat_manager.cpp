@@ -123,7 +123,7 @@ void Stat::copy(std::string File)
 {
 	Stat stat(File);		//Temp stat_manager
 	stat.open();			//Open and copy
-	
+
 	//Copy values from the new map into my local one
 	this->copy(stat.getVars());
 
@@ -157,17 +157,16 @@ void Stat::close(void)
 		//Iterate over the file-list, writing to the file-stream
 		for(std::vector<std::string>::iterator fi = this->files.begin(); fi != files.end(); ++fi )
 		{
-			file << "FILE " << (*fi) << std::endl; 
+			file << "FILE " << (*fi) << std::endl;
 		}
-	
+
 		//Iterate over the map, writing to the file-stream
 		for(std::map<std::string,std::string>::iterator mi = vars.begin(); mi != vars.end(); ++mi )
 		{
-			file << (*mi).first << " " << (*mi).second << std::endl; 
+			file << (*mi).first << " " << (*mi).second << std::endl;
 		}
-
 	}
-	
+
 	//Dump the values in the map and file-list
 	this->vars.clear();
 	this->files.clear();

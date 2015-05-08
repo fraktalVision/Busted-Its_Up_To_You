@@ -55,7 +55,6 @@ public:
 
 	ModelLoader(std::string);
 	virtual ~ModelLoader(void);
-
 };
 
 #endif

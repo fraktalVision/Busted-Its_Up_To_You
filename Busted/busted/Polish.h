@@ -12,14 +12,13 @@
 #include "../engine/core/Questions/Questions.h"
 #include "../engine/core/Sprite.h"
 
-
 enum ParticleType{ PT_BALLOON, PT_CONFETTI };
 
 //!class for particle based sprites that have velocity
 class Particle
 {
 public:
-	Particle(ParticleType t, Sprite& sprite, float vx, float vy, float vz, 
+	Particle(ParticleType t, Sprite& sprite, float vx, float vy, float vz,
 			float dw = 0.0f, float dh = 0.0f, float dang = 0.0f );
 
 	void Update(float t);
@@ -30,7 +29,6 @@ public:
 	float	m_delta_rot; //!<change in rotation
 	ParticleType type;
 };
-
 
 //!class for managing particle systems
 class ParticleFeature
@@ -45,14 +43,9 @@ public:
 private:
 
 	void LoadBalloonIntro();
-	
 
 	Particle* AddParticle(ParticleType pt, float x, float y, float z, std::string s);
 	std::vector<Particle*> m_particles; //all the balloons that are displayed in the group
 
 	void LoadOutro();
-	
 };
-
-
-

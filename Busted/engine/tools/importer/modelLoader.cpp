@@ -181,7 +181,7 @@ void ModelLoader::copy(std::string File)
 		if((*si).first != "MODEL" && (*si).first != "INST" && (*si).first != "TOKEN")
 			this->vars[(*si).first] = (*si).second;
 	}
-	
+
 	//Copy values from the new map into my local one
 	//Iterate through target map and copy values...
 	for(std::map<std::string, pina*>::iterator si = stat->getModels()->begin(); si != stat->getModels()->end(); ++si)
@@ -189,7 +189,7 @@ void ModelLoader::copy(std::string File)
 		this->models[(*si).first] = (*si).second;
 		this->place_map[int(models.size())-1] = (*si).first;
 	}
-	
+
 	//Copy values from the new map into my local one
 	//Iterate through target map and copy values...
 	for(std::map<std::string, Model*>::iterator si = stat->getInstances()->begin(); si != stat->getInstances()->end(); ++si)
@@ -197,7 +197,7 @@ void ModelLoader::copy(std::string File)
 		this->instances[(*si).first] = (*si).second;
 		this->inst_place_map[int(instances.size())-1] = (*si).first;
 	}
-	
+
 	//Copy values from the new map into my local one
 	//Iterate through target map and copy values...
 	for(std::map<std::string, Model*>::iterator si = stat->getTokens()->begin(); si != stat->getTokens()->end(); ++si)

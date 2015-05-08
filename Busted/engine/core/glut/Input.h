@@ -14,9 +14,6 @@ const char ENTER = 10;
 
 #include <stack>
 
-
-
-
 //struct for managing mouse data
 struct MOUSE
 {
@@ -28,20 +25,16 @@ struct MOUSE
 
 enum MouseDown{MLEFT, MRIGHT};
 
-
-
 //struct for managing keyboard data
 struct KEYBOARD
 {
 	char Trig[MAX_KEY_RANGE]; //letter keys
-	char Held[MAX_KEY_RANGE]; 
+	char Held[MAX_KEY_RANGE];
 	char t_enter; // flag for enter being triggered
 	char t_escape; //flag for espace being triggered
 	char t_space; //flag from pressing space bar
 	std::stack<char> pressed_keys;	// stack of pressed keys
 };
-
-
 
 //input class responsible for managing input
 class Input
@@ -63,7 +56,6 @@ public:
 	void ClearMouseButTrig( int i);
 	void ClearMouseButHeld( int i);
 
-
 	void SetKeyboard( char c);
 	void ClearKeyboardData();
 	void ClearMouseData();
@@ -81,4 +73,3 @@ private:
 	float m_xRatio;
 	float m_yRatio;
 };
-

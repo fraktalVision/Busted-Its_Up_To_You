@@ -5,17 +5,12 @@
 
 */
 
-
-
 #include "Mainmenu.h"
 #include "busted.all.h"
-
 
 extern Input *pInput;
 extern Mentor_Manager *pMentor_man;
 extern Texture_Manager* pTexture_man;
-
-
 
 /***********************************
 MainMenu Constructor
@@ -37,10 +32,9 @@ MainMenu::MainMenu(Text_Manager* tm): m_men_res(MR_NONE), m_men_act(MA_BASE), m_
 
 	m_pla_slide_men = NumberMenu( tm, "Slide Number ", 1, 1, DATA("PLA_SLIDE_MAX"), 1, DATA("PLA_SLDMENU_POSX"), DATA("PLA_SLDMENU_POSY"), true );
 	m_slide_men = NumberMenu( tm, "Slide Number ", 1, 1, DATA("MOD_SLIDE_MAX"), 1, DATA("MOD_SLDMENU_POSX"), DATA("MOD_SLDMENU_POSY"), true );
-	
+
 	m_exit_mod_but = Answer(tm, std::string("Back to the Main Menu"), 600.0f, 600.0f, 500.0f );
 }
-
 
 /***********************************
 MainMenu Update
@@ -58,7 +52,6 @@ void MainMenu::Update(float t)
 	m_credits.Update(t);
 	m_exit_mod_but.Update(t);
 
-
 	//if the menu is in the base set of actions
 	if( m_men_act == MA_BASE )
 	{
@@ -66,7 +59,7 @@ void MainMenu::Update(float t)
 		if( pInput->PollMouseBut(MLEFT) )
 		{
 			//check which button was pressed
-			bool butpress = false;  
+			bool butpress = false;
 			if( m_startBut.IsMouseOver() )
 			{
 				m_men_res = MR_START;
@@ -106,7 +99,6 @@ void MainMenu::Update(float t)
 			if(butpress)
 			{
 				pMusic_man->play("BTN_C");
-
 			}
 		}
 	}
@@ -124,7 +116,7 @@ void MainMenu::Update(float t)
 	else if( m_men_act == MA_MODERATOR )
 	{
 		m_slide_men.Update();
-		
+
 		//the user selects tto go back
 		if( pInput->PollMouseBut(MLEFT ) )
 		{
@@ -140,7 +132,7 @@ void MainMenu::Update(float t)
 	else if( m_men_act == MA_PLAYER )
 	{
 		m_pla_slide_men.Update();
-		
+
 		//the user selects tto go back
 		if( pInput->PollMouseBut(MLEFT ) )
 		{
@@ -156,7 +148,7 @@ void MainMenu::Update(float t)
 	else if( m_men_act == MA_CREDITS )
 	{
 		m_cred_dis->Update(t);
-		
+
 		//the user selects to go back or the credits finish
 		if( pInput->PollMouseBut(MLEFT ) || m_cred_dis->IsFinished())
 		{
@@ -167,7 +159,6 @@ void MainMenu::Update(float t)
 	}
 }
 
-
 /***********************************
 MainMenu Render
 
@@ -175,8 +166,6 @@ Author: Jamie Gault
 ***********************************/
 void MainMenu::Render()
 {
-
-
 	if( m_men_act == MA_BASE )
 	{
 		m_title.Render();
@@ -189,10 +178,8 @@ void MainMenu::Render()
 	}
 	else if( m_men_act == MA_OPTIONS )
 	{
-		
-
 		m_optmenu.Render();
-	}	
+	}
 	else if( m_men_act == MA_MODERATOR )
 	{
 			//drop a gel on the screen
@@ -200,22 +187,20 @@ void MainMenu::Render()
 
 		glColor3f(1.0f, 1.0f, 1.0f);
 		//render the frame background
-		RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")), 
-						50.0f*SCREEN_X_RATIO, 
-						50.0f*SCREEN_Y_RATIO, 
-						(DATA("SCREEN_WIDTH") -50.0f), 
+		RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")),
+						50.0f*SCREEN_X_RATIO,
+						50.0f*SCREEN_Y_RATIO,
+						(DATA("SCREEN_WIDTH") -50.0f),
 						(DATA("SCREEN_HEIGHT") -50.0f));
 
-
 		//render the moderator screen data
-		RenderCoordScreenImage( m_mod_slides[m_slide_men.GetValue()-1], 
-						150.0f*SCREEN_X_RATIO, 
-						50.0f*SCREEN_Y_RATIO, 
-						(DATA("SCREEN_WIDTH") -150.0f)*SCREEN_X_RATIO, 
+		RenderCoordScreenImage( m_mod_slides[m_slide_men.GetValue()-1],
+						150.0f*SCREEN_X_RATIO,
+						50.0f*SCREEN_Y_RATIO,
+						(DATA("SCREEN_WIDTH") -150.0f)*SCREEN_X_RATIO,
 						(DATA("SCREEN_HEIGHT") -100.0f)*SCREEN_Y_RATIO);
 		m_slide_men.Render();
 		m_exit_mod_but.Render();
-
 	}
 	else if( m_men_act == MA_PLAYER )
 	{
@@ -224,32 +209,27 @@ void MainMenu::Render()
 
 		glColor3f(1.0f, 1.0f, 1.0f);
 		//render the frame background
-		RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")), 
-						50.0f*SCREEN_X_RATIO, 
-						50.0f*SCREEN_Y_RATIO, 
-						(DATA("SCREEN_WIDTH") -50.0f), 
+		RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")),
+						50.0f*SCREEN_X_RATIO,
+						50.0f*SCREEN_Y_RATIO,
+						(DATA("SCREEN_WIDTH") -50.0f),
 						(DATA("SCREEN_HEIGHT") -50.0f));
 
-
 		//render the moderator screen data
-		RenderCoordScreenImage( m_pla_slides[m_pla_slide_men.GetValue()-1], 
-							150.0f*SCREEN_X_RATIO, 
-							50.0f*SCREEN_Y_RATIO, 
-							(DATA("SCREEN_WIDTH") -150.0f)*SCREEN_X_RATIO, 
+		RenderCoordScreenImage( m_pla_slides[m_pla_slide_men.GetValue()-1],
+							150.0f*SCREEN_X_RATIO,
+							50.0f*SCREEN_Y_RATIO,
+							(DATA("SCREEN_WIDTH") -150.0f)*SCREEN_X_RATIO,
 							(DATA("SCREEN_HEIGHT") -100.0f)*SCREEN_Y_RATIO);
 
 		m_pla_slide_men.Render();
 		m_exit_mod_but.Render();
-
 	}
 	else if( m_men_act == MA_CREDITS )
 	{
 		m_cred_dis->Render();
 	}
-
-	
 }
-
 
 /***********************************
 MainMenu GetMenuResult
@@ -260,9 +240,6 @@ MENU_RESULT MainMenu::GetMenuResult()
 {
 	return m_men_res;
 }
-
-
-
 
 /***********************************
 PauseMainMenuMenu LoadModInst
@@ -279,7 +256,6 @@ void MainMenu::LoadModInst()
 		pTexture_man->SetupTexture( std::string("MOD_SLIDE_") + id.str() );
 		m_mod_slides.push_back( pTexture_man->GetTexture( std::string("MOD_SLIDE_") + id.str() ) );
 	}
-
 }
 
 /***********************************
@@ -297,9 +273,7 @@ void MainMenu::LoadPlaInst()
 		pTexture_man->SetupTexture( std::string("PLA_SLIDE_") + id.str() );
 		m_pla_slides.push_back( pTexture_man->GetTexture( std::string("PLA_SLIDE_") + id.str() ) );
 	}
-
 }
-
 
 /***********************************
 PauseMenu UnloadModInst
@@ -314,9 +288,7 @@ void MainMenu::UnloadModInst()
 		id << i;
 
 		pTexture_man->UnloadTexture( std::string("MOD_SLIDE_") + id.str() );
-		
 	}
-
 }
 
 /***********************************
@@ -332,18 +304,8 @@ void MainMenu::UnloadPlaInst()
 		id << i;
 
 		pTexture_man->UnloadTexture( std::string("PLA_SLIDE_") + id.str() );
-		
 	}
-
 }
-
-
-
-
-
-
-
-
 
 /***********************************
 PauseMenu Constructor
@@ -360,10 +322,7 @@ PauseMenu::PauseMenu(Text_Manager* tm): m_men_res(MR_NONE), m_men_act( MA_BASE )
 	m_yes = Answer(tm, std::string("Yes"), 350.0f*SCREEN_X_RATIO, 500.0f*SCREEN_Y_RATIO, 500.0f );
 	m_no = Answer(tm, std::string("No"), 600.0f*SCREEN_X_RATIO, 500.0f*SCREEN_Y_RATIO, 500.0f );
 
-
-
 }
-
 
 /***********************************
 MainMenu Update
@@ -377,7 +336,7 @@ void PauseMenu::Update(float t)
 	m_quitBut.Update(t);
 	m_yes.Update(t);
 	m_no.Update(t);
-	
+
 	if( m_men_act == MA_BASE )
 	{
 		if( pInput->PollMouseBut(MLEFT) )
@@ -392,7 +351,7 @@ void PauseMenu::Update(float t)
 			else if( m_quitBut.IsMouseOver() )
 			{
 				//kill the program
-				
+
 				m_men_act = MA_QUIT;
 				butpress = true;
 			}
@@ -405,7 +364,6 @@ void PauseMenu::Update(float t)
 			if(butpress)
 			{
 				pMusic_man->play("BTN_C");
-
 			}
 		}
 	}
@@ -440,10 +398,7 @@ void PauseMenu::Update(float t)
 			}
 		}
 	}
-	
-	
 }
-
 
 /***********************************
 PauseMenu Render
@@ -454,7 +409,6 @@ void PauseMenu::Render()
 {
 	m_title.Render();
 
-
 	if( m_men_act == MA_BASE )
 	{
 		m_resumeBut.Render();
@@ -464,19 +418,18 @@ void PauseMenu::Render()
 	else if( m_men_act == MA_OPTIONS )
 	{
 		m_optmenu.Render();
-	}	
+	}
 	else if( m_men_act == MA_QUIT )
 	{
-		TextBox sure = TextBox(m_yes.GetTextBox().GetFontPtr(), std::string("Are you sure you want to quit "), 
+		TextBox sure = TextBox(m_yes.GetTextBox().GetFontPtr(), std::string("Are you sure you want to quit "),
 						150.0f*SCREEN_X_RATIO, 300.0f, 1000.0f, 10.0f*SCREEN_X_RATIO, 30.0f*SCREEN_X_RATIO, 30.0f*SCREEN_Y_RATIO );
 		sure.SetBackground(m_resumeBut.m_textureset.m_idle);
 		sure.Render();
 
 		m_yes.Render();
-		m_no.Render();	
-	}	
+		m_no.Render();
+	}
 }
-
 
 /***********************************
 PauseMenu GetMenuResult
@@ -488,11 +441,6 @@ MENU_RESULT PauseMenu::GetMenuResult()
 	return m_men_res;
 }
 
-
-
-
-
-
 /***********************************
 GenOptionsMenu Constructor
 
@@ -501,7 +449,7 @@ Author: Jamie Gault
 GenOptionsMenu::GenOptionsMenu(Text_Manager* tm):  m_men_res(MR_NONE),m_men_act(MA_BASE)
 {
 	m_title = TextBox(tm, std::string(" O P T I O N S "), 200.0f*SCREEN_X_RATIO, 100.0f*SCREEN_Y_RATIO, 1000.0f, 30.0f, 50.0f, 50.0f );
-	
+
 	std::list<std::string> texture_op;
 
 	texture_op.push_back( std::string("Low"));
@@ -517,8 +465,6 @@ GenOptionsMenu::GenOptionsMenu(Text_Manager* tm):  m_men_res(MR_NONE),m_men_act(
 	m_back_but = Answer(tm, std::string("Back"), 400.0f*SCREEN_X_RATIO, 600.0f*SCREEN_Y_RATIO, 500.0f );
 }
 
-
-
 /***********************************
 PauseMenu Update
 
@@ -530,11 +476,10 @@ void GenOptionsMenu::Update(float t)
 
 	if( m_men_act == MA_BASE )
 	{
-		
 		m_TextureDetail.Update();
 		m_MusicVol_men.Update();
 		m_SoundVol_men.Update();
-		
+
 		//the user selects tto go back
 		if( pInput->PollMouseBut(MLEFT ) )
 		{
@@ -544,11 +489,9 @@ void GenOptionsMenu::Update(float t)
 				m_men_res = MR_RETURN;
 				pMusic_man->play("BTN_C");
 			}
-			
 		}
 	}
 }
-
 
 /***********************************
 PauseMenu Render
@@ -557,10 +500,10 @@ Author: Jamie Gault
 ***********************************/
 void GenOptionsMenu::Render()
 {
-	RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")), 
-						50.0f*SCREEN_X_RATIO, 
-						50.0f*SCREEN_Y_RATIO, 
-						(DATA("SCREEN_WIDTH") -50.0f), 
+	RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")),
+						50.0f*SCREEN_X_RATIO,
+						50.0f*SCREEN_Y_RATIO,
+						(DATA("SCREEN_WIDTH") -50.0f),
 						(DATA("SCREEN_HEIGHT") -50.0f));
 
 	if( m_men_act == MA_BASE )
@@ -569,11 +512,10 @@ void GenOptionsMenu::Render()
 		m_TextureDetail.Render();
 		m_MusicVol_men.Render();
 		m_SoundVol_men.Render();
-		
+
 		m_back_but.Render();
 	}
 }
-
 
 /***********************************
 PauseMenu Render
@@ -588,8 +530,6 @@ void GenOptionsMenu::ApplyOptions()
 	pMusic_man->musVolume = ((float)m_MusicVol_men.GetValue()/10.0f);
 }
 
-
-
 /***********************************
 PauseMenu GetMenuResult
 
@@ -600,9 +540,6 @@ MENU_RESULT GenOptionsMenu::GetMenuResult()
 	return m_men_res;
 }
 
-
-
-
 /***********************************
 EndGameMenu Constructor
 
@@ -610,10 +547,8 @@ Author: Jamie Gault
 ***********************************/
 EndGameMenu::EndGameMenu(Text_Manager* tm): m_men_res(MR_NONE)
 {
-	
 	m_playagainBut = Answer(tm, std::string("Play again!"), 400.0f*SCREEN_X_RATIO, 500.0f*SCREEN_Y_RATIO, 500.0f );
 	m_quitBut = Answer(tm, std::string("Exit"), 400.0f*SCREEN_X_RATIO, 600.0f*SCREEN_Y_RATIO, 500.0f );
-
 }
 
 /***********************************
@@ -626,7 +561,6 @@ void EndGameMenu::Update(float t)
 	m_playagainBut.Update(t);
 	m_quitBut.Update(t);
 
-
 	//the user selects tto go back
 	if( pInput->PollMouseBut(MLEFT ) )
 	{
@@ -635,15 +569,14 @@ void EndGameMenu::Update(float t)
 			m_men_res = MR_RETRY;
 
 			pMusic_man->play("BTN_C");
-		}	
+		}
 		else if( m_quitBut.IsMouseOver() )
 		{
 			m_men_res = MR_EXITGAME;
 			//playsond
-		}	
+		}
 	}
 }
-
 
 /***********************************
 EndGameMenu Render
@@ -666,10 +599,6 @@ MENU_RESULT EndGameMenu::GetMenuResult()
 	return m_men_res;
 }
 
-
-
-
-
 /***********************************
 CreditsDisplay Constructor
 
@@ -679,20 +608,17 @@ CreditsDisplay::CreditsDisplay()
 {
 	loaded = LoadCreditsFile();
 
-
 	//load in all the characatures in sequence
 	for( int i = 0; i < DATA("NUM_CHARAC_PICS"); ++i )
 	{
-		float alt = ( i%2 == 0 )? 1.0f: -1.0f; 
+		float alt = ( i%2 == 0 )? 1.0f: -1.0f;
 		//the characatures each have an incremental id starting with 0 and going through DATA("NUM_CHARAC_PICS") - 1
 		std::stringstream s; s << i;
-		Box_2D* b = new Box_2D( pTexture_man->GetTexture(std::string("char")+s.str()), 350.0 + DATA("CHARAC_XOFFSET")*alt, 
+		Box_2D* b = new Box_2D( pTexture_man->GetTexture(std::string("char")+s.str()), 350.0 + DATA("CHARAC_XOFFSET")*alt,
 			DATA("CRED_START_HEIGHT") +((float)i)/ DATA("NUM_CHARAC_PICS")*m_YRange,DATA("CHARAC_WD"),DATA("CHARAC_HT") );
 
 		charPics.push_back(b);
-
 	}
-
 }
 
 /***********************************
@@ -704,10 +630,7 @@ CreditsDisplay::~CreditsDisplay()
 {
 	for(std::vector<Box_2D*>::iterator bi = charPics.begin(); bi != charPics.end(); ++bi)
 		delete *bi;
-
 }
-
-
 
 /***********************************
 CreditsDisplay Update
@@ -716,7 +639,6 @@ Author: Jamie Gault
 ***********************************/
 void CreditsDisplay::Update(float t)
 {
-
 	//slowly increment the text towards the top of the screen
 	for( std::vector<TextBox*>::iterator i = textboxlist.begin(); i != textboxlist.end() ; ++i )
 	{
@@ -728,9 +650,7 @@ void CreditsDisplay::Update(float t)
 	{
 		(*bi)->SetPosY((*bi)->GetPosY() - 2.0f*t );
 	}
-
 }
-
 
 /***********************************
 CreditsDisplay Render
@@ -739,7 +659,6 @@ Author: Jamie Gault
 ***********************************/
 void CreditsDisplay::Render()
 {
-
 	RenderScreenGel( 1.0f, 1.0f, 1.0f,0.5f);
 
 	glColor4f(1.0f, 1.0f, 1.0f,0.8f);
@@ -755,8 +674,6 @@ void CreditsDisplay::Render()
 		}
 	}
 
-	
-
 	for( std::vector<TextBox*>::iterator i = textboxlist.begin(); i != textboxlist.end() ; ++i )
 	{
 		//if the textbox is on screen
@@ -766,10 +683,7 @@ void CreditsDisplay::Render()
 		}
 	}
 
-	
-
 }
-
 
 /***********************************
 CreditsDisplay IsFinished
@@ -792,7 +706,6 @@ Author: Jamie Gault
 ***********************************/
 bool CreditsDisplay::LoadCreditsFile()
 {
-
 	std::ifstream myfile("../Busted/assets/Credits/credits.xtx");
 
 	float yinc = 0.0f;
@@ -829,13 +742,12 @@ bool CreditsDisplay::LoadCreditsFile()
 					size_t secondQuote = strline.find('"', firstQuote + 1);
 					std::string strtitle = strline.substr(firstQuote + 1, secondQuote - firstQuote - 1);
 
-					TextBox* box = new TextBox(pText_man, strtitle, DATA("CRED_TITLE_POS_X"), 
+					TextBox* box = new TextBox(pText_man, strtitle, DATA("CRED_TITLE_POS_X"),
 										DATA("CRED_START_HEIGHT")+yinc, 420.0f);
 					box->SetBackground(0);
 					textboxlist.push_back(box);
 					yinc += textboxlist[num_tboxes]->GetBoxHeight();
 					++num_tboxes;
-					
 
 					bool firsttime = true;
 
@@ -855,14 +767,13 @@ bool CreditsDisplay::LoadCreditsFile()
 
 							//make a new textbox for the person's name
 							TextBox* box = new TextBox(pText_man, strtitle, DATA("CRED_NAME_POS_X"), DATA("CRED_START_HEIGHT")+yinc, 750.0f);
-							box->SetBackground(0); //set a transparent background 
+							box->SetBackground(0); //set a transparent background
 							textboxlist.push_back(box);
 
 							//increment the y position for the next box to be below the box that was just made
 							yinc += textboxlist[num_tboxes]->GetBoxHeight();
 							++num_tboxes;
 						}
-						
 					}while( firstQuote != -1);
 
 					if(firsttime)
@@ -872,23 +783,21 @@ bool CreditsDisplay::LoadCreditsFile()
 						textboxlist[num_tboxes-1]->SetBoxHeight( textboxlist[num_tboxes-1]->GetBoxHeight()*DATA("CRED_TITLE_SCALE"));
 						textboxlist[num_tboxes-1]->SetLetterWidth( textboxlist[num_tboxes-1]->GetLetterWidth()*DATA("CRED_TITLE_SCALE"));
 						textboxlist[num_tboxes-1]->SetLetterHeight( textboxlist[num_tboxes-1]->GetLetterHeight()*DATA("CRED_TITLE_SCALE") );
-						
+
 						yinc += DATA("CRED_GAP_Y");
 					}
-				
+
 					yinc += DATA("CRED_GAP_Y");
-					
 				}
 			}
 		}
 
-		//save the start and end ranges 
+		//save the start and end ranges
 		m_YRange = yinc;
 		myfile.close();
 
 		return true;
 	}
-	
-	return false;
 
+	return false;
 }

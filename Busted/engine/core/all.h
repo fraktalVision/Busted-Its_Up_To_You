@@ -21,20 +21,18 @@ gamemogul@gmail.com
 	#include <map>
 	#include <queue>
 	#include <fstream>
-	
-	#include <ctime> 
+
+	#include <ctime>
 	#include <cstdlib>
 	#include <list>
 	#include <math.h>
 	#include <assert.h>
-
 
 	//#include "../glut/display.h"
     #include "glut/display.h"
 	//#include "../textureload/textureImporter.h"
 	#include "../tools/textureload/textureImporter.h"
 	#include <sqlite3.h>
-
 
 	//#include "../../tools/sqlite/SQLiteDB.h"
 	#include "../tools/sqlite/SQLiteDB.h"
@@ -68,7 +66,6 @@ gamemogul@gmail.com
 	#pragma comment(lib, "glu32.lib")
 //	#pragma comment(lib, "glew32.lib")
 	#pragma comment(lib, "glut32.lib")
-
 
 //#ifndef _ALL_H_
 //#define _ALL_H_

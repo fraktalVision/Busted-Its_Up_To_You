@@ -1,11 +1,9 @@
-
 #ifndef _GAMEWINDOW_H_
 #define _GAMEWINDOW_H_
 
 #include "all.h"
 
 //extern bool CamControl;
-
 
 //! basic window class for making a window
 class GameWindow
@@ -49,8 +47,6 @@ private:
 	HWND		m_hWnd;
 	HDC			m_hDC;  //handle to device in context
 	HGLRC		m_glrc;	//used for creating OpenGL render Device Context
-
 };
-
 
 #endif

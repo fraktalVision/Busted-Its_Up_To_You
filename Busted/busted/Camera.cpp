@@ -1,37 +1,26 @@
-
-
-
 #include "Camera.h"
-
-
-
-
-
-
 
 /***********************************
 CameraPath Constructor
 
 Author: Jamie Gault
 ***********************************/
-CameraPath::CameraPath(CAM_PATH_TYPE t, camera* c, void* foc, float speed, float val ): 
-																m_cam(c), 
-																m_type(t), 
+CameraPath::CameraPath(CAM_PATH_TYPE t, camera* c, void* foc, float speed, float val ):
+																m_cam(c),
+																m_type(t),
 																m_focus(NULL),
 																m_player_foc(NULL),
 																m_active(true),
 																m_speed(speed),
 																m_value(val)
 {
-
 	if( foc )
-	{	
+	{
 		if( m_type == CPT_FOLLOW )
 			m_player_foc = reinterpret_cast<player*>(foc);
 		else if( m_type == CPT_INTERP_POS )
-			m_focus = reinterpret_cast<vec4*>(foc);		
+			m_focus = reinterpret_cast<vec4*>(foc);
 	}
-
 
 	if( m_speed == 0.0f )
 		m_speed = 1.0f;
@@ -42,31 +31,28 @@ CameraPath::CameraPath(CAM_PATH_TYPE t, camera* c, void* foc, float speed, float
 
 	switch( m_type )
 	{
-	case CPT_FOLLOW: 
+	case CPT_FOLLOW:
 		break;
 	case CPT_INTERP_POS:
 
-		if( m_cam && m_focus ) 
+		if( m_cam && m_focus )
 		{
-
 			float x = m_focus->x - m_cam->pos.x;
 			float y = m_focus->y - m_cam->pos.y;
 			float z = m_focus->z - m_cam->pos.z;
-				
+
 			float mag = sqrt( x*x + y*y + z*z );
 
 			if( mag != 0.0f )
 			{
 				//assign unit vector
 				m_velo[0] = x / mag * m_speed; //include speed for optimization
-				m_velo[1] = y / mag * m_speed; 
+				m_velo[1] = y / mag * m_speed;
 				m_velo[2] = z / mag * m_speed;
 			}
 			else
 				m_type = CPT_NONE;
-			
 		}
-	
 
 		break;
 	case CPT_ZOOM:
@@ -76,16 +62,15 @@ CameraPath::CameraPath(CAM_PATH_TYPE t, camera* c, void* foc, float speed, float
 		m_speed =( (m_speed > 0.0f && m_value > 0.0f ) || (m_speed < 0.0f && m_value < 0.0f )) ? m_speed: -m_speed;
 		break;
 	}
-	
+
 	//if the cameras don't exist
-	if( !m_cam  ) 
+	if( !m_cam  )
 	{
 		m_type = CPT_NONE;
 	}
 
 	//assert( m_type != CPT_NONE );
 }
-
 
 /***********************************
 CameraPath Constructor
@@ -99,15 +84,14 @@ void CameraPath::Update( float t )
 
 	switch( m_type )
 	{
-	case CPT_FOLLOW: 
+	case CPT_FOLLOW:
 
 		//follow the focus point until it stops moving
-		if( !(m_player_foc->bAtDest) ) 
+		if( !(m_player_foc->bAtDest) )
 		{
 			m_cam->pos.x = m_player_foc->pos.x;
 			m_cam->pos.y = m_player_foc->pos.y;
 			m_cam->pos.z = m_player_foc->pos.z;
-
 		}
 		else
 			m_active = false;
@@ -116,31 +100,30 @@ void CameraPath::Update( float t )
 	case CPT_INTERP_POS:
 		{
 			m_cam->pos.x += m_velo[0]*t; //include speed for optimization
-			m_cam->pos.y += m_velo[1]*t; 
+			m_cam->pos.y += m_velo[1]*t;
 			m_cam->pos.z += m_velo[2]*t;
 
 			float rad = m_velo[0]*t * m_velo[0]*t + m_velo[1]*t * m_velo[1]*t + m_velo[2]*t * m_velo[2]*t;
-			
+
 			float x = m_focus->x - m_cam->pos.x;
 			float y = m_focus->y - m_cam->pos.y;
 			float z = m_focus->z - m_cam->pos.z;
-			
+
 			//if the camera has gotten as close as it's going to get
 			if( x*x + y*y + z*z < rad )
 			{
 				m_cam->pos = *m_focus;
 				m_active = false;
 			}
-
 		}
 		break;
-		
+
 	case CPT_ZOOM:
 
 		if( m_speed*t * m_speed*t < m_value * m_value )
 		{
 			m_cam->setCamDistance( m_cam->getCamDistance() + m_speed*t );
-			m_value -= m_speed*t; 
+			m_value -= m_speed*t;
 		}
 		else
 		{
@@ -154,7 +137,7 @@ void CameraPath::Update( float t )
 		if( m_speed*t * m_speed*t < m_value )
 		{
 			m_cam->rot.y += m_speed*t ;
-			m_value -= m_speed*t; 
+			m_value -= m_speed*t;
 		}
 		else
 		{
@@ -167,7 +150,7 @@ void CameraPath::Update( float t )
 		if( m_speed*t * m_speed*t < m_value )
 		{
 			m_cam->rot.x +=  m_speed*t ;
-			m_value -= m_speed*t; 
+			m_value -= m_speed*t;
 		}
 		else
 		{
@@ -181,13 +164,12 @@ void CameraPath::Update( float t )
 	}
 }
 
-
 /***********************************
 Camera_Manager Constructor
 
 Author: Jamie Gault
 ***********************************/
-Camera_Manager::Camera_Manager( camera* cam ): m_cam(cam), 
+Camera_Manager::Camera_Manager( camera* cam ): m_cam(cam),
 											   m_active(false),
 											   m_pause(false),
 											   m_type(TP_FIXED_POS),
@@ -196,7 +178,6 @@ Camera_Manager::Camera_Manager( camera* cam ): m_cam(cam),
 											   far_z_lim(20.0f),
 											   zoom_range(60.0f),
 											   speed( 1/150.0f)
-
 
 {
 	m_focal_pos[0] = 0.0f;
@@ -216,7 +197,6 @@ Camera_Manager::Camera_Manager( camera* cam ): m_cam(cam),
 	m_trans_active = false;
 }
 
-
 /***********************************
 Camera_Manager Destructor
 
@@ -226,7 +206,6 @@ Camera_Manager::~Camera_Manager()
 {
 	ClearPaths();
 }
-
 
 /***********************************
 Camera_Manager Update
@@ -246,11 +225,9 @@ void Camera_Manager::Update( float t )
 		case TP_FIXED_POS:
 			UpdateFollowCam(t);
 			break;
-
 		}
 	}
 }
-
 
 /***********************************
 Camera_Manager ClearPaths
@@ -265,15 +242,13 @@ void Camera_Manager::ClearPaths()
 		//delete the elements it has
 		if(m_cam_path_que.front())
 			delete m_cam_path_que.front();
-		
+
 		//and pop it off
 		m_cam_path_que.pop();
 	}
 
 	m_active = false;
-
 }
-
 
 /***********************************
 Camera_Manager AddPath
@@ -287,7 +262,7 @@ void Camera_Manager::AddPath( CAM_PATH_TYPE cam_p, void* foc, float speed, float
 	m_active = true;
 
 	CameraPath *cp = new CameraPath( cam_p, m_cam, foc, speed, val );
-	
+
 	m_cam_path_que.push(cp);
 }
 
@@ -301,13 +276,12 @@ bool Camera_Manager::DumpPath()
 	//delete the elements it has
 	if(m_cam_path_que.front())
 		delete m_cam_path_que.front();
-	
+
 	//and pop it off
 	m_cam_path_que.pop();
 
 	//return if the path queue is not empty
 	return ! m_cam_path_que.empty();
-
 }
 
 /***********************************
@@ -315,14 +289,13 @@ Camera_Manager LockedOn
 
 Author: Jamie Gault
 ***********************************/
-bool Camera_Manager::LockedOn() 
+bool Camera_Manager::LockedOn()
 {
 	if( m_cam_path_que.empty() )
 		return false;
 	else
 		return m_cam_path_que.front()->GetType() == CPT_FOLLOW;
 }
-
 
 /***********************************
 Camera_Manager LockedOn
@@ -336,8 +309,6 @@ bool Camera_Manager::AtPos(vec4 pos)
 
 	return false;
 }
-
-
 
 /***********************************
 Camera_Manager LockedOn
@@ -360,7 +331,6 @@ void Camera_Manager::UpdateStickCam( float t)
 	}
 }
 
-
 /***********************************
 Camera_Manager UpdateFollowCam
 
@@ -368,7 +338,6 @@ Author: Jamie Gault
 ***********************************/
 void Camera_Manager::UpdateFollowCam( float t)
 {
-	
 	vec3 rot = vec3(0.0f, 0.0f, 0.0f);
 
 	float dx = m_focal_pos[0]-m_cam->getPosX();
@@ -390,7 +359,6 @@ void Camera_Manager::UpdateFollowCam( float t)
 		glMatrixMode (GL_MODELVIEW);
 	}*/
 
-
 	if( m_trans_active )
 	{
 		m_trans_cnt += t*speed;
@@ -410,7 +378,6 @@ void Camera_Manager::UpdateFollowCam( float t)
 			m_focal_pos[1] = foc.y;
 			m_focal_pos[2] = foc.z;
 
-
 			//determine the cameras position along it's spline
 			vec3 c = m_cam_spl.GetPoint( m_trans_cnt );
 			m_cam->pos.x = c.x;
@@ -427,7 +394,6 @@ void Camera_Manager::UpdateFollowCam( float t)
 		if( m_follow_type == CFT_TOKEN_FOLLOW )
 			m_cam->setCamDistance( CalcZDis(dx, dy, dz) );
 	}
-	
 
 	if( dz != 0.0f )
 	{
@@ -438,10 +404,8 @@ void Camera_Manager::UpdateFollowCam( float t)
 	{
 		m_cam->rot.y = 0.0f;
 		m_cam->rot.x = 0.0f;
-	}	
+	}
 }
-
-
 
 /***********************************
 Camera_Manager SetupTokenFollowCam
@@ -459,7 +423,6 @@ void Camera_Manager::SetupTokenFollowCam()
 	m_goal_cpos[2] = 60.0f;
 }
 
-
 /***********************************
 Camera_Manager SetupOverviewCam
 
@@ -467,10 +430,8 @@ Author: Jamie Gault
 ***********************************/
 void Camera_Manager::SetupOverviewCam()
 {
-
 	TransitionCamera( 0.0f, 100.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 }
-
 
 /***********************************
 Camera_Manager CalcZDis
@@ -480,8 +441,8 @@ Author: Jamie Gault
 void Camera_Manager::SetupQZoomInCam()
 {
 	pMusic_man->play("ZOOM_IN");
-	float mag = (m_cam->pos.x - m_focal_pos[0])*(m_cam->pos.x - m_focal_pos[0]) + 
-				(m_cam->pos.y - m_focal_pos[1])*(m_cam->pos.y - m_focal_pos[1]) + 
+	float mag = (m_cam->pos.x - m_focal_pos[0])*(m_cam->pos.x - m_focal_pos[0]) +
+				(m_cam->pos.y - m_focal_pos[1])*(m_cam->pos.y - m_focal_pos[1]) +
 				(m_cam->pos.z - m_focal_pos[2])*(m_cam->pos.z - m_focal_pos[2]);
 
 	mag = sqrt(mag);
@@ -532,7 +493,6 @@ void Camera_Manager::SetCamFollowType( CAM_FOLLOW_TYPE t)
 	m_follow_type = t;
 }
 
-
 /***********************************
 Camera_Manager TransitionCamera
 
@@ -553,8 +513,6 @@ void Camera_Manager::TransitionCamera( float cx, float cy, float cz, float fx, f
 
 	m_cam_spl = Spline(c0, c1, c2, c3);
 
-
-
 	float fdx = fx - m_focal_pos[0];
 	float fdy = fy - m_focal_pos[1];
 	float fdz = fz - m_focal_pos[2];
@@ -566,7 +524,6 @@ void Camera_Manager::TransitionCamera( float cx, float cy, float cz, float fx, f
 
 	m_foc_spl = Spline(f0, f1, f2, f3);
 
-
 	float ddx = z_dis - m_cam->getCamDistance();
 
 	vec3 d0 = vec3(m_cam->getCamDistance(), 0.0f, 0.0f);
@@ -575,8 +532,6 @@ void Camera_Manager::TransitionCamera( float cx, float cy, float cz, float fx, f
 	vec3 d3 = vec3(ddx*1.0f + m_cam->getCamDistance(), 0.0f, 0.0f);
 
 	m_cdis_spl = Spline(d0, d1, d2, d3);
-										
-
 
 	m_goal_cpos[0] = cx;
 	m_goal_cpos[1] = cy;
@@ -591,7 +546,6 @@ void Camera_Manager::TransitionCamera( float cx, float cy, float cz, float fx, f
 	m_trans_active = true;
 }
 
-
 /***********************************
 Camera_Manager TransitionCamera
 
@@ -599,10 +553,9 @@ Author: Jamie Gault
 ***********************************/
 void Camera_Manager::TransitionCamera( float fx, float fy, float fz )
 {
-	TransitionCamera( m_goal_cpos[0],m_goal_cpos[1],m_goal_cpos[2], fx, fy, fz, 
-						CalcZDis(fx-m_goal_cpos[0], fy-m_goal_cpos[1], fz-m_goal_cpos[2]) ); 
+	TransitionCamera( m_goal_cpos[0],m_goal_cpos[1],m_goal_cpos[2], fx, fy, fz,
+						CalcZDis(fx-m_goal_cpos[0], fy-m_goal_cpos[1], fz-m_goal_cpos[2]) );
 }
-
 
 /***********************************
 Camera_Manager TransitionCamera
@@ -611,11 +564,10 @@ Author: Jamie Gault
 ***********************************/
 void Camera_Manager::TransitionCamera( float zoom )
 {
-	TransitionCamera( m_cam->pos.x,m_cam->pos.y,m_cam->pos.z, 
-					  m_focal_pos[0],m_focal_pos[1],m_focal_pos[2], 
-						zoom ); 
+	TransitionCamera( m_cam->pos.x,m_cam->pos.y,m_cam->pos.z,
+					  m_focal_pos[0],m_focal_pos[1],m_focal_pos[2],
+						zoom );
 }
-
 
 /***********************************
 Camera_Manager CalcZDis
@@ -630,7 +582,7 @@ float Camera_Manager::CalcZDis( float x, float y, float z )
 	if( near_z_lim != far_z_lim )
 	{
 		//zoom the camera in and out with lerps
-		if( mag < near_z_lim ) 
+		if( mag < near_z_lim )
 		{
 			return (0.0f);
 		}
@@ -638,13 +590,11 @@ float Camera_Manager::CalcZDis( float x, float y, float z )
 		{
 			return ( ( mag-near_z_lim)/(far_z_lim - near_z_lim)*zoom_range );
 		}
-		else 
+		else
 		{
 			return (zoom_range);
 		}
 	}
 	else
 		return 0.0f;
-
 }
-

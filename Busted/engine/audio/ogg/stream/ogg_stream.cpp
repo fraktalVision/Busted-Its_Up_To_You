@@ -16,7 +16,7 @@ extern class DataDrive* DATA_MAN;
 //Constructors/Destructors
 //---------------------------
 //Initialize
-ogg_stream::ogg_stream(std::string filename, SND_TYPE t, bool l, int NUM_BUF) 
+ogg_stream::ogg_stream(std::string filename, SND_TYPE t, bool l, int NUM_BUF)
 	:	oggFile(NULL),
 		gain(1.0f),
 		fade(0.1f),
@@ -37,7 +37,7 @@ ogg_stream::ogg_stream(std::string filename, SND_TYPE t, bool l, int NUM_BUF)
 
 //---------------------------
 //Close out
-ogg_stream::~ogg_stream(void) 
+ogg_stream::~ogg_stream(void)
 {
 	release();
 }
@@ -45,7 +45,7 @@ ogg_stream::~ogg_stream(void)
 //---------------------------
 //Open the stream, start playing the source
 void ogg_stream::open(void)
-{		
+{
 	check();
 	alGenBuffers(NUM_BUFFERS, buffers);						//Create buffers to play the sounds from
 	check();
@@ -119,7 +119,6 @@ void ogg_stream::release()
 	oggState = OGG_CLOSED;
 }
 
-
 //---------------------------
 //Stream audio bits from the ogg file, into buffers in soundcard memory
 bool ogg_stream::loadPcm(ALuint buffer)
@@ -192,7 +191,7 @@ void ogg_stream::update(float volume)
 			//1. swap
 			alSourceUnqueueBuffers(source, 1, &buffer);
 			check();
-				
+
 			//2. Copy buffer data to the soundcard
 			if (!loadPcm(buffer)) {
 				if (!loop) {
@@ -200,7 +199,7 @@ void ogg_stream::update(float volume)
 					break;
 				} else {
 					loadPcm(buffer);
-				}				
+				}
 			}
 
 			//3. write to the new buffer
@@ -208,7 +207,7 @@ void ogg_stream::update(float volume)
 			check();
 		}
 
-		// check if we're in the right AL state - it can be reset for some reason (in 
+		// check if we're in the right AL state - it can be reset for some reason (in
 		// window mode, move the window with mouse and sound will be reset)
 		if (getState() != AL_PLAYING) {
 			int queuedBuffers;
@@ -235,8 +234,8 @@ void ogg_stream::pause(void)
 
 	int queued = 0;
 	alGetSourcei(source, AL_BUFFERS_QUEUED, &queued);
-	check(); 
-		
+	check();
+
 	while(queued--) {
 		ALuint buffer;
 		alSourceUnqueueBuffers(source, 1, &buffer);
@@ -246,14 +245,14 @@ void ogg_stream::pause(void)
 	oggState = OGG_PAUSED;
 }
 
-void ogg_stream::play(void)		
-{ 
+void ogg_stream::play(void)
+{
  	if (oggState == OGG_PLAY) {
 		return;
 	}
 
 	//Cycle through all the buffers, and update their contents with new data
-	for(int i = 0; i < NUM_BUFFERS; ++i) { 
+	for(int i = 0; i < NUM_BUFFERS; ++i) {
 		loadPcm(buffers[i]);
 	}
 
@@ -268,11 +267,11 @@ void ogg_stream::play(void)
 	oggState = OGG_PLAY;
 }
 
-void ogg_stream::stop(void)		
-{ 
+void ogg_stream::stop(void)
+{
 	pause();
 	resetOggStream();
-	oggState = OGG_STOPPED; 
+	oggState = OGG_STOPPED;
 }
 
 //---------------------------
@@ -301,7 +300,7 @@ void ogg_stream::check()
 	if(error != AL_NO_ERROR)
 	{
 		std::stringstream ss;
-		ss << "OpenAL error was raised: " << error  << " in " << this->filename << std::endl; 
+		ss << "OpenAL error was raised: " << error  << " in " << this->filename << std::endl;
 		throw std::runtime_error(ss.str());
 	}
 }
@@ -330,7 +329,7 @@ std::string ogg_stream::errorString(int code)
 //Show file info
 void ogg_stream::display()
 {
-	if(DATA("debug")) { 
+	if(DATA("debug")) {
 		std::cout
 			<< "//-----OGG FILE-----"								<< "\n"
 			<< "version         "	<< vorbisInfo->version			<< "\n"
@@ -344,9 +343,8 @@ void ogg_stream::display()
 			<< "vendor "			<< vorbisComment->vendor		<< "\n";
 
 		for(int i = 0; i < vorbisComment->comments; i++)
-			std::cout << "   " << vorbisComment->user_comments[i] << std::endl; 
+			std::cout << "   " << vorbisComment->user_comments[i] << std::endl;
 
-		std::cout << std::endl; 
+		std::cout << std::endl;
 	}
 }
-

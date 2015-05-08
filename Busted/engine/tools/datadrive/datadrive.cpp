@@ -12,7 +12,6 @@ Author Jamie Gault
 DataDrive::DataDrive()
 {}
 
-
 /*
 DataDrive RefreshData
 Author Jamie Gault
@@ -26,7 +25,6 @@ void DataDrive::RefreshData()
 		ScanFileForData(fileNames[i]);
 	}
 }
-
 
 /*
 DataDrive GetData
@@ -45,7 +43,6 @@ float DataDrive::GetData(const std::string dataString)
 	}
 }
 
-
 /*
 DataDrive AddDataContext
 Author Jamie Gault
@@ -54,7 +51,6 @@ void DataDrive::AddDataContext(const std::string dataString, float dataVal)
 {
 	m_dataMap[dataString] = dataVal;
 }
-
 
 /*
 DataDrive GetFileNamesFromMasterIni
@@ -69,7 +65,7 @@ std::vector<std::string> DataDrive::GetFileNamesFromMasterIni(const std::string 
 	//if the main input file failed ot load
 	if(!inputFile)
 	{
-		throw std::runtime_error("Could not open master ini file");		
+		throw std::runtime_error("Could not open master ini file");
 	}
 	else
 	{
@@ -82,12 +78,11 @@ std::vector<std::string> DataDrive::GetFileNamesFromMasterIni(const std::string 
 		}
 		inputFile.close();
 	}
-	
+
 	if(fileNames[fileNames.size()-1] == "")
 		fileNames.pop_back();
 	return fileNames;
 }
-
 
 /*
 DataDrive ScanFileForData

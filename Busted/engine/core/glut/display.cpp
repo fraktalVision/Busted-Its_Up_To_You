@@ -41,46 +41,37 @@ void Display::drawScreenGrid()
 
 	for( float i = 0; i < 25; ++i)
 	{
-
 		for( float j = 0; j < 20 ; ++j)
 		{
 			glVertex2f(i*50.0f*SCREEN_X_RATIO,0.0f);
 			glVertex2f(i*50.0f*SCREEN_X_RATIO,768.0f*SCREEN_Y_RATIO);
-			
-		
+
 			glVertex2f(0.0f,i*50.0f*SCREEN_Y_RATIO);
 			glVertex2f(1024.0f*SCREEN_X_RATIO,i*50.0f*SCREEN_Y_RATIO);
 		}
 	}
 	glEnd();
 
-
 	TextBox gridpos(Game_Man->textboxdata.text_m,  0.0f, 0.0f, 30.0f, 3.0f, 15.0f, 15.0f);
-	
+
 	for( float i = 0; i < 25; ++i)
 	{
-		
-
 		for( float j = 0; j < 20 ; ++j)
 		{
 			//render the x value
 			std::stringstream xpos;
 			xpos<< i*50.0f;
 			gridpos.SetString(xpos.str());
-			
+
 			gridpos.SetPosX( i*50.0f*SCREEN_X_RATIO );
 			gridpos.SetPosY( 0.0f );
 			gridpos.Render();
-			
-
 
 			gridpos.SetPosY( i*50.0f*SCREEN_Y_RATIO );
 			gridpos.SetPosX( 0.0f );
 			gridpos.Render();
-
 		}
 	}
-	
 }
 
 //Default glEnables and other GL settings
@@ -111,7 +102,6 @@ void Display::LoadGLDefaults()
 		glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 		glShadeModel(GL_SMOOTH);
 
-		
 		if(DATA("light_1"))
 			glEnable(GL_LIGHT1);
 		GLfloat diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f };
@@ -137,7 +127,6 @@ void Display::LoadGLDefaults()
 	reshape(width, height);
 	glClearColor(1.0, 1.0, 1.0, 0.0);
 }
-
 
 void Display::UpdateLighting()
 {
@@ -170,8 +159,6 @@ void Display::UpdateLighting()
 
 	GLfloat pos[] = { 0.0f, DATA("lz"), 0.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
-
-
 
 	GLfloat pos1[] = { DATA("lx"), 10.0f, 0.0f, 0.0f };
 	glLightfv(GL_LIGHT1, GL_POSITION, pos1);
@@ -254,7 +241,7 @@ void Display::UpdateCompanyScreen()
 	//Finalize GL
 	Graph_En->RenderScreen();
 
-	ViewPerspective();	
+	ViewPerspective();
 
 		//clear input data
 	pInput->ClearKeyboardData();
@@ -266,7 +253,6 @@ void Display::display(void)
 	//Cap the frame limit
 	if(!Game_Man->UpdateFramerate())
 		return;
-
 
 	//render the company screen until the user clicks
 	if( Game_Man->GetExternalGS() == ES_PREGAME_LOAD)
@@ -287,14 +273,11 @@ void Display::display(void)
 	//Modify the view based on the camera
 	Camera->render();
 
-	
-	
 	UpdateLighting();
 
-
 	//render nothing while displaying a question
-	if( (Game_Man->GetInGameState() != IGS_QUESTION || 
-		(Game_Man->m_cam_man.GetTransInterp() != 1.0f && Game_Man->m_cam_man.GetCamFollowType() ==CFT_Q_TRANS_IN )) && 
+	if( (Game_Man->GetInGameState() != IGS_QUESTION ||
+		(Game_Man->m_cam_man.GetTransInterp() != 1.0f && Game_Man->m_cam_man.GetCamFollowType() ==CFT_Q_TRANS_IN )) &&
 		Game_Man->GetInGameState() != IGS_RESULT)
 	{
 		//!!!!!!!!!!!!!!!!!!!!
@@ -306,10 +289,8 @@ void Display::display(void)
 			(*oi)->render();
 		}// for objStack
 
-
-		
 		glDisable(GL_LIGHTING);
-		
+
 		//render stuff without lights
 		for(std::vector<obj*>::iterator oi = objStack.begin(); oi < objStack.end(); ++oi)
 		{
@@ -317,15 +298,12 @@ void Display::display(void)
 				(*oi)->render();
 		}// for objStack
 
-
-
 		//if it's time to roll the dice
 		//if(  Game_Man->GetInGameState() == IGS_DICE || Game_Man->GetInGameState() == IGS_MOVE )
 		{
-
-			Sprite roll( pTexture_man->GetTexture("ROLL_AGAIN" ), 40.0f, 7.0f, -40.0f, 9.0f, 9.0f); 
+			Sprite roll( pTexture_man->GetTexture("ROLL_AGAIN" ), 40.0f, 7.0f, -40.0f, 9.0f, 9.0f);
 			Sprite lose( pTexture_man->GetTexture("LOSEATURN" ), -40.0f, 7.0f, -40.0f, 9.0f, 9.0f);
-			//Sprite sprite( pTexture_man->GetTexture("LOSEATURN" ), 0.0f, 30.0f, 0.0f, 20.0f, 20.0f); 
+			//Sprite sprite( pTexture_man->GetTexture("LOSEATURN" ), 0.0f, 30.0f, 0.0f, 20.0f, 20.0f);
 
 			//render roll again signs
 			roll.SetOffset( 0.0f, roll.GetHeight()/2.0f);
@@ -343,15 +321,12 @@ void Display::display(void)
 		}
 
 		glColor3f(1.0f,1.0f,1.0f);	//reset the color just in-case the next object doesn't have one
-
 	}
 	else
 		glDisable(GL_LIGHTING);
 
-	
 	//Render the game updates
-	Game_Man->Render();  
-
+	Game_Man->Render();
 
 	if( DATA("screengrid") )
 	{

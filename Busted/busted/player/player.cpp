@@ -20,10 +20,8 @@ void player::update(float t)
 
 		if( path_t > 1.0f /*this->posInc.x == 0 && this->posInc.z == 0*/ )
 		{
-
 			//spot setting
 			/**/
-
 
 			if(this->tmpTile->getNum() == this->getTile()->getNum())
 			{
@@ -56,17 +54,17 @@ void player::update(float t)
 				vec3 v1 = vec3( this->pos.x, this->pos.y, this->pos.z);
 
 				//point that is 5 units higher and a third the distance away from the the start
-				vec3 v2 = vec3( (MyTile->getPosX() +MyTile->getBases()[this->getID()-1].x - this->pos.x)/3.0f + this->pos.x, 
+				vec3 v2 = vec3( (MyTile->getPosX() +MyTile->getBases()[this->getID()-1].x - this->pos.x)/3.0f + this->pos.x,
 							DATA("HOP_HT") + this->pos.y,
 							(MyTile->getPosZ() +MyTile->getBases()[this->getID()-1].z - this->pos.z)/3.0f + this->pos.z);
 
 				//point that is 5 units higher and two/thirds the distance away from the the start
-				vec3 v3 = vec3( 2.0f*(MyTile->getPosX() +MyTile->getBases()[this->getID()-1].x - this->pos.x)/3.0f + this->pos.x, 
+				vec3 v3 = vec3( 2.0f*(MyTile->getPosX() +MyTile->getBases()[this->getID()-1].x - this->pos.x)/3.0f + this->pos.x,
 							DATA("HOP_HT") + this->pos.y,
 							2.0f*(MyTile->getPosZ() +MyTile->getBases()[this->getID()-1].z - this->pos.z)/3.0f + this->pos.z);
-				
+
 				//point at the goal destination of the next tile
-				vec3 v4 = vec3(	MyTile->getPosX() + MyTile->getBases()[this->getID()-1].x , 
+				vec3 v4 = vec3(	MyTile->getPosX() + MyTile->getBases()[this->getID()-1].x ,
 							MyTile->getPosY() + MyTile->getBases()[this->getID()-1].y,
 							MyTile->getPosZ() +MyTile->getBases()[this->getID()-1].z );
 
@@ -75,21 +73,18 @@ void player::update(float t)
 
 				path_t -= 1.0f;
 
-
 				//load in scaling animation
 				v1 = vec3( DATA("DEF_TOK_SCALE"), DATA("DEF_TOK_SCALE"), DATA("DEF_TOK_SCALE"));
-				v2 = vec3( DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"), 
-							DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"), 
+				v2 = vec3( DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"),
+							DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"),
 							DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Z"));
-				v3 = vec3(DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"), 
-							DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"), 
+				v3 = vec3(DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"),
+							DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"),
 							DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Z"));
-				
+
 				scale_anim = Spline( v1, v2, v3, v1);
-				
 			}
 		}
-
 
 		//Get the stored rotation, apply the increment to it...
 		vec3 rotation = vec3( (this->getRot().x + this->rotInc.x*t), (this->getRot().y + this->rotInc.y*t), (this->getRot().z + this->rotInc.z*t) );
@@ -102,16 +97,15 @@ void player::update(float t)
 		//get scale at the certain time
 		if( path_t > 0.5f )
 		{
-
 			vec3 v1 = vec3( DATA("DEF_TOK_SCALE"), DATA("DEF_TOK_SCALE"), DATA("DEF_TOK_SCALE"));
-			vec3 v2 = vec3( DATA("DEF_TOK_SCALE"), 
-						DATA("DEF_TOK_SCALE"), 
+			vec3 v2 = vec3( DATA("DEF_TOK_SCALE"),
+						DATA("DEF_TOK_SCALE"),
 						DATA("DEF_TOK_SCALE"));
-			vec3 v3 = vec3(DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"), 
-						DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"), 
+			vec3 v3 = vec3(DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"),
+						DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"),
 						DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"));
-			vec3 v4 = vec3(DATA("DEF_TOK_SCALE"), 
-						DATA("DEF_TOK_SCALE"), 
+			vec3 v4 = vec3(DATA("DEF_TOK_SCALE"),
+						DATA("DEF_TOK_SCALE"),
 						DATA("DEF_TOK_SCALE"));
 			scale_anim = Spline( v1, v2, v3, v4);
 
@@ -124,7 +118,6 @@ void player::update(float t)
 			vec3 scale = scale_anim.GetPoint(path_t*2.0f);
 			this->setScale(scale);
 		}
-
 	}
 }
 
@@ -138,9 +131,6 @@ void player::atDest(void)
 	this->bAtDest = true;
 	tile_action = this->getTile()->getAction();
 }
-
-
-
 
 void player::setScore(int value)	{ this->score = value; }
 void player::incScore(int value)	{ this->score += value; }
@@ -179,19 +169,17 @@ void player::incTile(int tilenumber)
 			}
 			stat.close();
 
-			
-
 		//calc points of the spline
 		tile *MyTile = this->tmpTile;
 		vec3 v1 = vec3( this->pos.x, this->pos.y, this->pos.z);
-		vec3 v2 = vec3( (MyTile->getPosX() +MyTile->getBases()[this->getID()-1].x - this->pos.x)/3.0f + this->pos.x, 
+		vec3 v2 = vec3( (MyTile->getPosX() +MyTile->getBases()[this->getID()-1].x - this->pos.x)/3.0f + this->pos.x,
 					DATA("HOP_HT") + this->pos.y,
 					(MyTile->getPosZ() +MyTile->getBases()[this->getID()-1].z - this->pos.z)/3.0f + this->pos.z);
 
-		vec3 v3 = vec3( 2.0f*(MyTile->getPosX() +MyTile->getBases()[this->getID()-1].x - this->pos.x)/3.0f + this->pos.x, 
+		vec3 v3 = vec3( 2.0f*(MyTile->getPosX() +MyTile->getBases()[this->getID()-1].x - this->pos.x)/3.0f + this->pos.x,
 					DATA("HOP_HT") + this->pos.y,
 					2.0f*(MyTile->getPosZ() +MyTile->getBases()[this->getID()-1].z - this->pos.z)/3.0f + this->pos.z);
-		vec3 v4 = vec3(	MyTile->getPosX() + MyTile->getBases()[this->getID()-1].x , 
+		vec3 v4 = vec3(	MyTile->getPosX() + MyTile->getBases()[this->getID()-1].x ,
 					MyTile->getPosY() + MyTile->getBases()[this->getID()-1].y,
 					MyTile->getPosZ() +MyTile->getBases()[this->getID()-1].z );
 
@@ -199,20 +187,19 @@ void player::incTile(int tilenumber)
 
 		//load in scaling animation
 		v1 = vec3( DATA("DEF_TOK_SCALE"), DATA("DEF_TOK_SCALE"), DATA("DEF_TOK_SCALE"));
-		v2 = vec3( DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"), 
-					DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"), 
+		v2 = vec3( DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"),
+					DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"),
 					DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Z"));
-		v3 = vec3(DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"), 
-					DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"), 
+		v3 = vec3(DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_X"),
+					DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Y"),
 					DATA("DEF_TOK_SCALE")*DATA("SCALE_MAX_Z"));
-		
+
 		scale_anim = Spline( v1, v2, v3, v1);
 
 		path_t = 0.0f;
 }
 tile* player::getTile(void)			{ return this->myTile; }
 tile* player::getTempTile(void)			{ return this->tmpTile; }
-
 
 player::player() :	score(0),
 					bAtDest(true),
@@ -226,7 +213,6 @@ player::player() :	score(0),
 					stat("../Busted/assets/stats/tileStats.txt"),
 					privacy(0)
 
-					
 {
 	//Start at beginning...
 	this->setTile(0);
@@ -238,7 +224,7 @@ player::player() :	score(0),
 	vec3 scale = vec3(DATA("DEF_TOK_SCALE"), DATA("DEF_TOK_SCALE"), DATA("DEF_TOK_SCALE"));
 	this->setScale(scale);
 
-	rot.y += 180.0f;	
+	rot.y += 180.0f;
 
 	vec3 position = vec3( pos.x, pos.y, pos.z );
 	movepath = Spline( position, position, position, position );
@@ -258,11 +244,8 @@ void player::Reset()
 	pos.z = getTile()->pos.z + getTile()->getBases()[getID()-1].z;
 
 	this->setPos(pos);
-
 }
 
 player::~player()
 {
 }
-
-

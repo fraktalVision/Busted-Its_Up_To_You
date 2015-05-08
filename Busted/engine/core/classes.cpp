@@ -33,7 +33,7 @@ thing::~thing()
 		this->pos = pos;
 	}
 	void locator::setPos(vec3 pos)
-	{ 
+	{
 		this->pos.x = pos.x;
 		this->pos.y = pos.y;
 		this->pos.z = pos.z;
@@ -49,9 +49,8 @@ thing::~thing()
 		pos.x = x;
 		pos.y = y;
 		pos.z = z;
-	}	
-	
-	
+	}
+
 	//Retrieve
 	vec4 locator::getPos(void)		{ return this->pos; }
 	float locator::getPosX(void)	{ return this->pos.x; }
@@ -153,7 +152,6 @@ mesh_type::mesh_type(int v, int t, int n, int p)
 	{
 		if(DATA("debug")) { std::cout << "bad_alloc: " << x.what() << std::endl; }
 	}
-
 }
 
 mesh_type::~mesh_type(void)
@@ -206,8 +204,6 @@ void obj::render(void)
 			//Global offset of the mesh away from the camera
 			glTranslatef(0.0,0.0,MODEL_OFFSET);
 
-			
-
 			//Manipulate object based on it's stored transformation values...
 				glTranslatef(this->getPos().x,this->getPos().y,this->getPos().z);
 
@@ -238,10 +234,8 @@ void obj::render(void)
 				{
 					mesh_type* subMesh = (*mi);	//An individual mesh
 
-					
-
 					glBegin(GL_TRIANGLES);
-						
+
 						//Loop through each polygon and draw it, adjust the normals, and set it's color
 						for(int j=0; j < subMesh->num_poly; ++j)
 						{
@@ -250,21 +244,21 @@ void obj::render(void)
 								glTexCoord2f( subMesh->texcoord	[ subMesh->texcoord_list[j].a ].x, 1.0f-subMesh->texcoord[ subMesh->texcoord_list[j].a ].y );
 							else
 								glColor3f	( this->getColor().a.x,this->getColor().a.y,this->getColor().a.z);
-							
+
 							glNormal3f	( subMesh->normal	[ subMesh->normal_list[j].a ].x, subMesh->normal	[ subMesh->normal_list	[j].a ].y, subMesh->normal[ subMesh->normal_list[j].a ].z );
 							glVertex3f	( subMesh->vertex	[ subMesh->vertex_list[j].a ].x, subMesh->vertex	[ subMesh->vertex_list	[j].a ].y, subMesh->vertex[ subMesh->vertex_list[j].a ].z );
-							
+
 							//Vert 2
-							
+
 							if(texture||this->getPina()->GetTextureID())
 								glTexCoord2f( subMesh->texcoord	[ subMesh->texcoord_list[j].b ].x, 1.0f-subMesh->texcoord[ subMesh->texcoord_list[j].b ].y );
 							else
 								glColor3f	( this->getColor().b.x,this->getColor().b.y,this->getColor().b.z);
 							glNormal3f	( subMesh->normal	[ subMesh->normal_list	[j].b ].x, subMesh->normal	[ subMesh->normal_list	[j].b ].y, subMesh->normal[ subMesh->normal_list[j].b ].z);
 							glVertex3f	( subMesh->vertex	[ subMesh->vertex_list	[j].b ].x, subMesh->vertex	[ subMesh->vertex_list	[j].b ].y, subMesh->vertex[ subMesh->vertex_list[j].b ].z);
-							
+
 							//Vert 3
-							
+
 							if(texture||this->getPina()->GetTextureID())
 								glTexCoord2f( subMesh->texcoord	[ subMesh->texcoord_list[j].c ].x, 1.0f-subMesh->texcoord[ subMesh->texcoord_list[j].c ].y );
 							else
@@ -275,8 +269,6 @@ void obj::render(void)
 						} // for polygon
 
 					glEnd();
-
-					
 				}// for submesh
 				//Stop texture
 				glBindTexture( GL_TEXTURE_2D, 0 );
@@ -329,10 +321,6 @@ void obj::render(void)
 	//If I'm moving, I won't anymore
 	this->nullTransforms();
 
-
-
-
-
 	if( addtolist )
 	{
 		//!!!!!!!!!!!!!!!!!!!!
@@ -353,7 +341,6 @@ obj::obj(std::string filename)
 }
 obj::~obj(){}
 
-
 void RemoveObject( obj* ob )
 {
 	for( std::vector<obj*>::iterator i = objStack.begin(); i != objStack.end(); ++i )
@@ -366,25 +353,18 @@ void RemoveObject( obj* ob )
 	}
 }
 
-
-
-
 //---------------------------
 //Camera
 //Modify view transforms based on where the camera is located
 void camera::render(void)
-{	
-
+{
 	glTranslatef( 0.0f, 0.0f,  -distance);
-
 
 	glRotatef(this->getRot().x , 1.0, 0.0, 0.0);
 	glRotatef(this->getRot().y , 0.0, 1.0, 0.0);
 	glRotatef(this->getRot().z , 0.0, 0.0, 1.0);
 
 	glTranslatef( -this->getPos().x, -this->getPos().y, -this->getPos().z );
-
-
 };
 
 camera::camera()
@@ -429,7 +409,6 @@ Spline::Spline()
 			points[p][q] = 0.0f;
 		}
 	}
-
 }
 
 Spline::Spline(vec3 p_one, vec3 p_two, vec3 p_three, vec3 p_four )
@@ -459,10 +438,7 @@ Spline::Spline(vec3 p_one, vec3 p_two, vec3 p_three, vec3 p_four )
 		C[i] = 3.0f * points[1][i] - 3.0f * points[0][i];
 		D[i] = points[0][i];
 	}
-
-
 }
-
 
 void Spline::operator=( Spline& sp )
 {
@@ -472,7 +448,7 @@ void Spline::operator=( Spline& sp )
 		A[i] = sp.A[i];
 		B[i] = sp.B[i];
 		C[i] = sp.C[i];
-		D[i] = sp.D[i];		
+		D[i] = sp.D[i];
 	}
 
 	//copy all points
@@ -485,7 +461,6 @@ void Spline::operator=( Spline& sp )
 	}
 }
 
-
 vec3 Spline::GetPoint(float t)
 {
 	vec3 result;
@@ -495,5 +470,4 @@ vec3 Spline::GetPoint(float t)
 	result.z = A[2] * t * t * t + B[2] * t * t + C[2] * t + D[2];
 
 	return result;
-
 }

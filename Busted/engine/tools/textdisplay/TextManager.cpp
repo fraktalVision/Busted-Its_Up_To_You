@@ -3,10 +3,9 @@
 #include "../textureload/textureImporter.h"
 #include "../datadrive/datadrive.h"
 
-
 /***********************************
 Text_Manager Constructor
-	
+
 Author: Jamie Gault
 ***********************************/
 Text_Manager::Text_Manager( std::string fonttexture )
@@ -15,11 +14,9 @@ Text_Manager::Text_Manager( std::string fonttexture )
 	m_initialized = ( m_textureID == 0 ) ? false : true;
 }
 
-
-
 /***********************************
 Text_Manager Deconstructor
-	
+
 Author: Jamie Gault
 ***********************************/
 Text_Manager::~Text_Manager()
@@ -33,7 +30,7 @@ Text_Manager::~Text_Manager()
 static float r = 1.0f;
 /***********************************
 Text_Manager Render
-	
+
 brief: renders the string stored in the text box using the parameters of the text box
 Author: Jamie Gault
 ***********************************/
@@ -47,40 +44,36 @@ void Text_Manager::Render( TextBox &textbox )
 		float y0 = textbox.GetPosY() + textbox.GetBGOffset(0,1);
 		float y1 = textbox.GetPosY() + textbox.GetBoxHeight()+ textbox.GetBGOffset(1,1);
 
-	
 		//if there is a background
 		if( textbox.GetBackGround() )
 		{
-			glBindTexture(GL_TEXTURE_2D, textbox.GetBackGround());			
-			glBegin(GL_QUADS);						
-				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);	
+			glBindTexture(GL_TEXTURE_2D, textbox.GetBackGround());
+			glBegin(GL_QUADS);
+				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 				glTexCoord2f(0,0);
-				glVertex2f(x0,y0);				
+				glVertex2f(x0,y0);
 
 				glTexCoord2f(0,1);
-				glVertex2f(x0,y1);				
+				glVertex2f(x0,y1);
 
 				glTexCoord2f(1,1);
-				glVertex2f(x1,y1);				
+				glVertex2f(x1,y1);
 
 				glTexCoord2f(1,0);
-				glVertex2f(x1,y0 );					
-			glEnd();			
-
+				glVertex2f(x1,y0 );
+			glEnd();
 		}
-		
-
 
 		// Bind text texture
-		glBindTexture(GL_TEXTURE_2D, m_textureID);			
+		glBindTexture(GL_TEXTURE_2D, m_textureID);
 
-		glColor4f(textbox.GetColourComp(0), textbox.GetColourComp(1), textbox.GetColourComp(2), textbox.GetColourComp(3));	
+		glColor4f(textbox.GetColourComp(0), textbox.GetColourComp(1), textbox.GetColourComp(2), textbox.GetColourComp(3));
 
 		//break the words up into a vector of strings
 		std::istringstream stream(textbox.GetString());
 		std::vector<std::string> word_vec ( (std::istream_iterator<std::string>(stream)), std::istream_iterator<std::string>());
 
-		std::vector<std::string>::iterator word_it = word_vec.begin(); 
+		std::vector<std::string>::iterator word_it = word_vec.begin();
 
 		glBegin(GL_QUADS);
 
@@ -94,7 +87,7 @@ void Text_Manager::Render( TextBox &textbox )
 			widthiter = GetLetterSpace(*(*word_it).begin()) - firstletteroffset;
 
 			//iterate through each letter, spacing based on letter width
-			for(std::string::iterator let_it = (*word_it).begin(); 
+			for(std::string::iterator let_it = (*word_it).begin();
 							let_it != (*word_it).end() ; ++let_it )
 			{
 				prevletlen = GetLetterSpace(*let_it); //space between previous letter
@@ -106,15 +99,14 @@ void Text_Manager::Render( TextBox &textbox )
 			while( word_it != word_vec.end() &&
 				 widthiter + wordlength < textbox.GetBoxWidth())
 			{
-
 				widthiter += GetLetterSpace(*(*word_it).begin()) - firstletteroffset;
 				//iterate through each letter, spacing based on letter width
-				for(std::string::iterator let_it = (*word_it).begin(); 
+				for(std::string::iterator let_it = (*word_it).begin();
 								let_it != (*word_it).end() ; ++let_it)
 				{
 					prevletlen = GetLetterSpace(*let_it); //space between previous letter
-					RenderLetter( textbox.GetPosX() + widthiter, 
-								textbox.GetPosY() + heightiter, 
+					RenderLetter( textbox.GetPosX() + widthiter,
+								textbox.GetPosY() + heightiter,
 								textbox.GetLetterWidth(), textbox.GetLetterHeight(), *let_it);
 					widthiter += DATA("LETTER_WID_SCALE")*textbox.GetLetterWidth()*(1.0f - (prevletlen+GetLetterSpace(*let_it)));
 				}
@@ -130,7 +122,7 @@ void Text_Manager::Render( TextBox &textbox )
 					wordlength += GetLetterSpace(*(*word_it).begin()) - firstletteroffset;
 
 					//calculate the length of the next word
-					for(std::string::iterator let_it = (*word_it).begin(); 
+					for(std::string::iterator let_it = (*word_it).begin();
 									let_it != (*word_it).end() ;  ++let_it)
 					{
 						prevletlen = GetLetterSpace(*let_it); //space between previous letter
@@ -138,10 +130,9 @@ void Text_Manager::Render( TextBox &textbox )
 										( 1.0f - (prevletlen + GetLetterSpace(*let_it)));
 					}
 					//wordlength +=DATA("LETTER_WID_SCALE")*textbox.GetLetterWidth()*(1.0f);
-
 				}
 			}
-			
+
 			//go to the next row
 			heightiter += DATA("LETTER_HT_SCALE") * textbox.GetLetterHeight();
 		}
@@ -166,19 +157,17 @@ void Text_Manager::Render( TextBox &textbox )
 		}
 
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-
 	}
 }
 
 /***********************************
 Text_Manager Render
-	
+
 brief: render a letter given
 Author: Jamie Gault
 ***********************************/
 void Text_Manager::RenderLetter( float x, float y, float width, float height, char c )
 {
-
 	float tx0 = (float(c%16)*32.0f)/512.0f;
 	float ty0 = (float(c/16)*32.0f)/512.0f;
 	float tx1 = tx0 + 32.0f/512.0f;
@@ -186,33 +175,31 @@ void Text_Manager::RenderLetter( float x, float y, float width, float height, ch
 	float x1 = x + width;
 	float y1 = y + width;
 
-	
 	//r = 1.0f - r;
 	//glColor4f(r, 0.0f, 0.0f, 1);
 	//glBegin(GL_LINE_LOOP);
-	//	glVertex2f(x, y);				
-	//	glVertex2f(x, y1);				// Second Vertex	
-	//	glVertex2f(x1,y1);				// Third Vertex		
-	//	glVertex2f(x1,y );				// Fourth Vertex	
+	//	glVertex2f(x, y);
+	//	glVertex2f(x, y1);				// Second Vertex
+	//	glVertex2f(x1,y1);				// Third Vertex
+	//	glVertex2f(x1,y );				// Fourth Vertex
 	//glEnd();
 
 	//std::cout << c << " \n";
 
 	//glBegin(GL_QUADS);						// Begin Drawing Quads
-		//glColor4f(1.0f, 1.0f, 1.0f, 1.0f);	
-		glTexCoord2f(tx0,ty0);			
-		glVertex2f(x, y);				
+		//glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glTexCoord2f(tx0,ty0);
+		glVertex2f(x, y);
 
-		glTexCoord2f(tx0,ty1);			
-		glVertex2f( x, y1);				// Second Vertex	
+		glTexCoord2f(tx0,ty1);
+		glVertex2f( x, y1);				// Second Vertex
 
-		glTexCoord2f(tx1,ty1);		
-		glVertex2f(x1,y1);				// Third Vertex		
-		
-		glTexCoord2f(tx1,ty0);			
-		glVertex2f(x1,y );				// Fourth Vertex	
+		glTexCoord2f(tx1,ty1);
+		glVertex2f(x1,y1);				// Third Vertex
+
+		glTexCoord2f(tx1,ty0);
+		glVertex2f(x1,y );				// Fourth Vertex
 	//glEnd();			// Done Drawing Quads
-
 }
 
 float GetLetterSpace( char c )
@@ -235,15 +222,14 @@ float GetLetterSpace( char c )
 	case 'E':
 	case 'H':
 	case 'K':
-	
+
 	case 'L':
 	case 'R':
-	
+
 	case 'V':
 	case 'X':
 	case 'Z':
 		return DATA("averageCapital");//0.06f;
-
 
 	case 'C':
 	case 'D':
@@ -302,7 +288,6 @@ float GetLetterSpace( char c )
 	case '"':
 		return 0.2f;
 
-
 	case 'm':
 	case 'æ':
 		return DATA("reallywideletter");
@@ -332,10 +317,8 @@ float GetLetterSpace( char c )
 
 		return DATA("wideletter");//-0.80f;
 
-
 	case 'o':
 		return 0.07f;
-
 
 	case 's':
 	case 'è':
@@ -354,7 +337,5 @@ float GetLetterSpace( char c )
 
 	default:
 		return 0.03f;
-
 	}
 }
-

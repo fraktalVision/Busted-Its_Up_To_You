@@ -1,6 +1,3 @@
-
-
-
 #include "Menu.h"
 #include "busted.all.h"
 #include "player/player.h"
@@ -8,8 +5,6 @@
 extern Input *pInput;
 extern Mentor_Manager *pMentor_man;
 extern Texture_Manager* pTexture_man;
-
-
 
 //m_state = SMS_GAME_SETUP - Game Setup Screen
 //
@@ -28,7 +23,6 @@ extern Texture_Manager* pTexture_man;
 //SetupMenu::Update - Checks when a mouse is clicked
 //SetupMenu::Render - Renders the items - positions set in setupmenu
 
-
 PlayerSetup::PlayerSetup( int player_id, pina* piece, MENTOR_ID men_id, int soundset, GENDER gender)
 	: m_ID( player_id )
 	, m_boardpiece(piece)
@@ -38,7 +32,6 @@ PlayerSetup::PlayerSetup( int player_id, pina* piece, MENTOR_ID men_id, int soun
 	, m_rollvalue(0)
 {}
 
-
 /***********************************
 IncDecArrows Constructor
 
@@ -47,15 +40,12 @@ Author: Jamie Gault
 IncDecArrows::IncDecArrows():	m_value(0), m_pressed(AA_NONE), m_max(0), m_min(0), m_inc(0),m_defvalue(0)
 {}
 
-
-
-
 /***********************************
 IncDecArrows Constructor
 
 Author: Jamie Gault
 ***********************************/
-IncDecArrows::IncDecArrows( unsigned int defvalue, float xL, float yL, float xR, float yR, 
+IncDecArrows::IncDecArrows( unsigned int defvalue, float xL, float yL, float xR, float yR,
 						   unsigned min, unsigned int max, unsigned int inc):
 								m_value(defvalue), m_pressed(AA_NONE), m_min(min), m_max(max), m_inc( inc), m_defvalue(defvalue)
 {
@@ -63,9 +53,7 @@ IncDecArrows::IncDecArrows( unsigned int defvalue, float xL, float yL, float xR,
 
 	m_Right_but = Box_2D( BT_SQUARE, xR, yR, DATA("ARROW_WID"), DATA("ARROW_HT"));
 	m_Right_but.SetBackGround( pTexture_man->GetTexture("TID_ARROW") );
-
 }
-
 
 /***********************************
 IncDecArrows Constructor
@@ -76,7 +64,6 @@ IncDecArrows::IncDecArrows( IncDecArrows &arrow )
 {
 	(*this) = arrow;
 }
-
 
 /***********************************
 IncDecArrows operator=
@@ -97,8 +84,6 @@ IncDecArrows& IncDecArrows::operator=( IncDecArrows &arrows)
 
 	return *this;
 }
-
-
 
 /***********************************
 IncDecArrows Update
@@ -129,14 +114,13 @@ void IncDecArrows::Update()
 	else
 		m_Right_but.SetBackGround( pTexture_man->GetTexture("TID_ARROW_IDLE") );
 
-
 	if( pInput->PollMouseBut(MLEFT) )
 	{
 		if( m_Left_but.IsMouseOver() )
 		{
 			if( m_value > m_min )
 			{
-				m_value -= m_inc; 
+				m_value -= m_inc;
 				m_pressed = AA_DEC;
 				m_Left_but.SetBackGround( pTexture_man->GetTexture("TID_ARROW_TRIG") );
 
@@ -148,7 +132,7 @@ void IncDecArrows::Update()
 		{
 			if( m_value < m_max )
 			{
-				m_value += m_inc;  
+				m_value += m_inc;
 				m_pressed = AA_INC;
 				m_Right_but.SetBackGround( pTexture_man->GetTexture("TID_ARROW_TRIG") );
 
@@ -166,10 +150,9 @@ Author: Jamie Gault
 ***********************************/
 void IncDecArrows::Render()
 {
-
 	if( m_value == m_min )
 		glColor4f(0.50f, 0.50f, 0.50f, 1.0f);
-	
+
 	m_Left_but.Render();
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -182,7 +165,6 @@ void IncDecArrows::Render()
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-
 /***********************************
 IncDecArrows IsPressed
 
@@ -192,8 +174,6 @@ ARROW_ACTION IncDecArrows::IsPressed()
 {
 	return m_pressed;
 }
-
-
 
 /***********************************
 IncDecArrows SetValue
@@ -205,10 +185,9 @@ void IncDecArrows::SetValue(int i )
 	//set value as long as within range
 	if( (unsigned)i >= m_min && (unsigned)i <= m_max )
 	{
-		m_value = i; 
+		m_value = i;
 	}
 }
-
 
 /***********************************
 IncDecArrows Reset
@@ -221,11 +200,6 @@ void IncDecArrows::Reset()
 	Update();
 }
 
-
-
-
-
-
 /***********************************
 NumberMenu Constructor
 
@@ -234,21 +208,18 @@ Author: Jamie Gault
 NumberMenu::NumberMenu()
 {}
 
-
 /***********************************
 NumberMenu Constructor
 
 Author: Jamie Gault
 ***********************************/
-NumberMenu::NumberMenu( Text_Manager* tm, std::string identifier, unsigned defvalue, 
+NumberMenu::NumberMenu( Text_Manager* tm, std::string identifier, unsigned defvalue,
 					   unsigned min, unsigned max, unsigned int inc, float x, float y, bool displaymax )
 {
-
 	m_displaymax = displaymax;
 
-	m_identifier = TextBox(tm, identifier, x, y, 
+	m_identifier = TextBox(tm, identifier, x, y,
 							500.0f, 10.0f, 30, 30 );
-
 
 	m_identifier.SetBackground(0);
 
@@ -259,7 +230,7 @@ NumberMenu::NumberMenu( Text_Manager* tm, std::string identifier, unsigned defva
 	else
 		s<< max;
 
-	m_value_display = TextBox( tm, s.str(), x*SCREEN_X_RATIO + m_identifier.GetBoxWidth()+20.0f, 
+	m_value_display = TextBox( tm, s.str(), x*SCREEN_X_RATIO + m_identifier.GetBoxWidth()+20.0f,
 								y*SCREEN_Y_RATIO, 500.0f, 15*SCREEN_X_RATIO, 40*SCREEN_X_RATIO, 40*SCREEN_Y_RATIO );
 	m_value_display.SetBGOffset(0.0f,1,1);
 
@@ -269,15 +240,13 @@ NumberMenu::NumberMenu( Text_Manager* tm, std::string identifier, unsigned defva
 	else
 		m_value_display.SetBackground(pTexture_man->GetTexture("TID_TEXTBG"));
 
-	m_arrows = IncDecArrows( defvalue, m_value_display.GetPosX() , 
-									m_value_display.GetPosY() + m_value_display.GetBoxHeight(),  
-									m_value_display.GetPosX() + DATA("ARROW_WID"), 
-									m_value_display.GetPosY() + m_value_display.GetBoxHeight(), min, max, inc ); 
+	m_arrows = IncDecArrows( defvalue, m_value_display.GetPosX() ,
+									m_value_display.GetPosY() + m_value_display.GetBoxHeight(),
+									m_value_display.GetPosX() + DATA("ARROW_WID"),
+									m_value_display.GetPosY() + m_value_display.GetBoxHeight(), min, max, inc );
 
 	UpdateValueDisplay();
-
 }
-
 
 /***********************************
 NumberMenu Constructor
@@ -288,7 +257,6 @@ NumberMenu::NumberMenu( NumberMenu& menu )
 {
 	(*this) = menu;
 }
-
 
 /***********************************
 NumberMenu operator=
@@ -308,7 +276,6 @@ NumberMenu& NumberMenu::operator=( NumberMenu& menu )
 	return *this;
 }
 
-
 /***********************************
 NumberMenu Update
 
@@ -324,7 +291,6 @@ void NumberMenu::Update()
 	}
 }
 
-
 /***********************************
 NumberMenu Render
 
@@ -338,7 +304,6 @@ void NumberMenu::Render()
 		m_value_display.Render();
 	}
 }
-
 
 /***********************************
 NumberMenu UpdateValueDisplay
@@ -356,12 +321,6 @@ void NumberMenu::UpdateValueDisplay()
 	m_value_display.SetString(s.str());
 }
 
-
-
-
-
-
-
 /***********************************
 EditMenu Constructor
 
@@ -372,17 +331,17 @@ EditMenu::EditMenu()
 
 EditMenu::EditMenu(Text_Manager * tm, std::string title, float x, float y, int max_length)
 {
-	m_title_box = TextBox( tm, title, x*SCREEN_X_RATIO, y*SCREEN_Y_RATIO, 
+	m_title_box = TextBox( tm, title, x*SCREEN_X_RATIO, y*SCREEN_Y_RATIO,
 				500.0f, 10.0f*SCREEN_X_RATIO, 30*SCREEN_X_RATIO, 30*SCREEN_Y_RATIO);
 	m_title_box.SetBackground(0);
 
-	m_input_box = TextBox( tm, 
+	m_input_box = TextBox( tm,
 			std::string(max_length, 'm'),
 			m_title_box.GetPosX() + m_title_box.GetBoxWidth() + 20,
 			m_title_box.GetPosY(),
 			500.0f,
-			10.0f*SCREEN_X_RATIO, 
-			30*SCREEN_X_RATIO, 
+			10.0f*SCREEN_X_RATIO,
+			30*SCREEN_X_RATIO,
 			30*SCREEN_Y_RATIO);
 	m_input_box.SetBackground(pTexture_man->GetTexture("TID_TEXTBG_L"));
 	m_input_box.SetString("");
@@ -391,17 +350,17 @@ EditMenu::EditMenu(Text_Manager * tm, std::string title, float x, float y, int m
 	m_max_text_length = max_length;
 }
 
-void EditMenu::Reset() 
+void EditMenu::Reset()
 {
 	m_input_box.SetString("");
 }
 
-void EditMenu::SetText(const std::string & text) 
+void EditMenu::SetText(const std::string & text)
 {
 	return m_input_box.SetString(text);
 }
 
-std::string EditMenu::GetText() 
+std::string EditMenu::GetText()
 {
 	return m_input_box.GetString();
 }
@@ -431,14 +390,6 @@ void EditMenu::Render()
 	}
 }
 
-
-
-
-
-
-
-
-
 /***********************************
 WordMenu Constructor
 
@@ -447,7 +398,6 @@ Author: Jamie Gault
 WordMenu::WordMenu()
 {}
 
-
 /***********************************
 WordMenu Constructor
 
@@ -455,12 +405,9 @@ Author: Jamie Gault
 ***********************************/
 WordMenu::WordMenu( Text_Manager* tm, std::string identifier, std::list<std::string> &options, float x, float y  )
 {
-
-	m_identifier = TextBox(tm, identifier, x*SCREEN_X_RATIO, y*SCREEN_Y_RATIO, 
+	m_identifier = TextBox(tm, identifier, x*SCREEN_X_RATIO, y*SCREEN_Y_RATIO,
 							500.0f, 10.0f*SCREEN_X_RATIO, 30*SCREEN_X_RATIO, 30*SCREEN_Y_RATIO);
 
-
-	
 	/*if( m_identifier.GetBoxHeight() > 128.0f || m_identifier.GetBoxWidth() > 256.0f )
 		m_identifier.SetBackground(pTexture_man->GetTexture("TID_TEXTBG_L"));
 	else
@@ -469,10 +416,8 @@ WordMenu::WordMenu( Text_Manager* tm, std::string identifier, std::list<std::str
 
 	m_identifier.SetBackground(0);
 
-
 	m_options.assign( options.begin(),  options.end());
 	m_cur_option = m_options.begin();
-
 
 	//find the longest string to enter into the box
 	std::string* s = &(*m_options.begin());
@@ -481,9 +426,8 @@ WordMenu::WordMenu( Text_Manager* tm, std::string identifier, std::list<std::str
 		if( s->length() < (*strit).length() )
 			s = &(*strit);
 	}
-	
 
-	m_option_display = TextBox( tm, *s , x + m_identifier.GetBoxWidth()+20.0f, y, 
+	m_option_display = TextBox( tm, *s , x + m_identifier.GetBoxWidth()+20.0f, y,
 								600.0f, 10.0f, 30, 30 );
 
 	m_option_display.SetBGOffset(0.0f,1,1);
@@ -492,20 +436,15 @@ WordMenu::WordMenu( Text_Manager* tm, std::string identifier, std::list<std::str
 		m_option_display.SetBackground(pTexture_man->GetTexture("TID_TEXTBG_L"));
 	else
 		m_option_display.SetBackground(pTexture_man->GetTexture("TID_TEXTBG"));
-	
 
-	m_arrows = IncDecArrows( 0, m_option_display.GetPosX() /*- m_option_display.GetBoxWidth()/4*/, 
-									m_option_display.GetPosY() + m_option_display.GetBoxHeight(),  
-									m_option_display.GetPosX() + DATA("ARROW_WID"), 
-									m_option_display.GetPosY() + m_option_display.GetBoxHeight(), 
-									0, (int)m_options.size()-1); 
-
-	
+	m_arrows = IncDecArrows( 0, m_option_display.GetPosX() /*- m_option_display.GetBoxWidth()/4*/,
+									m_option_display.GetPosY() + m_option_display.GetBoxHeight(),
+									m_option_display.GetPosX() + DATA("ARROW_WID"),
+									m_option_display.GetPosY() + m_option_display.GetBoxHeight(),
+									0, (int)m_options.size()-1);
 
 	UpdateDisplay();
-
 }
-
 
 /***********************************
 WordMenu Constructor
@@ -516,7 +455,6 @@ WordMenu::WordMenu( WordMenu& menu )
 {
 	(*this) = menu;
 }
-
 
 /***********************************
 WordMenu operator=
@@ -532,12 +470,10 @@ WordMenu& WordMenu::operator=( WordMenu& menu )
 	m_options.assign( menu.m_options.begin(),  menu.m_options.end());
 	m_cur_option = m_options.begin();
 
-
 	m_arrows = menu.m_arrows;
 
 	return *this;
 }
-
 
 /***********************************
 WordMenu Update
@@ -560,9 +496,7 @@ void WordMenu::Update()
 
 		UpdateDisplay();
 	}
-
 }
-
 
 /***********************************
 WordMenu Render
@@ -578,7 +512,6 @@ void WordMenu::Render()
 	}
 }
 
-
 /***********************************
 WordMenu UpdateValueDisplay
 
@@ -588,7 +521,6 @@ void WordMenu::UpdateDisplay()
 {
 	m_option_display.SetString(*m_cur_option);
 }
-
 
 /***********************************
 WordMenu SetToValue
@@ -609,11 +541,6 @@ void WordMenu::SetOption(int i)
 	UpdateDisplay();
 }
 
-
-
-
-
-
 /***********************************
 PieceOption Constructor
 
@@ -633,7 +560,6 @@ PieceOption::PieceOption(  pina* obj, std::string name ):  m_taken(false), m_tok
 	m_piece.rot.y = 180.0f;
 }
 
-
 /***********************************
 PieceOption Destructor
 
@@ -642,12 +568,7 @@ Author: Jamie Gault
 PieceOption::~PieceOption()
 {
 	//RemoveObject( &m_piece );
-
 }
-
-
-
-
 
 /***********************************
 PieceMenu Constructor
@@ -659,19 +580,17 @@ PieceMenu::PieceMenu(): m_action( PA_PAUSE )
 	base_pos[0] = 0.0f;
 	base_pos[1] = 3.0f;
 	base_pos[2] = 0.0f;
-	
+
 	goal_pos[0] = 0.0f;
 	goal_pos[1] = 3.0f;
 	goal_pos[2] = 0.0f;
 
-	m_arrows = IncDecArrows( 0, DATA("PIECE_ARROW_POSX"), DATA("PIECE_ARROW_POSY"), 
-							DATA("PIECE_ARROW_POSX")+ DATA("PIECE_ARROW_GAP"), DATA("PIECE_ARROW_POSY"), 
+	m_arrows = IncDecArrows( 0, DATA("PIECE_ARROW_POSX"), DATA("PIECE_ARROW_POSY"),
+							DATA("PIECE_ARROW_POSX")+ DATA("PIECE_ARROW_GAP"), DATA("PIECE_ARROW_POSY"),
 							0, (int)pModel_man->getTokens()->size() - 1 );
 
 	LoadDisplayPieces();
-
 }
-
 
 /***********************************
 PieceMenu Deconstructor
@@ -685,9 +604,7 @@ PieceMenu::~PieceMenu()
 	{
 		delete (*poi);
 	}
-
 }
-
 
 /***********************************
 PieceMenu Update
@@ -696,11 +613,8 @@ Author: Jamie Gault
 ***********************************/
 void PieceMenu::Update(float t)
 {
-
 	//spin current piece
 	(*m_selected_piece)->m_piece.rot.y += t;
-
-
 
 	//change the scale of all pieces
 	for( std::list<PieceOption*>::iterator poi =  m_pie_opt_list.begin() ;
@@ -722,7 +636,6 @@ void PieceMenu::Update(float t)
 					(*poi)->m_piece.scale.z = 4.0f;
 				}
 			}
-
 		}
 		else
 		{
@@ -738,19 +651,13 @@ void PieceMenu::Update(float t)
 					(*poi)->m_piece.scale.y = 1.5f;
 					(*poi)->m_piece.scale.z = 1.5f;
 				}
-
 			}
-
 		}
-
 	}
 
-
-	
 	//if the menu is shifting
 	if( m_action != PA_PAUSE )
 	{
-
 		//increment positions
 		if(  m_action == PA_MOVERIGHT )
 		{
@@ -762,7 +669,6 @@ void PieceMenu::Update(float t)
 				base_pos[0] = goal_pos[0];
 				m_action = PA_PAUSE;
 			}
-			
 		}
 		else if(  m_action == PA_MOVELEFT )
 		{
@@ -774,17 +680,13 @@ void PieceMenu::Update(float t)
 				base_pos[0] = goal_pos[0];
 				m_action = PA_PAUSE;
 			}
-			
 		}
 
-
 		UpdatePiecePos();
-
 	}
 	else
 	{
 		m_arrows.Update();
-
 
 		//if the left button was pressed
 		if( pInput->PollMouseBut(MLEFT) )
@@ -799,7 +701,6 @@ void PieceMenu::Update(float t)
 	}
 }
 
-
 /***********************************
 PieceMenu Render
 
@@ -809,7 +710,6 @@ void PieceMenu::Render()
 {
 	m_arrows.Render();
 }
-
 
 /***********************************
 PieceMenu Reset
@@ -827,7 +727,6 @@ void PieceMenu::Reset()
 
 	UpdatePiecePos();
 }
-
 
 /***********************************
 PieceMenu Reset
@@ -852,7 +751,7 @@ void PieceMenu::OpenPiece( pina* model )
 			break;
 		}
 		if (pieceOption->m_taken) {
-			// skip taken piece - it won't be shown, and we can 
+			// skip taken piece - it won't be shown, and we can
 			// properly rotate the carusel
 			continue;
 		}
@@ -865,8 +764,6 @@ void PieceMenu::OpenPiece( pina* model )
 	base_pos[0] = goal_pos[0];
 	UpdatePiecePos();
 }
-
-
 
 /***********************************
 PieceMenu ChoosePiece
@@ -891,7 +788,6 @@ PieceOption* PieceMenu::ChoosePiece()
 	return op;
 }
 
-
 /***********************************
 PieceMenu SetVisible
 
@@ -906,7 +802,6 @@ void PieceMenu::SetVisible( bool v, bool all)
 		(*poi)->m_piece.setVisible( v );
 	}
 }
-
 
 /***********************************
 PieceMenu MoveLeft
@@ -924,16 +819,13 @@ void PieceMenu::MoveLeft()
 	do
 	{ --poi; }
 	while( poi != m_pie_opt_list.begin() && (*poi)->m_taken );
-	
 
 	//the beginning of the list was found
 	if( poi == m_pie_opt_list.begin() && (*m_pie_opt_list.begin())->m_taken )
 		return;
 
-
 	vec3 v = vec3( 0.5f, 0.5f, 0.5f );
 	vec3 u = vec3( 1.0f, 1.0f, 1.0f );
-
 
 	(*m_selected_piece)->m_piece.setColor(v);
 
@@ -943,11 +835,8 @@ void PieceMenu::MoveLeft()
 
 	goal_pos[0] += DATA("PIECE_POS_STEP");
 
-	
 	m_action = PA_MOVELEFT;
-
 }
-
 
 /***********************************
 PieceMenu MoveRight
@@ -962,7 +851,6 @@ void PieceMenu::MoveRight()
 	do
 	{ ++poi; }
 	while( poi != m_pie_opt_list.end() && (*poi)->m_taken );
-
 
 	//the end was reached without finding a free piece
 	if( poi == m_pie_opt_list.end() )
@@ -979,12 +867,8 @@ void PieceMenu::MoveRight()
 
 	goal_pos[0] -= DATA("PIECE_POS_STEP");
 
-
 	m_action = PA_MOVERIGHT;
-
 }
-
-
 
 /***********************************
 PieceMenu LoadDisplayPieces
@@ -994,7 +878,7 @@ Author: Jamie Gault
 void PieceMenu::LoadDisplayPieces()
 {
 	PieceOption* option;
-	
+
 	for(std::map<std::string, Model*>::iterator ti = pModel_man->getTokens()->begin(); ti != pModel_man->getTokens()->end(); ++ti)
 	{
 		(*ti).second->mesh->SetTextureID( pTexture_man->GetTexture((*ti).second->texture) );
@@ -1006,10 +890,7 @@ void PieceMenu::LoadDisplayPieces()
 
 	//set all the pieces into position
 	UpdatePiecePos();
-
 }
-
-
 
 /***********************************
 PieceMenu UpdatePiecePos
@@ -1038,8 +919,6 @@ void PieceMenu::UpdatePiecePos()
 	}
 }
 
-
-
 /***********************************
 PieceMenu FindUnselected
 
@@ -1047,7 +926,6 @@ Author: Jamie Gault
 ***********************************/
 void PieceMenu::FindUnselected()
 {
-
 	for( std::list<PieceOption*>::iterator poi =  m_pie_opt_list.begin() ;
 		poi != m_pie_opt_list.end(); ++poi )
 	{
@@ -1059,15 +937,6 @@ void PieceMenu::FindUnselected()
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
 
 /***********************************
 MentorOption Constructor
@@ -1119,22 +988,14 @@ void MentorOption::Render()
 {
 	int pic = ( m_selected ) ? m_mentor->GetEmoPic(HAPPY) : m_mentor->GetEmoPic(NORMAL);
 
-	RenderCoordScreenImage( pic, 
-							m_box.GetPosX(), m_box.GetPosY(), m_box.GetPosX() + m_box.GetWidth(),  
+	RenderCoordScreenImage( pic,
+							m_box.GetPosX(), m_box.GetPosY(), m_box.GetPosX() + m_box.GetWidth(),
 							m_box.GetPosY() + m_box.GetHeight(), 1.0f);
 
 	if (m_box.IsMouseOver() || m_selected) {
 		m_box.Render();
 	}
 }
-
-
-
-
-
-
-
-
 
 /***********************************
 MentorMenu Constructor
@@ -1157,7 +1018,6 @@ MentorMenu::MentorMenu()
 	m_selected_mentor = *m_men_opt_vec.begin();
 }
 
-
 /***********************************
 MentorMenu Destructor
 
@@ -1171,7 +1031,6 @@ MentorMenu::~MentorMenu()
 		delete(*i);
 	}
 }
-
 
 /***********************************
 MentorMenu PollOptions
@@ -1215,7 +1074,6 @@ MentorOption* MentorMenu::PollOptions()
 	return m_selected_mentor; //returns if there was one already selected or not
 }
 
-
 /***********************************
 MentorMenu Render
 
@@ -1228,8 +1086,7 @@ void MentorMenu::Render()
 	}
 }
 
-
-void MentorMenu::SetSelectedMentor(int id) 
+void MentorMenu::SetSelectedMentor(int id)
 {
 	for (int i = 0; i < m_men_opt_vec.size(); ++i) {
 		if (i == id) {
@@ -1245,10 +1102,9 @@ void MentorMenu::SetSelectedMentor(int id)
 }
 
 MentorOption* MentorMenu::GetSelectedMentor()
-{ 
-	return m_selected_mentor; 
+{
+	return m_selected_mentor;
 }
-
 
 /***********************************
 ConfigConfirm Constructor
@@ -1261,9 +1117,8 @@ ConfigConfirm::ConfigConfirm(PlayerSetup::list_t & setups)
 
 	for(PlayerSetup::list_t::iterator psi = setups.begin()
 		; psi != setups.end()
-		; ++psi, inc_y += 100.0f ) 
+		; ++psi, inc_y += 100.0f )
 	{
-
 		TextBox * name = new TextBox( pText_man, psi->m_name, 0.0f, 125.0f + inc_y, 500.0f );
 		name->SetPosX(500.0f - name->GetBoxWidth() - 20);
 		name->SetBackground(pTexture_man->GetTexture("TID_TEXTBG"));
@@ -1275,7 +1130,6 @@ ConfigConfirm::ConfigConfirm(PlayerSetup::list_t & setups)
 
 		mentor_pics.push_back( new Box_2D( pMentor_man->GetMentor(psi->m_mentor )->GetEmoPic(HAPPY),
 										  600.0f, 100.0f+ inc_y, 100.0f, 100.0f ) );
-
 
 		std::string music;
 		switch(psi->m_soundset) {
@@ -1304,7 +1158,6 @@ ConfigConfirm::ConfigConfirm(PlayerSetup::list_t & setups)
 			gender_vec.push_back( new TextBox( pText_man, std::string("Boy"),  810.0f, 120.0f + inc_y, 500.0f ));
 		else
 			gender_vec.push_back( new TextBox( pText_man, std::string("Girl"),  810.0f, 120.0f + inc_y, 500.0f ));
-
 	}
 }
 
@@ -1315,7 +1168,6 @@ Author: Jamie Gault
 ***********************************/
 ConfigConfirm::~ConfigConfirm()
 {
-
 	for( std::vector<TextBox*>::iterator name = name_vec.begin(); name != name_vec.end(); ++name )
 		delete (*name);
 
@@ -1330,10 +1182,7 @@ ConfigConfirm::~ConfigConfirm()
 
 	for( std::vector<TextBox*>::iterator gender = gender_vec.begin(); gender != gender_vec.end(); ++gender )
 		delete (*gender);
-
-
 }
-
 
 /***********************************
 ConfigConfirm Render
@@ -1356,12 +1205,7 @@ void ConfigConfirm::Render()
 
 	for( std::vector<TextBox*>::iterator gender = gender_vec.begin(); gender != gender_vec.end(); ++gender )
 		(*gender)->Render();
-
 }
-
-
-
-
 
 /***********************************
 PictureMenu Constructor
@@ -1382,7 +1226,6 @@ PictureMenu::PictureMenu(std::vector<unsigned int> &pic_ids, std::vector<int> &m
 		PictureOption* p = new PictureOption( Box_2D(pic_ids[i], xstep, y, 100.0f, 100.0f ), menu_ids[i] );
 		m_pic_opt_vec.push_back(p);
 	}
-
 }
 PictureMenu::PictureMenu(std::vector<BtnTextureSet> &pic_ids, std::vector<int> &menu_ids, float x, float y, int max_row)
 {
@@ -1398,9 +1241,7 @@ PictureMenu::PictureMenu(std::vector<BtnTextureSet> &pic_ids, std::vector<int> &
 		PictureOption* p = new PictureOption( Box_2D(pic_ids[i].m_idle, xstep, y, 100.0f, 100.0f, pic_ids[i].m_mouse_over ), menu_ids[i] );
 		m_pic_opt_vec.push_back(p);
 	}
-
 }
-
 
 /***********************************
 PictureMenu Destructor
@@ -1415,7 +1256,6 @@ PictureMenu::~PictureMenu()
 		delete(*i);
 	}
 }
-
 
 /***********************************
 PictureMenu PollOptions
@@ -1469,13 +1309,6 @@ void PictureMenu::Reset()
 	}
 }
 
-
-
-
-
-
-
-
 Text_Manager* txt;
 
 /***********************************
@@ -1486,17 +1319,16 @@ Author: Jamie Gault
 SetupMenu::SetupMenu(Text_Manager* tm, GLuint t_id )
 	: m_player_cnt(0), m_state(SMS_GAME_SETUP), m_confirm(NULL)
 {
-
 	txt = tm;
 
 	m_playercounter = NumberMenu( tm, "Number of Players:", 2, 2, 5, 1,  DATA("PLYCNT_MENU_POSX"), DATA("PLYCNT_MENU_POSY"));
 
-	m_roundcount = NumberMenu( tm, "Rounds Limit:", DATA("DEFAULT_ROUND_LIMIT"), 
-								DATA("MIN_ROUND_LIMIT"), DATA("MAX_ROUND_LIMIT"),  DATA("ROUND_INC"), 
+	m_roundcount = NumberMenu( tm, "Rounds Limit:", DATA("DEFAULT_ROUND_LIMIT"),
+								DATA("MIN_ROUND_LIMIT"), DATA("MAX_ROUND_LIMIT"),  DATA("ROUND_INC"),
 								DATA("RNDCNT_MENU_POSX"), DATA("RNDCNT_MENU_POSY") );
 
-	m_scorecount = NumberMenu( tm, "Goal Score:", DATA("DEFAULT_SCORE_LIMIT"), 
-								DATA("MIN_SCORE_LIMIT"), DATA("MAX_SCORE_LIMIT"), 5, 
+	m_scorecount = NumberMenu( tm, "Goal Score:", DATA("DEFAULT_SCORE_LIMIT"),
+								DATA("MIN_SCORE_LIMIT"), DATA("MAX_SCORE_LIMIT"), 5,
 								DATA("SCRCNT_MENU_POSX"), DATA("SCRCNT_MENU_POSY"));
 	m_scorecount.setVisible(false);
 
@@ -1505,7 +1337,7 @@ SetupMenu::SetupMenu(Text_Manager* tm, GLuint t_id )
 	game_mode_op.push_back( std::string("when selected number of rounds are completed."));
 	game_mode_op.push_back( std::string("when one player reaches the selected high score."));
 	game_mode_op.push_back( std::string("when one player reaches the selected high score or highest score after a set number of turns."));
-	m_game_mode = WordMenu( tm, "Game Ends:", game_mode_op, 
+	m_game_mode = WordMenu( tm, "Game Ends:", game_mode_op,
 							DATA("GOAL_MENU_POSX"), DATA("GOAL_MENU_POSY") );
 
 	//load the privacy on off selection
@@ -1528,17 +1360,14 @@ SetupMenu::SetupMenu(Text_Manager* tm, GLuint t_id )
 	//							DATA("PRIVLIM_MENU_POSX"), DATA("PRIVLIM_MENU_POSY"));
 	//m_priv_lim_on.setVisible(false);
 
-
 	//setup the gender menu
 	std::list<std::string> gender_op;
 	gender_op.push_back( std::string("Boy"));
 	gender_op.push_back( std::string("Girl"));
 	m_gendersetter = WordMenu( tm, "Player Gender:", gender_op,
 								DATA("GENSET_MENU_POSX"), DATA("GENSET_MENU_POSY") );
-	
-	m_playername = EditMenu( tm, "Player Name:  ", DATA("PLNAME_MENU_POSX"), DATA("PLNAME_MENU_POSY"), DATA("PLNAME_MAX_LENGTH"));
-	
 
+	m_playername = EditMenu( tm, "Player Name:  ", DATA("PLNAME_MENU_POSX"), DATA("PLNAME_MENU_POSY"), DATA("PLNAME_MAX_LENGTH"));
 
 	//load in the sound menu
 	if(pMusic_man->getNumSets() > 0)
@@ -1573,7 +1402,6 @@ SetupMenu::SetupMenu(Text_Manager* tm, GLuint t_id )
 				caption = std::string("MsI_Folk");
 				alt = std::string("MsI_Folk_A");
 				break;
-	
 			}
 			BtnTextureSet set = {pTexture_man->GetTexture( caption), pTexture_man->GetTexture( alt), 0};
 
@@ -1582,11 +1410,9 @@ SetupMenu::SetupMenu(Text_Manager* tm, GLuint t_id )
 		}
 
 		m_soundsetter = new PictureMenu(imagelist, menu_ids, DATA("SNDSET_MENU_POSX"), DATA("SNDSET_MENU_POSY"), 5);
-
 	}
 	else
 		m_soundsetter = NULL;
-
 
 	//init buttons for moving back and forth between menus
 	m_Next_but = Answer( TextBox(tm,  DATA("NEXT_BUT_POS_X"), DATA("NEXT_BUT_POS_Y"), 128.0f*3.0f/4.0f, 64.0f*3.0f/4.0f ));
@@ -1601,9 +1427,9 @@ SetupMenu::SetupMenu(Text_Manager* tm, GLuint t_id )
 					pTexture_man->GetTexture("BACK_BUT_CLICK"));
 
 	m_menu_title = TextBox(txt
-		, std::string("") 
+		, std::string("")
 		, DATA("MENU_TITLE_POSX") //20.0f*SCREEN_X_RATIO
-		, DATA("MENU_TITLE_POSY") //20.0f*SCREEN_Y_RATIO, 
+		, DATA("MENU_TITLE_POSY") //20.0f*SCREEN_Y_RATIO,
 		, 800.0f
 		, 15.0f*SCREEN_X_RATIO
 		, 40*SCREEN_X_RATIO
@@ -1617,9 +1443,7 @@ SetupMenu::SetupMenu(Text_Manager* tm, GLuint t_id )
 		, 10.0f*SCREEN_X_RATIO
 		, 30*SCREEN_X_RATIO
 		, 30*SCREEN_Y_RATIO);
-
 }
-
 
 /***********************************
 SetupMenu Deconstructor
@@ -1636,10 +1460,6 @@ SetupMenu::~SetupMenu()
 	if( m_confirm )
 		delete m_confirm;
 }
-
-
-
-
 
 /***********************************
 SetupMenu Update
@@ -1662,7 +1482,7 @@ void SetupMenu::Update(float t)
 		//if( m_priv_on.GetOption() == 1 )
 		//{
 		//	m_priv_lim_on.Update();
-		//	m_priv_lim_on.setVisible(true);			
+		//	m_priv_lim_on.setVisible(true);
 		//} else {
 		//	m_priv_lim_on.setVisible(false);
 		//}
@@ -1707,7 +1527,7 @@ void SetupMenu::Update(float t)
 				pMusic_man->play(pMusic_man->getSndSet((result)) + "-happy");
 			}
 		}
-		
+
 		break;
 	case SMS_PLAYER_TOKEN:
 		m_piece_menu.Update(t);
@@ -1733,7 +1553,6 @@ void SetupMenu::Update(float t)
 	}
 }
 
-
 /***********************************
 SetupMenu StartGame
 
@@ -1743,8 +1562,6 @@ bool SetupMenu::StartGame()
 {
 	return m_state == SMS_START;
 }
-
-
 
 /***********************************
 SetupMenu BackToMain
@@ -1765,17 +1582,17 @@ void SetupMenu::Render()
 {
 	glColor3f(1.0f, 1.0f, 1.0f );
 
-	RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")), 
-						50.0f, 
-						50.0f, 
-						(DATA("SCREEN_WIDTH") -50.0f), 
+	RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")),
+						50.0f,
+						50.0f,
+						(DATA("SCREEN_WIDTH") -50.0f),
 						(DATA("SCREEN_HEIGHT") -50.0f));
 
 	m_menu_title.Render();
 
 	switch( m_state )
 	{
-	case SMS_GAME_SETUP: 
+	case SMS_GAME_SETUP:
 		m_playercounter.Render();
 		m_game_mode.Render();
 
@@ -1817,11 +1634,10 @@ void SetupMenu::Render()
 	////render what player is being active
 	//if(m_state == SMS_MENTOR || m_state == SMS_PLAYER_TOKEN || m_state == SMS_PLAYER_INFO) {
 	//	glBindTexture( GL_TEXTURE_2D, 0 );
-	//	TextBox box( txt, m_cur_setup->m_name, 400.0f*SCREEN_X_RATIO, 100.0f*SCREEN_Y_RATIO, 
+	//	TextBox box( txt, m_cur_setup->m_name, 400.0f*SCREEN_X_RATIO, 100.0f*SCREEN_Y_RATIO,
 	//				500.0f, 10.0f*SCREEN_X_RATIO, 30*SCREEN_X_RATIO, 30*SCREEN_Y_RATIO  );
 	//	box.Render();
 	//}
-
 
 	//render buttons
 	m_Next_but.Render();
@@ -1844,7 +1660,7 @@ void SetupMenu::DeactivateGameSetupView()
 	m_psetup_list.resize(m_player_cnt);
 	for (size_t i = prev_sz; i < m_player_cnt; ++i ) {
 		m_psetup_list[i] = PlayerSetup( i+1, NULL, M_NONE, -1, GEN_MALE );
-	}	
+	}
 	m_cur_setup = m_psetup_list.begin();
 }
 
@@ -1909,7 +1725,7 @@ void SetupMenu::ActivateMentorView()
 {
 	m_state = SMS_MENTOR;
 	m_ment_menu.SetSelectedMentor(m_cur_setup->m_mentor);
-	m_menu_title.SetString(m_cur_setup->m_name + ", Select Your Mentor", true);			
+	m_menu_title.SetString(m_cur_setup->m_name + ", Select Your Mentor", true);
 }
 
 void SetupMenu::DeactivateMentorView()
@@ -1954,7 +1770,7 @@ void SetupMenu::MoveNext()
 		ActivatePlayerInfoView();
 		break;
 
-	case SMS_PLAYER_INFO:	
+	case SMS_PLAYER_INFO:
 		DeactivatePlayerInfoView();
 		ActivatePlayerTokenView();
 		break;
@@ -1986,7 +1802,6 @@ void SetupMenu::MoveNext()
 	}
 }
 
-
 /***********************************
 SetupMenu Back
 
@@ -2015,7 +1830,7 @@ void SetupMenu::MoveBack()
 
 	case SMS_PLAYER_INFO:
 		DeactivatePlayerInfoView();
-		ActivatePlayerNameView();		
+		ActivatePlayerNameView();
 		break;
 
 	case SMS_PLAYER_TOKEN:
@@ -2039,7 +1854,6 @@ void SetupMenu::MoveBack()
 		break;
 	}
 }
-
 
 /***********************************
 SetupMenu ClearPlayerSetups

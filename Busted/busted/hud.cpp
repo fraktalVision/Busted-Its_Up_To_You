@@ -5,15 +5,10 @@
 
 */
 
-
-
-
 #include "busted.all.h"
 #include "hud.h"
 
-
 extern Texture_Manager* pTexture_man;
-
 
 /***********************************
 DiceDisplay Constructor
@@ -22,7 +17,6 @@ Author: Jamie Gault
 ***********************************/
 DiceDisplay::DiceDisplay(bool two_d, float x, float y): m_3D(two_d), m_rolling(false), m_updatedelay(0.0f), m_roll_state(ROLL_IDLE)
 {
-
 	if( m_3D )
 	{
 		screen_pos[0] = 0.0f;
@@ -30,7 +24,7 @@ DiceDisplay::DiceDisplay(bool two_d, float x, float y): m_3D(two_d), m_rolling(f
 	}
 	else
 	{
-		//set screen position 
+		//set screen position
 		screen_pos[0] = x;
 		screen_pos[1] = y;
 	}
@@ -55,10 +49,7 @@ DiceDisplay::DiceDisplay(bool two_d, float x, float y): m_3D(two_d), m_rolling(f
 			m_delt_ang[i][j] = 0.0f;
 		}
 	}
-
 }
-
-
 
 /***********************************
 DiceDisplay Update
@@ -147,11 +138,7 @@ void DiceDisplay::Update(float t)
 		}
 	}
 
-	
-
 }
-
-
 
 /***********************************
 DiceDisplay Render3D
@@ -171,8 +158,6 @@ void DiceDisplay::Render3D()
 	}
 }
 
-
-
 /***********************************
 DiceDisplay RenderDie3D
 
@@ -189,7 +174,6 @@ void DiceDisplay::RenderDie3D( DIE_SIDE s )
 
 		glTranslatef( 0.0f, -4.0f + screen_pos[1], -30.0f + screen_pos[0]);
 
-		
 		glRotatef( m_delt_ang[s][0], 1.0f, 0.0f, 0.0f );
 		glRotatef( m_delt_ang[s][1], 0.0f, 1.0f, 0.0f );
 		glRotatef( m_delt_ang[s][2], 0.0f, 0.0f, 1.0f );
@@ -224,7 +208,7 @@ void DiceDisplay::RenderDie3D( DIE_SIDE s )
 		{
 			//iterate through drawing the markers
 			int i = 1;
-			for( std::vector<unsigned int>::iterator marker_it = m_marker_vec.begin(); 
+			for( std::vector<unsigned int>::iterator marker_it = m_marker_vec.begin();
 				marker_it != m_marker_vec.end(); ++marker_it, ++i )
 			{
 				if( i <= m_display_values[0] )
@@ -241,7 +225,7 @@ void DiceDisplay::RenderDie3D( DIE_SIDE s )
 			//Draw the right die markers
 			//iterate through drawing the markers
 			int i = 1;
-			for( std::vector<unsigned int>::iterator marker_it = m_marker_vec.begin(); 
+			for( std::vector<unsigned int>::iterator marker_it = m_marker_vec.begin();
 				marker_it != m_marker_vec.end(); ++marker_it, ++i )
 			{
 				if( i > m_display_values[0] )
@@ -250,14 +234,9 @@ void DiceDisplay::RenderDie3D( DIE_SIDE s )
 					Render3DSide(m_display_values[1]);
 				}
 			}
-
-
 		}
 	glPopMatrix();
-
 }
-
-
 
 /***********************************
 DiceDisplay Render3DSide
@@ -266,32 +245,30 @@ Author: Jamie Gault
 ***********************************/
 void DiceDisplay::Render3DSide( int val )
 {
-
 	switch( val )
 	{
-
 	case 1:
 		glBegin(GL_QUADS);
-			glTexCoord2f(0,0);			
+			glTexCoord2f(0,0);
 			glVertex3f(-1.0f, 1.0f, 1.0f );
-			glTexCoord2f(0,1);			
+			glTexCoord2f(0,1);
 			glVertex3f(-1.0f, -1.0f, 1.0f );
-			glTexCoord2f(1,1);			
+			glTexCoord2f(1,1);
 			glVertex3f(1.0f, -1.0f, 1.0f );
-			glTexCoord2f(1,0);			
+			glTexCoord2f(1,0);
 			glVertex3f(1.0f, 1.0f, 1.0f );
 		glEnd();
 		break;
 
 	case 2:
 		glBegin(GL_QUADS);
-			glTexCoord2f(0,0);			
+			glTexCoord2f(0,0);
 			glVertex3f(1.0f, 1.0f, 1.0f );
-			glTexCoord2f(0,1);			
+			glTexCoord2f(0,1);
 			glVertex3f(1.0f, -1.0f, 1.0f );
-			glTexCoord2f(1,1);			
+			glTexCoord2f(1,1);
 			glVertex3f(1.0f, -1.0f, -1.0f );
-			glTexCoord2f(1,0);			
+			glTexCoord2f(1,0);
 			glVertex3f(1.0f, 1.0f, -1.0f );
 		glEnd();
 		break;
@@ -299,13 +276,13 @@ void DiceDisplay::Render3DSide( int val )
 	case 3:
 		//render side 3
 		glBegin(GL_QUADS);
-			glTexCoord2f(0,0);			
+			glTexCoord2f(0,0);
 			glVertex3f(-1.0f, 1.0f, -1.0f );
-			glTexCoord2f(0,1);			
+			glTexCoord2f(0,1);
 			glVertex3f(-1.0f, -1.0f, -1.0f );
-			glTexCoord2f(1,1);			
+			glTexCoord2f(1,1);
 			glVertex3f(-1.0f, -1.0f, 1.0f );
-			glTexCoord2f(1,0);			
+			glTexCoord2f(1,0);
 			glVertex3f(-1.0f, 1.0f, 1.0f );
 		glEnd();
 		break;
@@ -313,13 +290,13 @@ void DiceDisplay::Render3DSide( int val )
 	case 4:
 		//render side 4;
 		glBegin(GL_QUADS);
-			glTexCoord2f(0,0);			
+			glTexCoord2f(0,0);
 			glVertex3f(-1.0f, -1.0f, 1.0f );
-			glTexCoord2f(0,1);			
+			glTexCoord2f(0,1);
 			glVertex3f(-1.0f, -1.0f, -1.0f );
-			glTexCoord2f(1,1);			
+			glTexCoord2f(1,1);
 			glVertex3f(1.0f, -1.0f, -1.0f );
-			glTexCoord2f(1,0);			
+			glTexCoord2f(1,0);
 			glVertex3f(1.0f, -1.0f, 1.0f );
 		glEnd();
 		break;
@@ -327,13 +304,13 @@ void DiceDisplay::Render3DSide( int val )
 	case 5:
 		//render side 5;
 		glBegin(GL_QUADS);
-			glTexCoord2f(1,1);			
+			glTexCoord2f(1,1);
 			glVertex3f(1.0f, 1.0f, 1.0f );
-			glTexCoord2f(1,0);			
+			glTexCoord2f(1,0);
 			glVertex3f(1.0f, 1.0f, -1.0f );
-			glTexCoord2f(0,0);			
+			glTexCoord2f(0,0);
 			glVertex3f(-1.0f, 1.0f, -1.0f );
-			glTexCoord2f(0,1);			
+			glTexCoord2f(0,1);
 			glVertex3f(-1.0f, 1.0f, 1.0f );
 		glEnd();
 		break;
@@ -341,20 +318,18 @@ void DiceDisplay::Render3DSide( int val )
 	case 6:
 		//render side 6;
 		glBegin(GL_QUADS);
-			glTexCoord2f(1,1);			
+			glTexCoord2f(1,1);
 			glVertex3f(1.0f, 1.0f, -1.0f );
-			glTexCoord2f(1,0);			
+			glTexCoord2f(1,0);
 			glVertex3f(1.0f, -1.0f, -1.0f );
-			glTexCoord2f(0,0);			
+			glTexCoord2f(0,0);
 			glVertex3f(-1.0f, -1.0f, -1.0f );
-			glTexCoord2f(0,1);			
+			glTexCoord2f(0,1);
 			glVertex3f(-1.0f, 1.0f, -1.0f );
 		glEnd();
 		break;
 	}
 }
-
-
 
 /***********************************
 DiceDisplay Render2D
@@ -365,15 +340,15 @@ void DiceDisplay::Render2D()
 {
 	if(!m_3D)
 	{
-		RenderCoordScreenImage( m_dice_textures[m_display_values[0] - 1], 
+		RenderCoordScreenImage( m_dice_textures[m_display_values[0] - 1],
 								screen_pos[0], screen_pos[1], screen_pos[0]+75.0f, screen_pos[1]+75.0f);
 
-		RenderCoordScreenImage( m_dice_textures[m_display_values[1] - 1], 
+		RenderCoordScreenImage( m_dice_textures[m_display_values[1] - 1],
 								screen_pos[0] + 100.0f, screen_pos[1], screen_pos[0]+75.0f + 100.0f, screen_pos[1]+75.0f);
 
 		//iterate through drawing the markers
 		int i = 1;
-		for( std::vector<unsigned int>::iterator marker_it = m_marker_vec.begin(); 
+		for( std::vector<unsigned int>::iterator marker_it = m_marker_vec.begin();
 			marker_it != m_marker_vec.end(); ++marker_it, ++i )
 		{
 			if( i <= m_display_values[0] )
@@ -382,9 +357,7 @@ void DiceDisplay::Render2D()
 				RenderCoordScreenImage( *marker_it, screen_pos[0] + 75.0f, screen_pos[1], screen_pos[0]+75.0f + 150.0f, screen_pos[1]+75.0f);
 		}
 	}
-
 }
-
 
 /***********************************
 DiceDisplay RollDice
@@ -395,7 +368,7 @@ void DiceDisplay::RollDice()
 {
 	if( m_roll_state != ROLL_IDLE )
 		return;
-	
+
 	PickNewNumbers();
 
 	m_total_steps = m_display_values[0] + m_display_values[1];
@@ -408,11 +381,7 @@ void DiceDisplay::RollDice()
 	}
 	else
 		m_rolling = false;
-
-
 }
-
-
 
 /***********************************
 DiceDisplay SetDisplayValues
@@ -472,12 +441,8 @@ void DiceDisplay::SetDie3DOrient( DIE_SIDE side )
 		m_orig_ang[s][1] = 0.0f;
 		m_orig_ang[s][2] = 0.0f;
 		break;
-
 	}
-
 }
-
-
 
 /***********************************
 DiceDisplay PickNewNumbers
@@ -495,7 +460,6 @@ void DiceDisplay::PickNewNumbers()
 	m_display_values[1] = ( value < m_display_values[1] )? value: value + 1;
 }
 
-
 /***********************************
 DiceDisplay IncrementStep
 
@@ -509,10 +473,7 @@ void DiceDisplay::IncrementStep()
 		m_marker_vec.push_back(GetMarkerValue(m_display_values[0], m_cur_step ));
 	else
 		m_marker_vec.push_back(GetMarkerValue(m_display_values[1], m_cur_step - m_display_values[0] ));
-
 }
-
-
 
 /***********************************
 DiceDisplay AddMarker
@@ -521,7 +482,6 @@ Author: Jamie Gault
 ***********************************/
 GLuint DiceDisplay::GetMarkerValue(int dieside, int cur_count )
 {
-
 	switch( dieside )
 	{
 	default:
@@ -594,24 +554,19 @@ GLuint DiceDisplay::GetMarkerValue(int dieside, int cur_count )
 	return pTexture_man->GetTexture("DIE_SPOT_CM");
 }
 
-
 /***********************************
 DiceDisplay AddMarker
 
 Author: Jamie Gault
 ***********************************/
-void DiceDisplay::SetToRoll() 
-{ 
-	m_rolling = true; 
+void DiceDisplay::SetToRoll()
+{
+	m_rolling = true;
 	m_marker_vec.clear();
 	m_roll_state = ROLL_IDLE;
 
 	m_delt_ang[0][0] += 82.0f; //keeps the two dice from syncing up and turning in unison
 }
-
-
-
-
 
 /***********************************
 PlayOrderRoll Constructor
@@ -633,7 +588,6 @@ PlayOrderRoll::PlayOrderRoll(): IsComplete(false),
 	m_footer = TextBox(pText_man, std::string("Click the mouse to continue")
 			, 300.0f, 700.0f
 			, 1000.0f, 10.0f, 30.0f, 30.0f );
-
 }
 
 /***********************************
@@ -667,8 +621,7 @@ void PlayOrderRoll::Update(float t)
 		(*dice_it)->Update(t);
 	}
 
-
-	for( std::vector<Answer*>::iterator stop_it = m_stopbut_vec.begin(); 
+	for( std::vector<Answer*>::iterator stop_it = m_stopbut_vec.begin();
 			stop_it != m_stopbut_vec.end(); ++stop_it )
 	{
 		(*stop_it)->Update(t);
@@ -680,15 +633,14 @@ void PlayOrderRoll::Update(float t)
 		//check for if all dice have been rolled
 		if( m_roll_count == m_players.size() )
 		{
-
 			//the person is done using the dice roll system
-			IsComplete = true;	
+			IsComplete = true;
 		}
 		else
 		{
 			int userid = 0;
 			int stopmarker = -1;
-			for( std::vector<Answer*>::iterator stop_it = m_stopbut_vec.begin(); 
+			for( std::vector<Answer*>::iterator stop_it = m_stopbut_vec.begin();
 			stop_it != m_stopbut_vec.end(); ++stop_it, ++userid )
 			{
 				if( (*stop_it)->IsMouseOver() )
@@ -702,7 +654,6 @@ void PlayOrderRoll::Update(float t)
 			if( stopmarker != -1 )
 			{
 				pMusic_man->play("BTN_C");
-
 
 				//if dice haven't been rolled yet
 				if( !m_dicerolls[stopmarker]->ResultsShown() )
@@ -721,9 +672,8 @@ void PlayOrderRoll::Update(float t)
 							if( *i == m_dicerolls[stopmarker]->GetTotalValue() )
 							{	rollagain = true; break;	}
 						}
-
 					}while ( rollagain );
-					
+
 					m_values_taken.push_back(m_dicerolls[stopmarker]->GetTotalValue());
 
 					++m_roll_count;
@@ -732,18 +682,16 @@ void PlayOrderRoll::Update(float t)
 		}
 	}
 
-
 	//check for if all dice have been rolled
 	if( m_roll_count == m_players.size() )
 	{
-
 		//if determining the play order was successful, move on
 		if( ! results_shown)
 		{
 			results_shown = DeterminePlayerOrder();
 			if (results_shown) {
 				m_title.SetString("The order is...");
-				
+
 				// reorder player names
 				float base_x = 300.0f;
 				float base_y = 75.0f;
@@ -751,7 +699,6 @@ void PlayOrderRoll::Update(float t)
 				float delta_y = -120.0f;
 				m_animation_speed.resize(m_players.size());
 				for (int i = 0; i < m_players.size(); ++i) {
-
 				}
 			}
 		}
@@ -760,19 +707,16 @@ void PlayOrderRoll::Update(float t)
 		if( interp_cntr < INTERPMAX )
 			//have the delay counter increment
 			interp_cntr += 4.0f*t;
-		else 
+		else
 			interp_cntr = INTERPMAX;
 
-
-
 		////render the icons for the play order once it's decided
-		//for( std::vector<Box_2D*>::iterator tokres_it = m_tok_results_icons.begin(); 
+		//for( std::vector<Box_2D*>::iterator tokres_it = m_tok_results_icons.begin();
 		//tokres_it != m_tok_results_icons.end(); ++tokres_it )
 		//{
 		//	(*tokres_it)->SetPosX(230.0f - 300.0f *(1.0f - GetInterp()) );
 		//}
 	}
-
 }
 
 /***********************************
@@ -791,10 +735,10 @@ void PlayOrderRoll::Render()
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 	//render the frame background
-	RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")), 
-					50.0f*SCREEN_X_RATIO, 
-					50.0f*SCREEN_Y_RATIO, 
-					(DATA("SCREEN_WIDTH") -50.0f), 
+	RenderCoordScreenImage( pTexture_man->GetTexture(std::string("MENU_BACKGROUND")),
+					50.0f*SCREEN_X_RATIO,
+					50.0f*SCREEN_Y_RATIO,
+					(DATA("SCREEN_WIDTH") -50.0f),
 					(DATA("SCREEN_HEIGHT") -50.0f));
 
 	m_title.Render();
@@ -810,7 +754,6 @@ void PlayOrderRoll::Render()
 		if (results_shown) {
 			float y = base_y + i * delta_y + m_animation_speed[i] * anim_factor;
 			box->SetPosY(y);
-
 		}
 		box->Render();
 	}
@@ -850,7 +793,7 @@ void PlayOrderRoll::Render()
 	if( results_shown ) {
 		m_footer.Render();
 	}
-	
+
 	//render the icons for the play order once it's decided
 	for( std::vector<Box_2D*>::iterator tokres_it = m_tok_results_icons.begin()
 		; tokres_it != m_tok_results_icons.end()
@@ -859,8 +802,6 @@ void PlayOrderRoll::Render()
 		(*tokres_it)->Render();
 	}
 }
-
-
 
 /***********************************
 PlayOrderRoll Load
@@ -908,14 +849,13 @@ void PlayOrderRoll::Load(PlayerSetup::list_t & players)
 		m_dicerolls.push_back(dice);
 
 		//load button for rolling
-		Answer* ans = new Answer( pText_man, std::string("Stop!") 
+		Answer* ans = new Answer( pText_man, std::string("Stop!")
 			//, 685.0f + 100.0f*SCREEN_X_RATIO, (200.0f + delta_y)*SCREEN_Y_RATIO
 			, base_x + delta_x + 285.0f, base_y + delta_y + 25.0f
-			, 1000.0f); 
+			, 1000.0f);
 		m_stopbut_vec.push_back(ans);
 	}
 }
-
 
 /***********************************
 PlayOrderRoll DeterminePlayerOrder
@@ -946,7 +886,7 @@ bool PlayOrderRoll::DeterminePlayerOrder()
 		}
 
 		std::sort(m_players.begin(), m_players.end());
-			
+
 		ol_loaded = true;
 	}
 
@@ -957,10 +897,6 @@ bool PlayOrderRoll::DeterminePlayerOrder()
 		return false;
 }
 
-
-
-
-
 /***********************************
 ScoreDisplay Constructor
 
@@ -968,13 +904,11 @@ Author: Jamie Gault
 ***********************************/
 ScoreDisplay::ScoreDisplay(std::vector<player*> &playerlist ): active_player(0), Anim_on(false)
 {
-	
 	//render the highlight over the person who's turn it is
-	turnHL = Box_2D( pTexture_man->GetTexture( "TurnHighLigh" ),  
-			(DATA("ICON_POS_X") + DATA("ICON_SPACE_X")*(float)active_player - 60.0f), 
-			DATA("ICON_POS_Y")-40.0f, 
+	turnHL = Box_2D( pTexture_man->GetTexture( "TurnHighLigh" ),
+			(DATA("ICON_POS_X") + DATA("ICON_SPACE_X")*(float)active_player - 60.0f),
+			DATA("ICON_POS_Y")-40.0f,
 			128.0f*SCREEN_X_RATIO, 128.0f*SCREEN_Y_RATIO);
-
 
 	float xpos = DATA("ICON_POS_X");
 	float ypos = DATA("ICON_POS_Y");
@@ -983,13 +917,11 @@ ScoreDisplay::ScoreDisplay(std::vector<player*> &playerlist ): active_player(0),
 	//iterate through all the player setups and load in the icons
 	for( std::vector<player*>::iterator psi = playerlist.begin(); psi != playerlist.end(); ++psi, ++count)
 	{
-			
 		score.push_back(0);
 
-	
 		//setup the box that holds the score
-		TextBox* scoreb = new TextBox(pText_man, (xpos + space*count), ypos, 
-								60.0f, 60.0f, 
+		TextBox* scoreb = new TextBox(pText_man, (xpos + space*count), ypos,
+								60.0f, 60.0f,
 								10.0f, 35.0f, 35.0f);
 
 		scoreb->SetString( "00" );
@@ -1003,19 +935,15 @@ ScoreDisplay::ScoreDisplay(std::vector<player*> &playerlist ): active_player(0),
 		scoreb->SetBackground( pTexture_man->GetTexture(std::string("score_frame")));
 		score_boxes.push_back( scoreb );
 
-
 		//determine the name of the texture id
 		std::string iconname("icon_");
 		iconname.append((*psi)->getName());
 
-		icon_boxes.push_back( new Box_2D( pTexture_man->GetTexture( iconname ),  
-							(xpos + space*count - 100.0f)*SCREEN_X_RATIO, ypos-50.0f, 
+		icon_boxes.push_back( new Box_2D( pTexture_man->GetTexture( iconname ),
+							(xpos + space*count - 100.0f)*SCREEN_X_RATIO, ypos-50.0f,
 							128.0f*SCREEN_X_RATIO, 128.0f*SCREEN_Y_RATIO) );
 	}
-
 }
-
-
 
 /***********************************
 ScoreDisplay Destructor
@@ -1037,7 +965,6 @@ ScoreDisplay::~ScoreDisplay()
 	}
 }
 
-
 /***********************************
 ScoreDisplay Update
 
@@ -1045,7 +972,6 @@ Author: Jamie Gault
 ***********************************/
 void ScoreDisplay::Update(float t)
 {
-
 	if( Anim_on )
 	{
 		accum_time += t;
@@ -1067,17 +993,14 @@ void ScoreDisplay::Update(float t)
 		}
 		else
 		{
-			anim_box.SetPosY( DATA("ICON_POS_Y")- 100.0f*accum_time/DATA("SCORE_TIME_LIMIT") );	
+			anim_box.SetPosY( DATA("ICON_POS_Y")- 100.0f*accum_time/DATA("SCORE_TIME_LIMIT") );
 		}
 	}
 
 	turnHL.angle += t;
 
 	turnHL.SetPosX((DATA("ICON_POS_X") + DATA("ICON_SPACE_X")*(float)active_player - 60.0f)*SCREEN_X_RATIO);
-
 }
-
-
 
 /***********************************
 ScoreDisplay Render
@@ -1102,10 +1025,9 @@ void ScoreDisplay::Render()
 		(*box)->Render();
 	}
 
-	if( Anim_on) 
+	if( Anim_on)
 		anim_box.Render();
 }
-
 
 /***********************************
 ScoreDisplay AddPoints
@@ -1114,10 +1036,8 @@ Author: Jamie Gault
 ***********************************/
 void ScoreDisplay::AddPoints(int player_id, int points)
 {
-
 	if( points == 0 )
 		return;
-	
 
 	accum_time = 0.0f;
 	anim_pl_id = player_id;
@@ -1125,7 +1045,6 @@ void ScoreDisplay::AddPoints(int player_id, int points)
 	Anim_on = true;
 
 	std::stringstream scorestring;
-
 
 	//generate the string for the texture
 	if( points >= 0 )
@@ -1135,14 +1054,10 @@ void ScoreDisplay::AddPoints(int player_id, int points)
 
 	int i= pTexture_man->GetTexture(scorestring.str());
 
-	anim_box = Box_2D( i, (DATA("ICON_POS_X") + DATA("ICON_SPACE_X")*(float)active_player)-50.0f, 
+	anim_box = Box_2D( i, (DATA("ICON_POS_X") + DATA("ICON_SPACE_X")*(float)active_player)-50.0f,
 								DATA("ICON_POS_Y") , 100.0f, 100.0f);
 
-
-	
 }
-
-
 
 /***********************************
 ScoreDisplay AddPoints
@@ -1153,16 +1068,13 @@ void ScoreDisplay::Reset()
 {
 	int id = 0;
 	for( std::vector<int>::iterator sc = score.begin(); sc!= score.end() ; ++sc, ++id)
-	{		
+	{
 		*sc = 0;
 		std::stringstream s;
 		s<< "0"<<*sc;
 		(score_boxes[id])->SetString( s.str() );
 	}
-
 }
-
-
 
 /***********************************
 EndDisplay Constructor
@@ -1171,7 +1083,6 @@ Author: Jamie Gault
 ***********************************/
 EndDisplay::EndDisplay( WinData & win_data )
 {
-
 		std::stringstream title;
 
 		if( win_data.turn == win_data.turn_limit )
@@ -1179,35 +1090,30 @@ EndDisplay::EndDisplay( WinData & win_data )
 		else
 			title << "We have a winner!   ";
 
-	
-
 		//add to the title to the list of things to be rendered
-		txtbox_vec.push_back(new TextBox(pText_man, title.str() , 
-							100.0f*SCREEN_X_RATIO, 200.0f*SCREEN_Y_RATIO, 
+		txtbox_vec.push_back(new TextBox(pText_man, title.str() ,
+							100.0f*SCREEN_X_RATIO, 200.0f*SCREEN_Y_RATIO,
 							500.0f, 10.0f*SCREEN_X_RATIO, 30*SCREEN_X_RATIO, 30*SCREEN_Y_RATIO ));
-	
-		
 
 		int size = (int)win_data.winner.size();
 
 		//if there's more than one winner
 		if( size > 1 )
 		{
-			std::stringstream win; 
+			std::stringstream win;
 
 			win << "  Tie! ";
 
-			TextBox* t = new TextBox(pText_man, win.str() , 
-								300.0f, 300.0f, 
+			TextBox* t = new TextBox(pText_man, win.str() ,
+								300.0f, 300.0f,
 								700.0f, 10.0f, 30, 30 );
 			txtbox_vec.push_back(t);
 			win.flush();
 
 			player* end = win_data.winner.back();
 
-
 			float x = 30.0f + t->GetBoxWidth();
-			
+
 			//list out all winners
 			for( std::vector<player*>::iterator p = win_data.winner.begin(); p != win_data.winner.end() ; ++p )
 			{
@@ -1219,57 +1125,49 @@ EndDisplay::EndDisplay( WinData & win_data )
 					str << " win with a score of " << (*p)->getScore() << "!";
 				}
 				else
-				{					
+				{
 					str << "and";
 				}
 
-				tok_ics.push_back(new Box_2D( pTexture_man->GetTexture(std::string("icon_") + (*p)->getName()), 
-										DATA("END_TIELIST_POSX") + x, 
-										DATA("END_TIELIST_POSY") + DATA("END_ICON_OFFSETY"), 
+				tok_ics.push_back(new Box_2D( pTexture_man->GetTexture(std::string("icon_") + (*p)->getName()),
+										DATA("END_TIELIST_POSX") + x,
+										DATA("END_TIELIST_POSY") + DATA("END_ICON_OFFSETY"),
 										DATA("END_TIEICON_WD"),DATA("END_TIEICON_HT")));
 				x += 80.0f;
 
-
-				TextBox* box = new TextBox(pText_man, str.str() , 
-												DATA("END_TIELIST_POSX") + x, DATA("END_TIELIST_POSY"), 
+				TextBox* box = new TextBox(pText_man, str.str() ,
+												DATA("END_TIELIST_POSX") + x, DATA("END_TIELIST_POSY"),
 												700.0f, 10.0f, 30, 30 );
 
 				txtbox_vec.push_back(box);
 
 				//increment by the width of the box
-				x +=  box->GetBoxWidth(); 
+				x +=  box->GetBoxWidth();
 			}
 		}
 		else
 		{
 			float x = 0.0f;
 
-			tok_ics.push_back(new Box_2D( pTexture_man->GetTexture(std::string("icon_") + (*win_data.winner.begin())->getName()), 
-										DATA("END_ONEWIN_POSX") + DATA("END_ICON_OFFSETX") + x, 
-										DATA("END_ONEWIN_POSY") + DATA("END_ICON_OFFSETY"), 
+			tok_ics.push_back(new Box_2D( pTexture_man->GetTexture(std::string("icon_") + (*win_data.winner.begin())->getName()),
+										DATA("END_ONEWIN_POSX") + DATA("END_ICON_OFFSETX") + x,
+										DATA("END_ONEWIN_POSY") + DATA("END_ICON_OFFSETY"),
 										DATA("END_WINICON_WD"),DATA("END_WINICON_HT") ));
 			x += 120.0f;
 
-			std::stringstream win; 
+			std::stringstream win;
 			win << " wins with a score of " << (*win_data.winner.begin())->getScore() << "!";
 
-			TextBox* txt = new TextBox(pText_man, win.str() , 
-								DATA("END_ONEWIN_POSX") + x, 
-								DATA("END_ONEWIN_POSY"), 
+			TextBox* txt = new TextBox(pText_man, win.str() ,
+								DATA("END_ONEWIN_POSX") + x,
+								DATA("END_ONEWIN_POSY"),
 								700.0f, 13.0f, 40, 40 );
 			//add text box for the end of the sentence
 			txtbox_vec.push_back(txt);
 
 			txt->SetBGOffset(-70.0f, 0, 0);
-
-			
 		}
-	
-
 }
-
-
-
 
 /***********************************
 EndDisplay Destructor
@@ -1278,7 +1176,6 @@ Author: Jamie Gault
 ***********************************/
 EndDisplay::~EndDisplay()
 {
-
 	for( std::vector<TextBox*>::iterator txt = txtbox_vec.begin(); txt != txtbox_vec.end() ; ++txt )
 	{
 		delete(*txt);
@@ -1288,9 +1185,7 @@ EndDisplay::~EndDisplay()
 	{
 		delete(*tok);
 	}
-
 }
-
 
 /***********************************
 EndDisplay Update
@@ -1300,7 +1195,6 @@ Author: Jamie Gault
 void EndDisplay::Update(float t)
 {
 	//don't really need it to do much
-
 }
 
 /***********************************
@@ -1311,18 +1205,13 @@ Author: Jamie Gault
 void EndDisplay::Render()
 {
 
-	
-
-
 	for( std::vector<TextBox*>::iterator txt = txtbox_vec.begin(); txt != txtbox_vec.end() ; ++txt )
 	{
 		(*txt)->Render();
 	}
 
-
 	for( std::vector<Box_2D*>::iterator tok = tok_ics.begin(); tok != tok_ics.end() ; ++tok )
 	{
 		(*tok)->Render();
 	}
-
 }

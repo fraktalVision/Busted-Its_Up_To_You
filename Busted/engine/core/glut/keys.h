@@ -7,48 +7,44 @@ extern Input* pInput;
 
 void keys(unsigned char key, int x, int y)
 {
-	
 	int modifier = glutGetModifiers();
 	switch (key)
 	{
-
 	case 'x':
-		
+
 		break;
 	case 'c':
-		
+
 		break;
 	case 'z':
-		
+
 		break;
 	case 'p':
 		break;
 	case ' ':
-		
+
 	case 'a':
-		
+
 		break;
 	case 'd':
-		
+
 		break;
 	case 'q':
-		
+
 		break;
 	case 'e':
-		
+
 		break;
 	case 's':
-		
+
 		break;
 	case 'w':
-		
+
 		break;
 	case '\t':
-		
+
 		break;
 	}
-
-	
 }
 
 #endif

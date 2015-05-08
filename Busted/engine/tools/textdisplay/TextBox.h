@@ -20,20 +20,17 @@ class TextBox
 {
 public:
 	TextBox(); //default
-	
+
 	TextBox(Text_Manager* t, std::string & s, float x, float y, float maxwidth,
 				float gap = 10.0f, float letWd = 30.0f, float letHt = 30.0f);
 	//window will adjust itself to the dimensions needed for the text
-	
-	TextBox( Text_Manager* t, float x, float y, float width, float height, 
+
+	TextBox( Text_Manager* t, float x, float y, float width, float height,
 				float gap = 10.0f, float letWd = 30.0f, float letHt = 30.0f );
 
 	TextBox(TextBox& textbox);
 
 	TextBox& operator=( TextBox& textbox );
-
-
-
 
 	void SetString( std::string s, bool recalculateSize = false ); //!<adds a string to the given texture box
 	void ClearString();//!< Remove a string from it
@@ -76,7 +73,7 @@ public:
 	void Update();
 
 private:
-	
+
 	std::string m_displaystring;
 	float m_pos[2]; //x and y screen positions
 	float m_letter_dim[2]; //letter width and height
@@ -91,5 +88,3 @@ private:
 
 	float m_colour[4]; //colour of the font
 };
-
-

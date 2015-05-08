@@ -1,10 +1,8 @@
-
 #include "all.h"
 #include "GameWindow.h"
 #include "glut/Input.h"
 //#include <windows.h>
 #include <stdio.h>
-
 
 #pragma comment(lib, "gdi32.lib")
 
@@ -13,16 +11,12 @@ extern class Input* pInput;
 
 bool CamControl = false;
 
-
-
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4312 )
 
-
-GameWindow::GameWindow( const std::string &title, bool fullscreen, int iconfile): 
+GameWindow::GameWindow( const std::string &title, bool fullscreen, int iconfile):
                 m_title(title), isFullScreen(fullscreen), m_ICO(iconfile)
 {}
-    
 
 GameWindow::~GameWindow()
 {
@@ -55,7 +49,6 @@ void GameWindow::Open()
     {
         throw std::runtime_error("Failed To Register The Window Class.");
     }
-    
 
 	if (isFullScreen)                                                // Attempt Fullscreen Mode?
     {
@@ -118,7 +111,7 @@ void GameWindow::Close()
 	if (m_hWnd && IsWindow(m_hWnd)) {
 		DestroyWindow(m_hWnd);
 	}
-	m_hWnd = NULL;	
+	m_hWnd = NULL;
 	if (m_hInstance) {
 		UnregisterClass(m_title.c_str(), m_hInstance);
 	}
@@ -144,36 +137,34 @@ LRESULT CALLBACK GameWindow::StaticWindowProc(HWND m_hWnd, UINT msg, WPARAM wPar
 {
     switch (msg)
     {
-    case WM_SIZE: 
+    case WM_SIZE:
         display->reshape(LOWORD(lParam),HIWORD(lParam));
         break;
 
-    case WM_DESTROY: 
-		PostQuitMessage(0); 
+    case WM_DESTROY:
+		PostQuitMessage(0);
 		break;
 
-    case WM_CHAR: 
-		pInput->SetKeyboard( wParam ); 
+    case WM_CHAR:
+		pInput->SetKeyboard( wParam );
         if(pInput->PollKey('c')&& DATA("debug") ) {
-			CamControl = !CamControl; 
+			CamControl = !CamControl;
 		}
 		break;
-    case WM_LBUTTONDOWN: 
-		pInput->SetMouseButTrig( MLEFT ); 
+    case WM_LBUTTONDOWN:
+		pInput->SetMouseButTrig( MLEFT );
 		break;
 
-    case WM_RBUTTONDOWN: 
-		pInput->SetMouseButTrig( MRIGHT ); 
+    case WM_RBUTTONDOWN:
+		pInput->SetMouseButTrig( MRIGHT );
 		break;
 
-    case WM_MOUSEMOVE: 
+    case WM_MOUSEMOVE:
         {
             int x=(short)LOWORD(lParam);
             int y=(short)HIWORD(lParam);
             //float x = (lParam); float y = GET_Y_LPARAM(lParam);
-            pInput->SetMousePosX(x); pInput->SetMousePosY(y); 
-
-
+            pInput->SetMousePosX(x); pInput->SetMousePosY(y);
 
             vec2 input = {x, y};
             vec2 orig = Camera->getOrigMouse();
@@ -187,7 +178,6 @@ LRESULT CALLBACK GameWindow::StaticWindowProc(HWND m_hWnd, UINT msg, WPARAM wPar
                     case MK_LBUTTON:
                     {
                         vec3 newRot = Camera->getRot();
-                
 
                         newRot.x += diffTrans.x/5;
                         newRot.y += diffTrans.y/5;
@@ -207,7 +197,6 @@ LRESULT CALLBACK GameWindow::StaticWindowProc(HWND m_hWnd, UINT msg, WPARAM wPar
                         float cos1 = cos((180.0f-Rot.y+90.0f)/180.0f*3.14159f);
                         float sin1 = sin((180.0f-Rot.y+90.0f)/180.0f*3.14159f);
 
-
                         pos.x -= cos1*diffTrans.x/7.5  - sin1*diffTrans.y/7.5 ;
                         pos.z -= -cos0*diffTrans.x/7.5  + sin0*diffTrans.y/7.5 ;;
                         Camera->setPos(pos);
@@ -216,7 +205,7 @@ LRESULT CALLBACK GameWindow::StaticWindowProc(HWND m_hWnd, UINT msg, WPARAM wPar
                         break;
                     case MK_RBUTTON:
                     {
-                        //vec4 pos 
+                        //vec4 pos
                         float d    = Camera->getCamDistance();
 
                         if(diff < 0)
@@ -234,7 +223,6 @@ LRESULT CALLBACK GameWindow::StaticWindowProc(HWND m_hWnd, UINT msg, WPARAM wPar
                     default:
                         break;
                 }// switch
-
             }
             Camera->setOrigMouse(input);
         }
@@ -243,24 +231,19 @@ LRESULT CALLBACK GameWindow::StaticWindowProc(HWND m_hWnd, UINT msg, WPARAM wPar
     return (DefWindowProc(m_hWnd, msg, wParam, lParam));
 }
 
-
-
-
 GraphicsEngine::GraphicsEngine()
 {
     m_glrc    = NULL;
     m_hDC    = NULL;
     m_hWnd    = NULL;
-
 }
-
 
 void GraphicsEngine::Init(GameWindow& window)
 {
 	int bits = 32;
 
     m_hWnd = window.GetHandle();
-    
+
     static PIXELFORMATDESCRIPTOR pfd=                // pfd Tells Windows How We Want Things To Be
     {
         sizeof(PIXELFORMATDESCRIPTOR),                // Size Of This Pixel Format Descriptor
@@ -275,14 +258,14 @@ void GraphicsEngine::Init(GameWindow& window)
         0,                                            // Shift Bit Ignored
         0,                                            // No Accumulation Buffer
         0, 0, 0, 0,                                    // Accumulation Bits Ignored
-        16,                                            // 16Bit Z-Buffer (Depth Buffer)  
+        16,                                            // 16Bit Z-Buffer (Depth Buffer)
         0,                                            // No Stencil Buffer
         0,                                            // No Auxiliary Buffer
         PFD_MAIN_PLANE,                                // Main Drawing Layer
         0,                                            // Reserved
         0, 0, 0                                        // Layer Masks Ignored
     };
-    
+
     if (!(m_hDC=GetDC(m_hWnd)))                            // Did We Get A Device Context?
     {
 		throw std::runtime_error("Can't Create A GL Device Context");
@@ -341,5 +324,3 @@ void GraphicsEngine::RenderScreen()
     glFinish();
     SwapBuffers( m_hDC);
 }
-
-

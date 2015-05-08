@@ -26,7 +26,7 @@ enum OGG_STATE { OGG_CLOSED, OGG_PLAY, OGG_PAUSED, OGG_STOPPED }; //What's the c
 //!Class for encapsulating the ogg sound format and playing effects
 class ogg_stream
 {
-private: 
+private:
 	std::string		filename;
 	FILE*           oggFile;		//!< file handle
 	OggVorbis_File  oggStream;		//!< stream handle
@@ -54,11 +54,11 @@ public:
 	ALfloat			maxgain;		//!<maximum amount of gain
 	ALfloat			fade;			//!<fade incrememnt amount
 
-	OGG_STATE getOggState(void)	{ 
-		return oggState; 
+	OGG_STATE getOggState(void)	{
+		return oggState;
 	}
 	ALenum getState(void) {
-		ALenum state = 0;    
+		ALenum state = 0;
 		alGetSourcei(source, AL_SOURCE_STATE, &state);
 		check();
 		return state;
@@ -81,7 +81,7 @@ public:
 	ogg_stream(std::string file, SND_TYPE type = SFX, bool loop = false, int NUM_BUF = 2);
 	~ogg_stream(void);
 
-protected:					
+protected:
 	void check();						//!< checks OpenAL error state
 	std::string errorString(int code);	//!< stringify an error code
 };

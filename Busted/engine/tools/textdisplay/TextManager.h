@@ -3,7 +3,6 @@
 #include "../../core/all.h"
 #include "TextBox.h"
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /*
 Text_Manager class
@@ -27,5 +26,4 @@ private:
 
 	GLuint m_textureID; //texture id that holds the font in opengl
 	bool m_initialized; //wether or not the font has been initialized
-
 };
